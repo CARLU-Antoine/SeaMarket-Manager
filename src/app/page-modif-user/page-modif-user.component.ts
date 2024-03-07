@@ -42,6 +42,7 @@ const ELEMENT_DATA: tableauUser[] = [
   templateUrl: './page-modif-user.component.html',
   styleUrl: './page-modif-user.component.css'
 })
+
 export class PageModifUserComponent {
   userForm: FormGroup;
   selectedRole = 'admin';
