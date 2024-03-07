@@ -8,6 +8,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
+import { SidenavComponent } from '../sidenav/sidenav.component';
 
 import {MatTableModule} from '@angular/material/table';
 
@@ -30,6 +31,7 @@ const ELEMENT_DATA: tableauUser[] = [
   standalone: true,
   imports: [
     CommonModule,
+    SidenavComponent,
     RouterOutlet,
     MatCardModule,
     MatFormFieldModule,

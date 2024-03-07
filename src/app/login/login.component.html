@@ -1,22 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion au seaMarket</title>
-</head>
-<body>
-    <div class="container">
-        <h2>Connexion au seaMarket</h2>
-        <form action="#" method="POST">
-            <div class="form-group">
-                <input type="text" id="username" name="username" placeholder="Nom d'utilisateur" required>
-            </div>
-            <div class="form-group">
-                <input type="password" id="password" name="password" placeholder="Mot de passe" required>
-            </div>
-            <button (click)="nagivateToSideNav()">Connexion</button>
+<app-sidenav></app-sidenav>
+<!--Card d'ajout d'un utilisateur-->
+<mat-card class="cardCenter" style="text-align:center;">
+    <mat-card-title style="color: white;">Se connecter au SeaMarket-Manager</mat-card-title>
+    <mat-card-content>
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <br/>
+        <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email">
+        </mat-form-field>
+        <br/>
+        <mat-form-field appearance="fill">
+            <mat-label>Mot de passe</mat-label>
+            <input matInput type="password" formControlName="motDePasse">
+        </mat-form-field>
+        <br/>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!userForm.valid">Se connecter</button>
         </form>
-    </div>
-</body>
-</html>
+    </mat-card-content>
+</mat-card>
