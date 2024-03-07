@@ -20,10 +20,10 @@
       
     <mat-drawer class="slide-container" #drawer mode="side">
         <div class="sidenav-content">
-        <button>Poissons</button>
-        <button>Fruits de Mer</button>
-        <button>Crustacés</button>
-        <button>Statistiques</button>
+          <button (click)="nagivateToDashboard()">Dashboard</button>
+          <button (click)="nagivateToProduit()">Produits</button>
+          <button (click)="nagivateToAnalyse()">Analyse</button>
+          <button (click)="nagivateToModifUser()">Utilisateur</button>
         </div>
       </mat-drawer>
 </mat-drawer-container>
