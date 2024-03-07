@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
+import { PageModifUserComponent } from './page-modif-user/page-modif-user.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirection vers la page de connexion
+  { path: '', redirectTo: 'login', pathMatch: 'full' }, // Redirection vers la page de connexion
   { path: 'login', component: LoginComponent },
-  // Ajoutez d'autres routes au besoin
+  { path: 'modifUser', component: PageModifUserComponent },
 ];
 
 @NgModule({
@@ -14,4 +15,4 @@ const routes: Routes = [
 })
 export class AppRoutingModule { }
 
-export { routes }; // Exportez la variable routes
+export { routes };  

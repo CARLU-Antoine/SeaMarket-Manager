@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TablePageComponent } from './table-page.component';
+import { PageModifUserComponent } from './page-modif-user.component';
 
-describe('TablePageComponent', () => {
-  let component: TablePageComponent;
-  let fixture: ComponentFixture<TablePageComponent>;
+describe('PageModifUserComponent', () => {
+  let component: PageModifUserComponent;
+  let fixture: ComponentFixture<PageModifUserComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TablePageComponent]
+      imports: [PageModifUserComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(TablePageComponent);
+    fixture = TestBed.createComponent(PageModifUserComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
