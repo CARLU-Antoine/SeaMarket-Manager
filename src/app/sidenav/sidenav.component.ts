@@ -28,4 +28,10 @@ export class SidenavComponent {
   nagivateToDashboard() {
     this.router.navigate(['/dashboard']);
   }
+  nagivateToProduit() {
+    this.router.navigate(['/tabProduits']);
+  }
+  nagivateToAnalyse() {
+    this.router.navigate(['/Analyse']);
+  }
 }
