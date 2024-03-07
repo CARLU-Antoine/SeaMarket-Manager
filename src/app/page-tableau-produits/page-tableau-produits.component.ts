@@ -7,6 +7,8 @@ import {MatTabsModule} from '@angular/material/tabs';
 
 import { TableauGeneralComponent } from './tableau-general/tableau-general.component';
 
+import { SidenavComponent } from '../sidenav/sidenav.component';
+
 export interface tableauCategorie {
   nom: string;
 }
@@ -24,7 +26,8 @@ const ELEMENT_DATA: tableauCategorie[] = [
     RouterOutlet,
     MatCardModule,
     MatTabsModule,
-    TableauGeneralComponent
+    TableauGeneralComponent,
+    SidenavComponent
   ],
   templateUrl: './page-tableau-produits.component.html',
   styleUrl: './page-tableau-produits.component.css'
