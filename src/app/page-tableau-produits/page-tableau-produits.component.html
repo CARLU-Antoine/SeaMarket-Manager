@@ -1,0 +1,7 @@
+<div>
+    <mat-tab-group class="navTab">
+        <mat-tab *ngFor="let categorie of dataSource" [label]="categorie.nom">
+            <app-tableau-general [categorie]="categorie.nom"></app-tableau-general>
+        </mat-tab>
+    </mat-tab-group>
+</div>
