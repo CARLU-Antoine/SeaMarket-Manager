@@ -5,10 +5,9 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { PageModifUserComponent } from './page-modif-user/page-modif-user.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' }, // Redirection vers la page de connexion
-  { path: 'login', component: LoginComponent },
+  { path: '', redirectTo: 'sidenav', pathMatch: 'full' },
   { path: 'sidenav', component: SidenavComponent },
-  // Ajoutez d'autres routes au besoin
+  { path: 'login', component: LoginComponent },
   { path: 'modifUser', component: PageModifUserComponent },
 ];
 
