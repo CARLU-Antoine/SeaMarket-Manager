@@ -1,12 +1,11 @@
 .toolbar-container{
     background-color: #c9c9c9;
-    width: 1000%;
 }
 .sidenav-container {
     width: 100%;
     height: 100%;
-    border: 1px solid rgba(21, 89, 247, 0.5);
-    background-color: #f0f0f0;
+    border: 1px solid #1559f780;
+    background-color: whitesmoke;
   }
   .sidenav-content {
     display: flex;
@@ -20,7 +19,7 @@
     width: 100%;
     margin-bottom: 10px;
     padding: 20px;
-    background-color: #929191;
+    background-color: #B9B9B9;
   }
   
   .example-spacer {

@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion au seaMarket</title>
 </head>
 <body>
+   
     <div class="container">
         <h2>Connexion au seaMarket</h2>
         <form action="#" method="POST">
             <div class="form-group">
                 <input type="text" id="username" name="username" placeholder="Nom d'utilisateur" required>
             </div>
-            <div class="form-group">
-                <input type="password" id="password" name="password" placeholder="Mot de passe" required>
-            </div>
+            <mat-form-field>
+                <mat-label>Enter your password</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                  <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+              </mat-form-field>
             <button (click)="nagivateToSideNav()">Connexion</button>
         </form>
     </div>
