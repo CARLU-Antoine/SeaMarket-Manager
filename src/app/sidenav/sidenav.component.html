@@ -1,0 +1,21 @@
+<mat-drawer-container class="sidenav-container" autosize>
+    <mat-toolbar class="toolbar-container">
+        <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+          <mat-icon mat-button (click)="drawer.toggle()">menu</mat-icon>
+        </button>
+        <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
+        </button>
+        
+        <span class="example-spacer">SeaMarket-Manager</span>
+      </mat-toolbar>
+
+    <mat-drawer #drawer mode="side">
+        <div class="sidenav-content">
+        <button>Poissons</button>
+        <button>Fruits de Mer</button>
+        <button>Crustacés</button>
+        <button>Statistiques</button>
+        </div>
+      </mat-drawer>
+</mat-drawer-container>
