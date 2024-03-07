@@ -1,14 +1,20 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { AppRoutingModule } from './app-routing.module';
+import { NgModule,CUSTOM_ELEMENTS_SCHEMA } from "@angular/core"; 
+import { BrowserModule } from "@angular/platform-browser"; 
+import { FormsModule } from "@angular/forms"; 
 
+import { AppComponent } from "./app.component"; 
+import { MatCardModule } from "@angular/material/card"; 
+import { MatButtonModule } from "@angular/material/button"; 
 
-
-@NgModule({
-  declarations: [],
-  imports: [
-    CommonModule,
-    AppRoutingModule
-  ]
-})
-export class AppModule { }
+@NgModule({ 
+imports: 
+[BrowserModule, 
+FormsModule, 
+MatCardModule, 
+MatButtonModule 
+], 
+declarations: [AppComponent], 
+bootstrap: [AppComponent], 
+schemas: [CUSTOM_ELEMENTS_SCHEMA]
+}) 
+export class AppModule {}
