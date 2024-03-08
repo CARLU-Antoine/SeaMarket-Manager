@@ -5,11 +5,12 @@ import { MatCardModule } from "@angular/material/card";
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-sidenav',
   standalone: true,
-  imports: [MatToolbarModule,MatSidenavModule,MatCardModule,MatIconModule,MatMenuModule],
+  imports: [MatToolbarModule,MatSidenavModule,MatCardModule,MatIconModule,MatMenuModule,MatButtonModule],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.css'
 })
