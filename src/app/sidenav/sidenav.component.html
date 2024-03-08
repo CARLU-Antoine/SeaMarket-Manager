@@ -1,21 +1,13 @@
 <mat-drawer-container class="sidenav-container" autosize>
     <mat-toolbar class="toolbar-container">
         <button>
-          <mat-icon mat-button (click)="drawer.toggle()">menu</mat-icon>
+          <mat-icon style="cursor: pointer;" (click)="drawer.toggle()">menu</mat-icon>
         </button>
         <button (click)="nagivateToHome()">
             <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
         </button>
 
       <span style="padding: 20px;">SeaMarket-Manager</span>
-      <div class="container-account">
-        <mat-icon mat-button [matMenuTriggerFor]="menu">account_circle</mat-icon>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="nagivateToModifUser()">Créer un compte</button>
-          <button mat-menu-item (click)="nagivateToLogin()">Se connecter</button>
-        </mat-menu>
-      </div>
-
       </mat-toolbar>
       
     <mat-drawer class="slide-container" #drawer mode="side">

@@ -27,12 +27,3 @@
     padding: 20px;
     background-color: #B9B9B9;
   }
-  
-  .container-account{
-    position:absolute;
-   right: 3%;
-  }
-
-  .container-account:hover{
-    cursor: pointer;
-  }
