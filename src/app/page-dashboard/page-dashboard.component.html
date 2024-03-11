@@ -1,2 +1,30 @@
 <app-sidenav></app-sidenav>
-<app-pie-chart></app-pie-chart>
+
+<mat-card class="card-general"style="width: 1000px; height: 400px; margin: auto;">
+    <!-- Première rangée -->
+    <div style="display: flex;">
+        <div style="width: 100%;">
+            <div style="height: 50px;" class="card-component">
+                <span>inserer un component</span>
+            </div>
+            <div style="height: 50px;" class="card-component">
+                <app-count-user [userCount]="numberOfUsers"></app-count-user>
+            </div>
+        </div>
+        <div class="card-component">
+            <span>Stocks</span>
+            <app-pie-chart></app-pie-chart>
+        </div>
+    </div>
+  
+    <!-- Deuxième rangée -->
+    <div style="width: 100%; height: 50px; background-color: lightgreen; margin-top: 10px;"></div>
+  
+    <!-- Troisième rangée -->
+    <div style="display: flex; margin-top: 10px;">
+        
+      <div style="flex: 1;"></div> <!-- Espacement pour remplir l'espace restant -->
+      <div style="width: 600px; height: 50px; background-color: lightcoral;"></div>
+    </div>
+  </mat-card>
+  

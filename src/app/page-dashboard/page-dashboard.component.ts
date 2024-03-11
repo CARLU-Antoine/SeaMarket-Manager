@@ -1,19 +1,23 @@
 import { Component } from '@angular/core';
-// import { NgChartsModule } from 'ng2-charts';
 import { SidenavComponent } from '../sidenav/sidenav.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
+import { CountUserComponent } from './count-user/count-user.component';
 
+import {MatGridListModule} from '@angular/material/grid-list';
+import { MatCard } from '@angular/material/card';
 @Component({
   selector: 'app-page-dashboard',
   standalone: true,
   imports: [
     SidenavComponent,
-    PieChartComponent
-    // NgChartsModule
+    PieChartComponent,
+    CountUserComponent,
+    MatCard,
+    MatGridListModule,
   ],
   templateUrl: './page-dashboard.component.html',
   styleUrl: './page-dashboard.component.css'
 })
 export class PageDashboardComponent {
-
+  numberOfUsers = 5; //recuperer nombre de user ici 
 }
