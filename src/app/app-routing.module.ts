@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { PageModifUserComponent } from './page-modif-user/page-modif-user.component';
 import { PageTableauProduitsComponent } from './page-tableau-produits/page-tableau-produits.component';
+import { PageDashboardComponent } from './page-dashboard/page-dashboard.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'sidenav', pathMatch: 'full' },
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'modifUser', component: PageModifUserComponent },
   { path: 'tabProduits', component: PageTableauProduitsComponent },
+  { path: 'dashboard', component: PageDashboardComponent },
 ];
 
 @NgModule({
