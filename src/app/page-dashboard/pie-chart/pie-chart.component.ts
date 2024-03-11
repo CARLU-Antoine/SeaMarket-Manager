@@ -14,11 +14,11 @@ import { BaseChartDirective } from 'ng2-charts';
 export class PieChartComponent {
   title = 'ng2-charts-demo';
 
-  // Pie
   public pieChartOptions: ChartOptions<'pie'> = {
     responsive: false,
   };
-  public pieChartLabels = [ [ 'Download', 'Sales' ], [ 'In', 'Store', 'Sales' ], 'Mail Sales' ];
+  // ICI POUR METTRE LES DONNEES DU NOMBRE DE POISSONS/...
+  public pieChartLabels = [ 'Poissons','Fruits de mer', 'Coquillages' ];
   public pieChartDatasets = [ {
     data: [ 300, 500, 100 ]
   } ];
