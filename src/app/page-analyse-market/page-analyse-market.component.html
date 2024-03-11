@@ -1,0 +1,24 @@
+<app-sidenav></app-sidenav>
+
+<div class="container-charts">
+    <div class="container-chart">
+    <h4>chiffre-affaire</h4>
+    <mat-form-field>
+        <mat-label>Filtrer par période</mat-label>
+        <mat-select>
+        @for (periode of periodes; track periodes) {
+            <mat-option [value]="periode.value">{{periode.viewValue}}</mat-option>
+        }
+        </mat-select>
+    </mat-form-field>
+    
+    <div id="chart-chiffre-affaire"></div>
+
+    <h4>Résultat comptable</h4>
+
+    <div id="chart-comptabilite"></div>
+    <h4>Calcul des impots</h4>
+
+    <div id="chart-impot"></div>
+    </div>
+</div>
