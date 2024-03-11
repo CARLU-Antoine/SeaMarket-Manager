@@ -5,7 +5,8 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
-
+import {MatInputModule} from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 
 export interface tableauProduits {
   categorie: string;
@@ -40,6 +41,8 @@ const ELEMENT_DATA: tableauProduits[] = [
     MatCardModule,
     MatTableModule,
     MatIconModule,
+    MatInputModule,
+    FormsModule,
     TableauGeneralComponent
   ],
   templateUrl: './tableau-general.component.html',
