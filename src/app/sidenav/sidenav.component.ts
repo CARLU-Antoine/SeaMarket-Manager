@@ -33,6 +33,6 @@ export class SidenavComponent {
     this.router.navigate(['/tabProduits']);
   }
   nagivateToAnalyse() {
-    this.router.navigate(['/Analyse']);
+    this.router.navigate(['/analyseMarket']);
   }
 }
