@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
 
+import * as XLSX from 'xlsx';
+
 @Component({
   selector: 'app-comptabilite-chart',
   standalone: true,
@@ -22,6 +24,16 @@ export class ComptabiliteChartComponent {
 
   constructor() { }
 
-  ngOnInit() {
+
+  downloadData(): void {
+    // Créer un tableau de données contenant les étiquettes et les données
+    const data = [this.lineChartData].concat(
+        this.lineChartData.map(dataPoint => dataPoint.data)
+    );
+
+    const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(data);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Résultat comptable');
+    XLSX.writeFile(wb, 'Résultat comptable.xlsx');
   }
 }

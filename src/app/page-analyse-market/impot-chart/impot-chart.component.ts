@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
+import * as XLSX from 'xlsx';
+
 
 @Component({
   selector: 'app-impot-chart',
@@ -23,12 +25,16 @@ export class ImpotChartComponent {
     {data: [28, 48, 40, 19, 86, 27, 90, 24, 65, 56, 55, 40], label: 'Salariés'}
   ];
  
-  // events
-  public chartClicked(e:any):void {
-    console.log(e);
-  }
- 
-  public chartHovered(e:any):void {
-    console.log(e);
+
+  downloadData(): void {
+    // Créer un tableau de données contenant les étiquettes et les données
+    const data = [this.barChartLabels].concat(
+        this.barChartData.map(dataPoint => dataPoint.data)
+    );
+
+    const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(data);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'impôts');
+    XLSX.writeFile(wb, 'impôts.xlsx');
   }
 }
