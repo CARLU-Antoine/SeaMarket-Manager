@@ -1,30 +1,36 @@
 <app-sidenav></app-sidenav>
 
-<mat-card class="card-general"style="width: 1000px; height: 400px; margin: auto;">
+<mat-card class="card-general"style="width: 1000px; height: 500px; margin: auto;">
     <!-- Première rangée -->
     <div style="display: flex;">
         <div style="width: 100%;">
-            <div style="height: 50px;" class="card-component">
-                <span>inserer un component</span>
+            <div style="height: 65px;" class="card-component center">
+                <app-count-money [moneyCount]="numberOfMoney"></app-count-money>
             </div>
-            <div style="height: 50px;" class="card-component">
+            <div style="height: 65px;" class="card-component center">
                 <app-count-user [userCount]="numberOfUsers"></app-count-user>
+            </div>
+            <div style="height: 65px;" class="card-component center">
+                <span>Inserer composant</span>
+            </div>
+            <div style="height: 65px;" class="card-component center">
+                <span>Inserer composant</span>
             </div>
         </div>
         <div class="card-component">
             <span>Stocks</span>
             <app-pie-chart></app-pie-chart>
         </div>
+        <div class="card-component">
+            <span>ajouter un graphique different</span>
+            <app-pie-chart></app-pie-chart>
+        </div>
     </div>
   
-    <!-- Deuxième rangée -->
-    <div style="width: 100%; height: 50px; background-color: lightgreen; margin-top: 10px;"></div>
-  
-    <!-- Troisième rangée -->
-    <div style="display: flex; margin-top: 10px;">
-        
-      <div style="flex: 1;"></div> <!-- Espacement pour remplir l'espace restant -->
-      <div style="width: 600px; height: 50px; background-color: lightcoral;"></div>
+    <div style="margin-top: 10px;">
+        <div class="card-component" style="height: 50px;">
+            <span>Inserer composant</span>
+        </div>
     </div>
   </mat-card>
   
