@@ -43,7 +43,13 @@ const ELEMENT_DATA: tableauCategorie[] = [
 })
 
 export class PageTableauProduitsComponent {
-  isChecked = true;
+  isChecked: boolean = false;
+  modeEdition: boolean = false;
+  
+  modifierModeEdition(): void {
+    this.modeEdition = this.isChecked;
+  }  
+
   displayedColumns: string[] = ['nom'];
   dataSource = ELEMENT_DATA;
 }

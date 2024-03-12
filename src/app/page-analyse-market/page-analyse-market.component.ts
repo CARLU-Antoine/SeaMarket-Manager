@@ -2,6 +2,7 @@ import { Component, ViewChild, ElementRef, OnInit, AfterViewInit } from '@angula
 import * as d3 from 'd3';
 import { SidenavComponent } from '../sidenav/sidenav.component';
 import { MatSelectModule } from '@angular/material/select';
+import {MatIconModule} from '@angular/material/icon';
 
 interface Periode {
   value: string;
@@ -13,7 +14,8 @@ interface Periode {
   standalone: true,
   imports: [
     SidenavComponent,
-    MatSelectModule
+    MatSelectModule,
+    MatIconModule
   ],
   templateUrl: './page-analyse-market.component.html',
   styleUrls: ['./page-analyse-market.component.css']
@@ -24,6 +26,8 @@ export class PageAnalyseMarketComponent implements OnInit, AfterViewInit {
   periodes: Periode[] = [
     { value: 'année', viewValue: 'Par année' },
     { value: 'mois', viewValue: 'Par mois' },
+    { value: 'semaine', viewValue: 'Par semaine' },
+    { value: 'jour', viewValue: 'Par jour' }
   ];
 
   @ViewChild('chart', { static: false }) private chartContainer!: ElementRef;
@@ -64,7 +68,7 @@ export class PageAnalyseMarketComponent implements OnInit, AfterViewInit {
       { mois: 'Décembre', value: 30 }
     ]);
 
-    this.createLineChart('chart-impot', [
+    this.createBarChart('chart-impot', [
       { mois: 'Janvier', value: 10 },
       { mois: 'Février', value: 20 },
       { mois: 'Mars', value: 15 },
@@ -83,7 +87,7 @@ export class PageAnalyseMarketComponent implements OnInit, AfterViewInit {
   private createLineChart(containerId: string, data: { mois: string; value: number }[]): void {
     const margin = { top: 20, right: 40, bottom: 30, left: 60 };
     const width = 900;
-    const height = 500;
+    const height = 300;
 
     const svg = d3.select('#' + containerId)
       .append('svg')
@@ -159,5 +163,74 @@ export class PageAnalyseMarketComponent implements OnInit, AfterViewInit {
 
     svg.append('g')
       .call(d3.axisLeft(y));
+  }
+
+  private createBarChart(containerId: string, data: { mois: string; value: number }[]): void {
+    const margin = { top: 20, right: 40, bottom: 30, left: 60 };
+    const width = 900;
+    const height = 300;
+
+    const svg = d3.select('#' + containerId)
+      .append('svg')
+      .attr('width', width + margin.left + margin.right)
+      .attr('height', height + margin.top + margin.bottom)
+      .append('g')
+      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+    // Créer l'axe X
+    const x = d3.scaleBand()
+      .range([0, width])
+      .domain(data.map(d => d.mois))
+      .padding(0.1);
+
+    svg.append('g')
+      .attr('transform', 'translate(0,' + height + ')')
+      .call(d3.axisBottom(x));
+
+    // Créer l'axe Y
+    const y = d3.scaleLinear()
+      .domain([0, d3.max(data, d => d.value) || 0]) // Ajout d'une valeur par défaut si les données sont vides
+      .range([height, 0]);
+
+    svg.append('g')
+      .call(d3.axisLeft(y));
+
+      const tooltip = svg.append('g')
+      .attr('class', 'tooltip')
+      .style('display', 'none');
+
+    tooltip.append('rect')
+      .attr('width', 75)
+      .attr('height', 20)
+      .attr('fill', '#f9f9f9')
+      .attr('stroke', '#aaa')
+      .attr('stroke-width', '1');
+
+    tooltip.append('text')
+      .attr('x', 40)
+      .attr('dy', '1.2em')
+      .style('text-anchor', 'middle')
+      .style('font-size', '12px')
+      .attr('fill', 'black');
+
+      svg.selectAll('.bar')
+      .data(data)
+      .enter().append('rect')
+      .attr('class', 'bar')
+      .attr('x', d => x(String(d.mois)) || 0) // Ajout d'une valeur par défaut si les données sont vides
+      .attr('width', x.bandwidth())
+      .attr('y', d => y(d.value))
+      .attr('height', d => height - y(d.value))
+      .attr('fill', 'steelblue')
+      .on('mouseover', (event, { mois, value: dValue }) => {
+        if (mois && typeof mois === 'string') {
+          const xValue = x(mois);
+          if (xValue !== undefined) {
+            tooltip.style('display', null)
+              .attr('transform', `translate(${xValue}, ${y(dValue) - 21})`)
+            tooltip.select('text').text(`${mois}: ${dValue}`);
+          }
+        }
+      })
   }
 }

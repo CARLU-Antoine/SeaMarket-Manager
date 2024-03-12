@@ -6,11 +6,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {
-  _MatSlideToggleRequiredValidatorModule,
-} from '@angular/material/slide-toggle';
+import {FormsModule} from '@angular/forms';
+
 
 export interface tableauProduits {
   categorie: string;
@@ -58,6 +55,7 @@ export class TableauGeneralComponent {
   dataSource: tableauProduits[];
 
   @Input() categorie: string | undefined;
+  @Input() modeEdition: boolean=false;
 
   constructor() {
     this.dataSource = ELEMENT_DATA;
@@ -69,6 +67,7 @@ export class TableauGeneralComponent {
     } else {
       this.dataSource = ELEMENT_DATA;
     }
+
   }
 
   editRow(element: tableauProduits): void {
