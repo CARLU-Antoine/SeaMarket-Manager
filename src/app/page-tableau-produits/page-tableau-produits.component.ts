@@ -4,9 +4,14 @@ import { CommonModule } from '@angular/common';
 
 import { MatCardModule } from '@angular/material/card';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatButtonModule} from '@angular/material/button';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {
+  _MatSlideToggleRequiredValidatorModule,
+} from '@angular/material/slide-toggle';
 
 import { TableauGeneralComponent } from './tableau-general/tableau-general.component';
-
 import { SidenavComponent } from '../sidenav/sidenav.component';
 
 export interface tableauCategorie {
@@ -27,13 +32,18 @@ const ELEMENT_DATA: tableauCategorie[] = [
     MatCardModule,
     MatTabsModule,
     TableauGeneralComponent,
-    SidenavComponent
+    SidenavComponent,
+    MatSlideToggleModule,
+    FormsModule,
+    _MatSlideToggleRequiredValidatorModule,
+    ReactiveFormsModule
   ],
   templateUrl: './page-tableau-produits.component.html',
   styleUrl: './page-tableau-produits.component.css'
 })
 
 export class PageTableauProduitsComponent {
+  isChecked = true;
   displayedColumns: string[] = ['nom'];
   dataSource = ELEMENT_DATA;
 }

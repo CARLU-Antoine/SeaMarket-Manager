@@ -81,9 +81,9 @@ export class PageAnalyseMarketComponent implements OnInit, AfterViewInit {
   }
 
   private createLineChart(containerId: string, data: { mois: string; value: number }[]): void {
-    const margin = { top: 20, right: 20, bottom: 30, left: 50 };
-    const width = 600 - margin.left - margin.right;
-    const height = 400 - margin.top - margin.bottom;
+    const margin = { top: 20, right: 40, bottom: 30, left: 60 };
+    const width = 900;
+    const height = 500;
 
     const svg = d3.select('#' + containerId)
       .append('svg')
@@ -143,11 +143,12 @@ export class PageAnalyseMarketComponent implements OnInit, AfterViewInit {
           const xValue = x(mois);
           if (xValue !== undefined) {
             tooltip.style('display', null)
-              .attr('transform', `translate(${xValue + margin.left}, ${y(dValue) - 30})`);
+              .attr('transform', `translate(${xValue + 15}, ${y(dValue) + 20})`)
             tooltip.select('text').text(`${mois}: ${dValue}`);
           }
         }
-      })     
+      })
+         
       .on('mouseout', () => {
         tooltip.style('display', 'none');
       });

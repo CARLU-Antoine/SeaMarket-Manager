@@ -5,7 +5,12 @@
     height: auto;
     margin-right: auto;
     margin-left: 18%;
-    margin-top: 175px;
+    margin-top: 10px;
     color: white;
     background-color: #9f9d9db4;
+}
+.slide-toggle{
+    margin-top: 175px;
+    margin-left: 18%;
+    color: black;
 }
