@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnInit, AfterViewInit } from '@angular/core';
+import { Component,ViewChildren, QueryList } from '@angular/core';
 
 import { SidenavComponent } from '../sidenav/sidenav.component';
 import {MatGridListModule} from '@angular/material/grid-list';
@@ -26,6 +26,28 @@ import { ImpotChartComponent } from './impot-chart/impot-chart.component';
 })
 
 export class PageAnalyseMarketComponent {
+  @ViewChildren(MoneyChartComponent) moneyCharts!: QueryList<MoneyChartComponent>;
+  @ViewChildren(ComptabiliteChartComponent) comptabiliteCharts!: QueryList<ComptabiliteChartComponent>;
+  @ViewChildren(ImpotChartComponent) impotCharts!: QueryList<ImpotChartComponent>;
+
   constructor() { }
 
+
+  private DownloadChartData(charts: QueryList<any>): void {
+    charts.forEach(chart => {
+      chart.downloadData();
+    });
+  }
+  
+  downloadMoneyChartData(): void {
+    this.DownloadChartData(this.moneyCharts);
+  }
+
+  downloadComptabiliteChartData(): void {
+    this.DownloadChartData(this.comptabiliteCharts);
+  }
+
+  downloadImpotChartData(): void {
+    this.DownloadChartData(this.impotCharts);
+  }
 }
