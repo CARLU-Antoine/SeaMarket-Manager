@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { PageModifUserComponent } from './page-modif-user/page-modif-user.component';
 import { PageTableauProduitsComponent } from './page-tableau-produits/page-tableau-produits.component';
+import { PageDashboardComponent } from './page-dashboard/page-dashboard.component';
 import { PageAnalyseMarketComponent } from './page-analyse-market/page-analyse-market.component';
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'analyseMarket', component: PageAnalyseMarketComponent },
   { path: 'modifUser', component: PageModifUserComponent },
   { path: 'tabProduits', component: PageTableauProduitsComponent },
+  { path: 'dashboard', component: PageDashboardComponent },
 ];
 
 @NgModule({
