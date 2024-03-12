@@ -1,5 +1,17 @@
-.container-charts{
+.card-general{
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+.card-component{
+    background-color: lightgrey; 
+    margin: 10px; 
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.center{
     display: flex;
+    align-items: center; 
     justify-content: center;
-    align-items: center;
 }

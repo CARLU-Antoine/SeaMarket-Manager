@@ -1,49 +1,30 @@
 <app-sidenav></app-sidenav>
 
-<div class="container-charts">
-    <div class="container-chart">
-    <h4>chiffre-affaire</h4>
-    <mat-form-field>
-        <mat-label>Filtrer par période</mat-label>
-        <mat-select>
-        @for (periode of periodes; track periodes) {
-            <mat-option [value]="periode.value">{{periode.viewValue}}</mat-option>
-        }
-        </mat-select>
-    </mat-form-field>
-
-    <mat-icon style="position: absolute;right: 2%; cursor: pointer;">play_for_work</mat-icon>
-    <mat-icon style="position: absolute;right: 5%;cursor: pointer;">autorenew</mat-icon>
-
-    <div id="chart-chiffre-affaire"></div>
-    <mat-form-field>
-        <mat-label>Filtrer par période</mat-label>
-        <mat-select>
-        @for (periode of periodes; track periodes) {
-            <mat-option [value]="periode.value">{{periode.viewValue}}</mat-option>
-        }
-        </mat-select>
-    </mat-form-field>
-
-    <mat-icon style="position: absolute;right: 2%; cursor: pointer;">play_for_work</mat-icon>
-    <mat-icon style="position: absolute;right: 5%;cursor: pointer;">autorenew</mat-icon>
-
-    <h4>Résultat comptable</h4>
-    <div id="chart-comptabilite"></div>
-    <mat-form-field>
-        <mat-label>Filtrer par période</mat-label>
-        <mat-select>
-        @for (periode of periodes; track periodes) {
-            <mat-option [value]="periode.value">{{periode.viewValue}}</mat-option>
-        }
-        </mat-select>
-    </mat-form-field>
-
-    <mat-icon style="position: absolute;right: 2%; cursor: pointer;">play_for_work</mat-icon>
-    <mat-icon style="position: absolute;right: 5%;cursor: pointer;">autorenew</mat-icon>
-
-    <h4>Calcul des impots</h4>
-    <div id="chart-impot"></div>
-
+<mat-card class="card-general"style="width: 1000px; height: auto; margin: auto;">
+    <!-- Première rangée -->
+    <div style="display:flex;">
+        <div class="card-component" style="width: 50%; position: relative;">
+            <span>Analyse chiffre d'affaire</span>
+            <mat-icon style="position: absolute; right: 8%; cursor: pointer;">autorenew</mat-icon>
+            <mat-icon style="position: absolute; right: 2%; cursor: pointer;">play_for_work</mat-icon>
+            <app-money-chart></app-money-chart>
+        </div>        
+        <div class="card-component" style="width: 50%;">
+            <span>Résultat comptable (marge)</span>
+            <mat-icon style="position: absolute; right: 5%; cursor: pointer;">autorenew</mat-icon>
+            <mat-icon style="position: absolute; right: 2%; cursor: pointer;">play_for_work</mat-icon>
+            <app-comptabilite-chart></app-comptabilite-chart>
+        </div>
     </div>
-</div>
+    <div>
+        <div class="card-component" style="height: 100%;">
+            <span>Analyse de l’impôt sur les sociétés</span>
+            <mat-icon style="position: absolute; right: 5%; cursor: pointer;">autorenew</mat-icon>
+            <mat-icon style="position: absolute; right: 2%; cursor: pointer;">play_for_work</mat-icon>
+            <app-impot-chart></app-impot-chart>
+        </div>
+    </div>
+  </mat-card>
+  
+
+
