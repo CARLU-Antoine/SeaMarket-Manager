@@ -6,7 +6,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {
+  _MatSlideToggleRequiredValidatorModule,
+} from '@angular/material/slide-toggle';
 
 export interface tableauProduits {
   categorie: string;
