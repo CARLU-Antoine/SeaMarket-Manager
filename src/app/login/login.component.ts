@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { SidenavComponent } from '../sidenav/sidenav.component';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-login',
@@ -21,20 +22,23 @@ import { SidenavComponent } from '../sidenav/sidenav.component';
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
+    MatIconModule
   ],
   styleUrls: ['./login.component.css']
 })
 
 export class LoginComponent {
   userForm: FormGroup;
+  passwordVisible: boolean = false;
   
   constructor(private fb: FormBuilder) {
     this.userForm = this.fb.group({
-      nom: ['', Validators.required],
-      prenom: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       motDePasse: ['', [Validators.required, Validators.minLength(6)]],
-      role: ['', Validators.required]
     });
+  }
+  
+  togglePasswordVisibility() {
+      this.passwordVisible = !this.passwordVisible;
   }
 }

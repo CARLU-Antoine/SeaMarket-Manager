@@ -1,29 +1,21 @@
 <mat-drawer-container class="sidenav-container" autosize>
-    <mat-toolbar class="toolbar-container">
-        <button>
-          <mat-icon mat-button (click)="drawer.toggle()">menu</mat-icon>
-        </button>
-        <button (click)="nagivateToHome()">
-            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
-        </button>
+  <mat-toolbar class="toolbar-container">
+    <button (click)="drawer.toggle()">
+      <mat-icon style="cursor: pointer;">menu</mat-icon>
+    </button>
+    <button style="cursor: pointer;" (click)="nagivateToHome()">
+      <mat-icon fontIcon="home"></mat-icon>
+    </button>
 
-      <span style="padding: 20px;">SeaMarket-Manager</span>
-      <div class="container-account">
-        <mat-icon mat-button [matMenuTriggerFor]="menu">account_circle</mat-icon>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="nagivateToModifUser()">Créer un compte</button>
-          <button mat-menu-item (click)="nagivateToLogin()">Se connecter</button>
-        </mat-menu>
-      </div>
+    <span style="padding: 20px;">SeaMarket-Manager</span>
+  </mat-toolbar>
 
-      </mat-toolbar>
-      
-    <mat-drawer class="slide-container" #drawer mode="side">
-        <div class="sidenav-content">
-          <button (click)="nagivateToDashboard()">Dashboard</button>
-          <button (click)="nagivateToProduit()">Produits</button>
-          <button (click)="nagivateToAnalyse()">Analyse</button>
-          <button (click)="nagivateToModifUser()">Utilisateur</button>
-        </div>
-      </mat-drawer>
+  <mat-drawer class="slide-container" #drawer mode="side" opened> 
+    <div class="sidenav-content">
+      <button mat-raised-button (click)="nagivateToDashboard()">Dashboard</button>
+      <button mat-raised-button (click)="nagivateToProduit()">Produits</button>
+      <button mat-raised-button (click)="nagivateToAnalyse()">Analyse</button>
+      <button mat-raised-button (click)="nagivateToModifUser()">Utilisateur</button>
+    </div>
+  </mat-drawer>
 </mat-drawer-container>

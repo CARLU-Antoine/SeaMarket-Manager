@@ -1,5 +1,10 @@
 <app-sidenav></app-sidenav>
+
 <div>
+    <div class="slide-toggle">
+        <p>Activer ou désactiver la modification</p>
+        <mat-slide-toggle [(ngModel)]="isChecked">Slide Toggle Checked: {{isChecked}}</mat-slide-toggle>
+    </div>
     <mat-tab-group class="navTab">
         <mat-tab *ngFor="let categorie of dataSource" [label]="categorie.nom">
             <app-tableau-general [categorie]="categorie.nom"></app-tableau-general>
