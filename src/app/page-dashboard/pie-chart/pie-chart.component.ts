@@ -17,10 +17,9 @@ export class PieChartComponent {
   public pieChartOptions: ChartOptions<'pie'> = {
     responsive: false,
   };
-  // ICI POUR METTRE LES DONNEES DU NOMBRE DE POISSONS/...
   public pieChartLabels = [ 'Poissons','Fruits de mer', 'Coquillages' ];
   public pieChartDatasets = [ {
-    data: [ 300, 500, 100 ]
+    data: [ 300, 500, 100 ]  // ICI POUR METTRE LES DONNEES DU NOMBRE DE POISSONS/...
   } ];
   public pieChartLegend = true;
   public pieChartPlugins = [];
