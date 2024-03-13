@@ -1,11 +1,7 @@
-<app-sidenav></app-sidenav>
 <mat-drawer-container class="sidenav-container" autosize>
   <mat-toolbar class="toolbar-container">
     <button (click)="drawer.toggle()">
       <mat-icon style="cursor: pointer;">menu</mat-icon>
-    </button>
-    <button style="cursor: pointer;" (click)="nagivateToHome()">
-      <mat-icon fontIcon="home"></mat-icon>
     </button>
 
     <span style="padding: 20px;">SeaMarket-Manager</span>
@@ -13,11 +9,20 @@
 
   <mat-drawer class="slide-container" #drawer mode="side" opened> 
     <div class="sidenav-content">
-      
-      <button mat-raised-button (click)="nagivateToDashboard()"><mat-icon>dashboard</mat-icon></button>
-      <button mat-raised-button (click)="nagivateToProduit()">Produits</button>
-      <button mat-raised-button (click)="nagivateToAnalyse()">Analyse</button>
-      <button mat-raised-button (click)="nagivateToModifUser()">Utilisateur</button>
+      <div class="button-container">
+        <button class="button" (click)="nagivateToDashboard()">
+          <mat-icon>dashboard</mat-icon>
+        </button>
+        <button class="button" (click)="nagivateToProduit()">
+          <mat-icon>store</mat-icon>
+        </button>
+        <button class="button" (click)="nagivateToAnalyse()">
+          <mat-icon> attach_money</mat-icon>
+        </button>
+        <button class="button" (click)="nagivateToModifUser()">
+          <mat-icon>supervisor_account</mat-icon>
+        </button>
+      </div>
     </div>
   </mat-drawer>
 </mat-drawer-container>

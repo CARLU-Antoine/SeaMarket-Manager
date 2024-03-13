@@ -13,7 +13,7 @@
   top: 0;
   left: 0;
   bottom: 0;
-  width: 250px;
+  width: 150px;
   z-index: 1000;
 }
 
@@ -31,6 +31,28 @@
   margin-bottom: 10px;
   padding: 20px;
   background-color: #B9B9B9;
+}
+
+.button {
+  outline: 0 !important;
+  border: 0 !important;
+  width: 40px;
+  border-radius: 50%;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  transition: all ease-in-out 0.3s;
+  cursor: pointer;
+}
+
+.button:hover {
+  transform: translateY(-3px);
+}
+
+.icon {
+  font-size: 20px;
 }
 
 @media screen and (max-width: 768px) {
