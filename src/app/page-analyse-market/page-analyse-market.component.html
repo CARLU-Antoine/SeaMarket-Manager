@@ -1,6 +1,12 @@
 <app-sidenav></app-sidenav>
 
+
+
 <mat-card class="card-general"style="width: 1000px; height: auto; margin: auto;">
+    <div class="download-button" >
+        <mat-icon style="cursor: pointer;">autorenew</mat-icon>
+        <mat-icon style="cursor: pointer;" (click)="downloadAllChartData()">play_for_work</mat-icon>
+    </div>    
     <!-- Première rangée -->
     <div style="display:flex;">
         <div class="card-component" style="width: 50%; position: relative;">

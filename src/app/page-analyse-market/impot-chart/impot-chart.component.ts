@@ -26,6 +26,12 @@ export class ImpotChartComponent {
   ];
  
 
+  getData(): any[] {
+    // Récupérer les données sous forme d'un tableau d'objets avec les étiquettes et les valeurs
+    return this.barChartLabels.map((label, index) => ({
+      label: label,
+    }));
+  }
   downloadData(): void {
     // Créer un tableau de données contenant les étiquettes et les données
     const data = [this.barChartLabels].concat(

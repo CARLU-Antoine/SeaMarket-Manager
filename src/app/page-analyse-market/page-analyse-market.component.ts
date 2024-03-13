@@ -7,7 +7,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { MoneyChartComponent } from './money-chart/money-chart.component';
 import { ComptabiliteChartComponent } from './comptabilite-chart/comptabilite-chart.component';
 import { ImpotChartComponent } from './impot-chart/impot-chart.component'; 
-
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-page-analyse-market',
@@ -32,13 +32,47 @@ export class PageAnalyseMarketComponent {
 
   constructor() { }
 
-
   private DownloadChartData(charts: QueryList<any>): void {
     charts.forEach(chart => {
       chart.downloadData();
     });
   }
+
+  private getAllChartData(): any[] {
+    const allData: any[] = [];
+    this.moneyCharts.forEach(chart => allData.push(...chart.getData()));
+    this.comptabiliteCharts.forEach(chart => allData.push(...chart.getData()));
+    this.impotCharts.forEach(chart => allData.push(...chart.getData()));
+    return allData;
+  }
   
+  downloadAllChartData(): void {
+    const workbook = XLSX.utils.book_new();
+  
+    // Télécharger les données de chaque graphique dans une feuille Excel distincte
+    this.moneyCharts.forEach((chart, index) => {
+      const data = chart.getData();
+      const worksheet = XLSX.utils.json_to_sheet(data);
+      XLSX.utils.book_append_sheet(workbook, worksheet, `Chiffre d\'affaire`);
+    });
+  
+    this.comptabiliteCharts.forEach((chart, index) => {
+      const data = chart.getData();
+      const worksheet = XLSX.utils.json_to_sheet(data);
+      XLSX.utils.book_append_sheet(workbook, worksheet, `Rendu comptable`);
+    });
+  
+    this.impotCharts.forEach((chart, index) => {
+      const data = chart.getData();
+      const worksheet = XLSX.utils.json_to_sheet(data);
+      XLSX.utils.book_append_sheet(workbook, worksheet, `Impôts`);
+    });
+  
+    // Écrire le fichier Excel
+    XLSX.writeFile(workbook, 'Résultats.xlsx');
+  }
+  
+
   downloadMoneyChartData(): void {
     this.DownloadChartData(this.moneyCharts);
   }
@@ -50,4 +84,5 @@ export class PageAnalyseMarketComponent {
   downloadImpotChartData(): void {
     this.DownloadChartData(this.impotCharts);
   }
+
 }
