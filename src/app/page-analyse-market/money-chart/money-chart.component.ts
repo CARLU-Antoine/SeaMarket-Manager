@@ -23,13 +23,18 @@ export class MoneyChartComponent {
 
   constructor() { }
   
-
+  getData(): any[] {
+    // Récupérer les données sous forme d'un tableau d'objets avec les étiquettes et les valeurs
+    return this.lineChartLabels.map((label, index) => ({
+      label: label,
+      value: this.lineChartData[0].data[index] // Supposons que vous avez un seul jeu de données pour simplifier
+    }));
+  }
   downloadData(): void {
     // Créer un tableau de données contenant les étiquettes et les données
-    const data = [this.lineChartData].concat(
+    const data = [this.lineChartLabels].concat(
         this.lineChartData.map(dataPoint => dataPoint.data)
     );
-
     const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(data);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Chiffre d\'affaire');
