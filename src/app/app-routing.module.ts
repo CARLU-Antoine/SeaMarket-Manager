@@ -8,7 +8,7 @@ import { PageDashboardComponent } from './page-dashboard/page-dashboard.componen
 import { PageAnalyseMarketComponent } from './page-analyse-market/page-analyse-market.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'sidenav', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'sidenav', component: SidenavComponent },
   { path: 'login', component: LoginComponent },
   { path: 'analyseMarket', component: PageAnalyseMarketComponent },
