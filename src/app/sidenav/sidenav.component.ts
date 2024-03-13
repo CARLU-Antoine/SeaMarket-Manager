@@ -17,9 +17,6 @@ import {MatButtonModule} from '@angular/material/button';
 export class SidenavComponent {
   constructor(private router: Router) { }
   
-  nagivateToHome() {
-    this.router.navigate(['']);
-  }
   nagivateToLogin() {
     this.router.navigate(['/login']);
   }
