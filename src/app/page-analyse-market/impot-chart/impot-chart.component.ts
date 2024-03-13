@@ -37,4 +37,7 @@ export class ImpotChartComponent {
     XLSX.utils.book_append_sheet(wb, ws, 'impôts');
     XLSX.writeFile(wb, 'impôts.xlsx');
   }
+  public chartHovered(e:any):void {
+    console.log(e);
+  }
 }

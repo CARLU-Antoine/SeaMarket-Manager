@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
-
+import { ChartType } from 'chart.js';
 import * as XLSX from 'xlsx';
 
 @Component({
@@ -20,7 +20,7 @@ export class ComptabiliteChartComponent {
   };
 
   public lineChartLegend = true;
-  public lineChartType = 'line';
+  public lineChartType: ChartType = "line";
 
   constructor() { }
 

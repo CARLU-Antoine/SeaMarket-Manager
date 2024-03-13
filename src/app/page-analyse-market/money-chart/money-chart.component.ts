@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
+import { ChartType } from 'chart.js';
 import * as XLSX from 'xlsx';
 
 @Component({
@@ -19,7 +20,8 @@ export class MoneyChartComponent {
   };
 
   public lineChartLegend = true;
-  public lineChartType = 'line';
+  public lineChartType: ChartType = "line";
+  
 
   constructor() { }
   
@@ -35,4 +37,5 @@ export class MoneyChartComponent {
     XLSX.utils.book_append_sheet(wb, ws, 'Chiffre d\'affaire');
     XLSX.writeFile(wb, 'Chiffre d\'affaire.xlsx');
   }
+
 }
