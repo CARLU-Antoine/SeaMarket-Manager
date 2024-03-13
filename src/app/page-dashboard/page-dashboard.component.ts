@@ -13,6 +13,7 @@ import {MatIconModule} from '@angular/material/icon';
 import confetti from 'canvas-confetti';
 import * as XLSX from 'xlsx';
 
+
 @Component({
   selector: 'app-page-dashboard',
   standalone: true,
@@ -33,7 +34,6 @@ import * as XLSX from 'xlsx';
   styleUrl: './page-dashboard.component.css'
 })
 export class PageDashboardComponent {
-  
   @ViewChildren(StockQuantityComponent) stockChart!: QueryList<StockQuantityComponent>;
   @ViewChildren(PieChartComponent) ventesChart!: QueryList<PieChartComponent>;
   @ViewChildren(SellsChartComponent) historiqueChart!: QueryList<SellsChartComponent>;
@@ -51,6 +51,8 @@ export class PageDashboardComponent {
       chart.loadChart();
     });
   }
+  numberOfUsers = 5; //recuperer nombre de user ici 
+  numberOfMoney = 12345; //recuperer nombre de revenue ici 
 
   celebrate() {
   const duration = 3000;
