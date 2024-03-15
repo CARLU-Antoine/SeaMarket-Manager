@@ -44,7 +44,6 @@ const ELEMENT_DATA: tableauProduits[] = [
     MatIconModule,
     MatInputModule,
     FormsModule,
-    TableauGeneralComponent
   ],
   templateUrl: './tableau-general.component.html',
   styleUrl: './tableau-general.component.css'

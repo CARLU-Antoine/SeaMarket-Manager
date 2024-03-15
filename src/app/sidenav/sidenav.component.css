@@ -10,10 +10,10 @@
 
 .slide-container {
   position: fixed;
+  width: auto;
   top: 0;
   left: 0;
   bottom: 0;
-  width: 150px;
   z-index: 1000;
 }
 
@@ -26,11 +26,20 @@
   background-color: #c9c9c9;
 }
 
+
+
 .sidenav-content button {
   width: 100%;
   margin-bottom: 10px;
   padding: 20px;
   background-color: #B9B9B9;
+  color: black;
+}
+
+
+.sidenav-content .button:hover {
+  background-color: black;
+  color: white;
 }
 
 .button {
@@ -45,10 +54,6 @@
   color: #fff;
   transition: all ease-in-out 0.3s;
   cursor: pointer;
-}
-
-.button:hover {
-  transform: translateY(-3px);
 }
 
 .icon {
