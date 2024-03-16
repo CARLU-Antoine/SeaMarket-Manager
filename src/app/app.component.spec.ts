@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'Back-Office' title`, () => {
+  it(`should have the 'SeaMarket-Manager' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('Back-Office');
+    expect(app.title).toEqual('SeaMarket-Manager');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, Back-Office');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello,SeaMarket-Manager');
   });
 });
