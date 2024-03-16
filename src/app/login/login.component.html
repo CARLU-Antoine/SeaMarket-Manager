@@ -1,4 +1,3 @@
-<app-sidenav></app-sidenav>
 <!--Card login-->
 <mat-card class="cardCenter" style="text-align:center;">
     <br/>
@@ -24,8 +23,10 @@
                     [attr.aria-pressed]="passwordVisible">
                     <mat-icon>{{passwordVisible ? 'visibility' : 'visibility_off'}}</mat-icon>
                 </button>
-            </mat-form-field>        
-            <br/>
+            </mat-form-field>
+            <mat-error *ngIf="errorMessage" class="error-message">
+                {{ errorMessage }}
+              </mat-error> 
             <br/>
             <button mat-raised-button color="primary" type="submit" [disabled]="!userForm.valid">Se connecter</button>
         </form>

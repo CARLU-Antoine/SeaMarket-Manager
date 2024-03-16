@@ -32,8 +32,9 @@ import { LoginService } from '../services/login-service.service';
 export class LoginComponent {
   userForm: FormGroup;
   passwordVisible: boolean = false;
+  errorMessage: string = '';
 
-  constructor(private fb: FormBuilder, private LoginService: LoginService, private router: Router) {
+  constructor(private fb: FormBuilder, private loginService: LoginService, private router: Router) {
     this.userForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       motDePasse: ['', [Validators.required, Validators.minLength(6)]],
@@ -49,7 +50,7 @@ export class LoginComponent {
       const email = this.userForm.get('email')!.value;
       const password = this.userForm.get('motDePasse')!.value;
 
-      this.LoginService.login(email, password).subscribe(
+      this.loginService.login(email, password).subscribe(
         (response) => {
           // Connexion réussie - Stockez le jeton JWT dans le stockage local ou dans un service d'authentification
           const accessToken = response.access;
@@ -62,9 +63,8 @@ export class LoginComponent {
           this.router.navigate(['/dashboard']);
         },
         (error) => {
-          // Erreur de connexion - Gérez l'erreur
-          console.error('Erreur de connexion:', error);
-          // Afficher un message d'erreur à l'utilisateur, par exemple, utiliser un service de notification
+          // Erreur de connexion - Afficher le message d'erreur à l'utilisateur
+          this.errorMessage = 'Identifiants incorrects. Veuillez réessayer.';
         }
       );
     }

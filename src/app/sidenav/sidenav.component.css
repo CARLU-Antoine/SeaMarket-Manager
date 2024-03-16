@@ -113,22 +113,6 @@
 }
 }
 
-@media screen and (max-width: 768px) {
-  .slide-container {
-      width: 200px; 
-  }
-}
-
-@media screen and (max-width: 576px) {
-  .slide-container {
-      width: 150px;
-  }
-  
-  .sidenav-content button {
-      padding: 15px;
-  }
-}
-
 
 
 .rgb-effect::after {
@@ -144,6 +128,17 @@
   animation-duration: 600s;
   animation-iteration-count: infinite;
   animation-direction: alternate;
+}
+
+
+.mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-icon {
+  display: flex;
+  gap: 32px;
 }
 
 @keyframes rgb {
