@@ -1,6 +1,6 @@
 import { Component,OnInit } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
-import { ManageHistoryService } from '../../services/manage-history-service.service';
+import { ManageHistoryService } from '../../services/manage-history.service';
 @Component({
   selector: 'app-sells-chart',
   standalone: true,

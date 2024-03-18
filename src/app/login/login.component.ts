@@ -9,7 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { SidenavComponent } from '../sidenav/sidenav.component';
 import {MatIconModule} from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { LoginService } from '../services/login-service.service';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-login',

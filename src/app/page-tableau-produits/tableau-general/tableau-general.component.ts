@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input,OnInit,OnChanges } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -7,31 +7,20 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {FormsModule} from '@angular/forms';
+import { MatTableDataSource } from '@angular/material/table';
+import { ProductsListService } from '../../services/products-list.service';
+import { ManageProductService } from '../../services/manage-product.service';
 
 
-export interface tableauProduits {
+export interface tableauProduct {
   categorie: string;
   nom: string;
-  prix: number;
-  pourceProm: number;
-  stock: number;
-  vente: number;
+  price: number;
+  percentSale: number;
+  quantity: number;
+  sellArticle: number;
   commentaire: string;
 }
-
-const ELEMENT_DATA: tableauProduits[] = [
-  { categorie:"Poissons", nom: 'Cabillaut', prix: 10, pourceProm: 0, stock: 540, vente: 140, commentaire: ''},
-  { categorie:"Poissons", nom: 'Bar', prix: 4, pourceProm: 5, stock: 85, vente: 250, commentaire: ''},
-  { categorie:"Poissons", nom: 'Poisson chat', prix: 15, pourceProm: 20, stock: 2, vente: 440, commentaire: ''},
-
-  { categorie:"Fruits de mer", nom: 'crevette', prix: 10, pourceProm: 0, stock: 540, vente: 140, commentaire: ''},
-  { categorie:"Fruits de mer", nom: 'berlingot', prix: 4, pourceProm: 5, stock: 85, vente: 250, commentaire: ''},
-  { categorie:"Fruits de mer", nom: 'fdm', prix: 15, pourceProm: 20, stock: 2, vente: 440, commentaire: ''},
-
-  { categorie:"Crustacés", nom: 'homard', prix: 10, pourceProm: 0, stock: 540, vente: 140, commentaire: ''},
-  { categorie:"Crustacés", nom: 'jsp', prix: 4, pourceProm: 5, stock: 85, vente: 250, commentaire: ''},
-  { categorie:"Crustacés", nom: 'Crabe', prix: 15, pourceProm: 20, stock: 2, vente: 440, commentaire: ''},
-];
 
 @Component({
   selector: 'app-tableau-general',
@@ -49,28 +38,48 @@ const ELEMENT_DATA: tableauProduits[] = [
   styleUrl: './tableau-general.component.css'
 })
 
-export class TableauGeneralComponent {
+export class TableauGeneralComponent implements OnInit, OnChanges {
   displayedColumns: string[] = ['nom', 'prix', 'pourceProm', 'stock', 'vente', 'commentaire', 'edit'];
-  dataSource: tableauProduits[];
+  dataSource: MatTableDataSource<tableauProduct>;
 
   @Input() categorie: string | undefined;
-  @Input() modeEdition: boolean=false;
+  @Input() modeEdition: boolean = false;
 
-  constructor() {
-    this.dataSource = ELEMENT_DATA;
+  constructor(private productsListService: ProductsListService, private manageProductService: ManageProductService) {
+    this.dataSource = new MatTableDataSource<tableauProduct>();
+  }
+
+  ngOnInit(): void {
+    this.loadProducts();
   }
 
   ngOnChanges(): void {
-    if (this.categorie) {
-      this.dataSource = ELEMENT_DATA.filter(item => item.categorie === this.categorie);
-    } else {
-      this.dataSource = ELEMENT_DATA;
-    }
-
+    this.loadProducts();
   }
 
-  editRow(element: tableauProduits): void {
-    // Mettez en œuvre la logique pour éditer la ligne ici
-    console.log("Edit row:", element);
+  loadProducts(): void {
+    this.productsListService.getProducts().subscribe((data: any[]) => {
+      this.dataSource.data = data.map(product => ({
+        categorie: product.categories.join(','),
+        nom: product.id.toString(),
+        percentSale: parseFloat(product.percentSale),
+        price: product.price,
+        quantity: parseInt(product.quantity),
+        sellArticle: parseInt(product.sellArticle),
+        commentaire: product.comments
+      }));
+    });
+  }
+
+  updateProduct(element: tableauProduct): void {
+    this.manageProductService.updateProduct(element).subscribe(
+      response => {
+        console.log('Produit mis à jour avec succès !');
+        // Faites quelque chose avec la réponse, si nécessaire
+      },
+      error => {
+        console.error('Erreur lors de la mise à jour du produit :', error);
+      }
+    );
   }
 }
