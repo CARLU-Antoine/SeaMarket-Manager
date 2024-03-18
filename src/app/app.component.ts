@@ -2,7 +2,7 @@ import { Component,OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { RouterOutlet } from '@angular/router';
-import { LoginService } from './services/login-service.service';
+import { LoginService } from './services/login.service';
 import { Title } from '@angular/platform-browser';
 
 @Component({

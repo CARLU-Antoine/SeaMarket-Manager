@@ -2,7 +2,7 @@ import { Component,OnInit } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartType } from 'chart.js';
 import * as XLSX from 'xlsx';
-import { ManageHistoryService } from '../../services/manage-history-service.service';
+import { ManageHistoryService } from '../../services/manage-history.service';
 
 @Component({
   selector: 'app-money-chart',

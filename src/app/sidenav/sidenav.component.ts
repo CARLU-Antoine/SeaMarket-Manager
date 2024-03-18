@@ -7,7 +7,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
-import { LoginService } from '../services/login-service.service';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-sidenav',
