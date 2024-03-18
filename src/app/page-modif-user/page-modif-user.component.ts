@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
@@ -10,6 +10,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { SidenavComponent } from '../sidenav/sidenav.component';
 import { ModifUserService } from '../services/modif-user.service';
 import {MatTableModule} from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 
 export interface tableauUser {
   nom: string;
@@ -17,14 +18,7 @@ export interface tableauUser {
   email: string;
   role: string;
 }
-// mettre l'appel à la vraie bdd des users
-const ELEMENT_DATA: tableauUser[] = [
-  { nom: 'Guigz', prenom: "Guigui", email: 'g@gmail.com', role: 'admin'},
-  { nom: 'viv', prenom: "vivien", email: 'v@gmail.com', role: 'admin'},
-  { nom: 'ant', prenom: "antoine", email: 'a@gmail.com', role: 'admin'},
-  { nom: 'pers', prenom: "personne", email: 'p@gmail.com', role: 'user'},
 
-];
 @Component({
   selector: 'app-page-modif-user',
   standalone: true,
@@ -38,19 +32,20 @@ const ELEMENT_DATA: tableauUser[] = [
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
-    MatTableModule,
-
+    MatTableModule
   ],
   templateUrl: './page-modif-user.component.html',
   styleUrl: './page-modif-user.component.css'
 })
-export class PageModifUserComponent {
+export class PageModifUserComponent implements OnInit {
   userForm: FormGroup;
   selectedRole = 'admin';
+  displayedColumns: string[] = ['nom', 'prenom', 'email', 'role'];
+  dataSource: MatTableDataSource<tableauUser>;
 
   constructor(
     private fb: FormBuilder,
-    private userService: ModifUserService // Injectez le service ModifUserService
+    private userService: ModifUserService
   ) {
     this.userForm = this.fb.group({
       nom: ['', Validators.required],
@@ -59,16 +54,25 @@ export class PageModifUserComponent {
       motDePasse: ['', [Validators.required, Validators.minLength(6)]],
       role: ['', Validators.required]
     });
+    this.dataSource = new MatTableDataSource<tableauUser>();
   }
-  
+
+  ngOnInit(): void {
+    this.userService.getUsers().subscribe((data: tableauUser[]) => {
+      this.dataSource.data = data;
+    });
+  }
+
   onSubmit() {
     if (this.userForm.valid) {
       const email = this.userForm.get('email')!.value;
-      const nom= this.userForm.get('motDePasse')!.value;
-      const prenom= this.userForm.get('motDePasse')!.value;
+      const lastName = this.userForm.get('nom')!.value;
+      const firstName = this.userForm.get('prenom')!.value;
       const password = this.userForm.get('motDePasse')!.value;
+      const role = this.userForm.get('role')!.value;
+      const isAdmin = role === "admin";
 
-      this.userService.createUser(email,nom,prenom,password).subscribe(
+      this.userService.createUser(email, firstName, lastName, password, isAdmin).subscribe(
         response => {
           console.log('Utilisateur modifié avec succès!', response);
           // Réinitialiser le formulaire après soumission
@@ -80,7 +84,4 @@ export class PageModifUserComponent {
       );
     }
   }
-
-  displayedColumns: string[] = ['nom', 'prenom', 'email', 'role'];
-  dataSource = ELEMENT_DATA;
 }

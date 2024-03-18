@@ -55,7 +55,7 @@ export class LoginComponent {
           // Connexion réussie - Stockez le jeton JWT dans le stockage local ou dans un service d'authentification
           const accessToken = response.access;
           const refreshToken = response.refresh;
-          console.log(accessToken);
+          
           // Stockez les jetons dans le stockage local ou dans un service d'authentification
           localStorage.setItem('accessToken', accessToken);
           localStorage.setItem('refreshToken', refreshToken);

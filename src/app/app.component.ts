@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { RouterOutlet } from '@angular/router';
 import { LoginService } from './services/login-service.service';
-import { Title } from '@angular/platform-browser'; // Importez Title
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -18,14 +18,16 @@ export class AppComponent implements OnInit {
 
   constructor(private loginService: LoginService, 
     private router: Router,
-    private titleService: Title) {} // Injectez le service Title
+    private titleService: Title) {}
 
   ngOnInit(): void {
+    
     // Vérifiez le statut de connexion lors de l'initialisation du composant racine
     if (!this.isLoggedIn() && !this.isLoginPage()) {
       this.router.navigate(['/login']);
+    }else {
+      this.router.navigate(['/dashboard']);
     }
-
     // Définir le titre de l'application
     this.titleService.setTitle('SeaMarket-Manager');
   }
