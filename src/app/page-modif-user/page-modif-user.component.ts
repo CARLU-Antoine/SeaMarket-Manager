@@ -11,12 +11,14 @@ import { SidenavComponent } from '../sidenav/sidenav.component';
 import { ModifUserService } from '../services/modif-user.service';
 import {MatTableModule} from '@angular/material/table';
 import { MatTableDataSource } from '@angular/material/table';
+import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
+import { ViewChild } from '@angular/core';
 
 export interface tableauUser {
-  nom: string;
-  prenom: string;
+  firstName: string;
+  lastName: string;
   email: string;
-  role: string;
+  isAdmin: boolean;
 }
 
 @Component({
@@ -32,15 +34,17 @@ export interface tableauUser {
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
-    MatTableModule
+    MatTableModule,
+    MatPaginator,
+    MatPaginatorModule
   ],
   templateUrl: './page-modif-user.component.html',
   styleUrl: './page-modif-user.component.css'
 })
 export class PageModifUserComponent implements OnInit {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   userForm: FormGroup;
-  selectedRole = 'admin';
-  displayedColumns: string[] = ['nom', 'prenom', 'email', 'role'];
+  displayedColumns: string[] = ['lastName', 'firstName', 'email', 'isAdmin'];
   dataSource: MatTableDataSource<tableauUser>;
 
   constructor(
@@ -59,10 +63,16 @@ export class PageModifUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.getUsers().subscribe((data: tableauUser[]) => {
-      this.dataSource.data = data;
+      this.dataSource.data = data.map(user => ({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        isAdmin: user.isAdmin
+      }));
+      this.dataSource.paginator = this.paginator;
     });
   }
-
+  
   onSubmit() {
     if (this.userForm.valid) {
       const email = this.userForm.get('email')!.value;
@@ -70,16 +80,26 @@ export class PageModifUserComponent implements OnInit {
       const firstName = this.userForm.get('prenom')!.value;
       const password = this.userForm.get('motDePasse')!.value;
       const role = this.userForm.get('role')!.value;
-      const isAdmin = role === "admin";
-
+      let isAdmin = false;
+  
+      if (role === 'admin') {
+        isAdmin = true;
+      }
+  
       this.userService.createUser(email, firstName, lastName, password, isAdmin).subscribe(
-        response => {
-          console.log('Utilisateur modifié avec succès!', response);
+        (response: tableauUser) => {
+          console.log('Utilisateur créé avec succès!', response);
+          // Ajouter l'utilisateur à la source de données
+          this.dataSource.data.push(response);
+          // Actualiser la source de données
+          this.dataSource.data = [...this.dataSource.data];
+          // Réinitialiser le paginator
+          this.dataSource.paginator = this.paginator;
           // Réinitialiser le formulaire après soumission
-          // this.userForm.reset();
+          this.userForm.reset();
         },
         error => {
-          console.error('Erreur lors de la modification de l\'utilisateur', error);
+          console.error('Erreur lors de la création de l\'utilisateur', error);
         }
       );
     }
