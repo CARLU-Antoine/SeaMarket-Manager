@@ -13,6 +13,8 @@ export class LoginService {
   // Méthode pour authentifier l'utilisateur et obtenir le token
   login(email: string, password: string): Observable<any> {
     const hashedPassword = CryptoJS.MD5(password).toString(); // Hasher le mot de passe
+
+    console.log(hashedPassword)
     
     return this.http.post<any>('http://127.0.0.1:8000/login/', { email, password: hashedPassword });
   }

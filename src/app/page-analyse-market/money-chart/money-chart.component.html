@@ -1,5 +1,13 @@
 <div style="display: block">
     <div style="display: block">
+        <select [(ngModel)]="selectedTypeDate" (change)="loadChart($event)">
+            <option value="">Sélectionnez un type de date</option>
+            <option value="day">Jour</option>
+            <option value="month">Mois</option>
+            <option value="year">Année</option>
+        </select>        
+    </div>
+    <div style="display: block">
         <canvas baseChart
                 [datasets]="lineChartData"
                 [labels]="lineChartLabels"
@@ -7,4 +15,5 @@
                 [type]="lineChartType"
                 [legend]="lineChartLegend">
         </canvas>
-  </div>
+    </div>
+</div>
