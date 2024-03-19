@@ -2,13 +2,22 @@ import { Component,OnInit } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartType } from 'chart.js';
 import * as XLSX from 'xlsx';
-import { ManageHistoryService } from '../../services/manage-history.service';
+import { FormsModule } from '@angular/forms';
+import { StatsRevenuesService } from '../../services/stats-revenues.service';
+
+interface RevenueData {
+  date: string;
+  value: number;
+  quantity: number;
+}
 
 @Component({
   selector: 'app-money-chart',
   templateUrl: './money-chart.component.html',
   standalone: true,
-  imports: [BaseChartDirective],
+  imports: [
+    BaseChartDirective,
+    FormsModule],
   styleUrls: ['./money-chart.component.css']
 })
 export class MoneyChartComponent implements OnInit {
@@ -20,40 +29,31 @@ export class MoneyChartComponent implements OnInit {
   public lineChartLegend = true;
   public lineChartType: ChartType = 'line';
 
-  constructor(private manageHistoryService: ManageHistoryService) { }
+  constructor(private statsRevenuesService: StatsRevenuesService) { }
 
   ngOnInit(): void {
-    this.manageHistoryService.getChartData().subscribe((data: any[]) => {
-      console.log('Données récupérées depuis data :', data);
-
-      // Trier les données en fonction des mois de addDate
-      data.sort((a, b) => {
-        const dateA = new Date(a.addDate);
-        const dateB = new Date(b.addDate);
-        return dateA.getTime() - dateB.getTime();
-      });
-
-      // Créer un objet pour stocker les ventes par mois
-      const ventesParMois: { [key: string]: number } = {};
-
-      // Regrouper les transactions par mois et calculer la somme des ventes pour chaque mois
-      data.forEach(item => {
-        const mois = new Date(item.addDate).toLocaleString('fr-FR', { month: 'long', year: 'numeric' }); // Récupérer le mois et l'année sous forme de chaîne
-        ventesParMois[mois] = (ventesParMois[mois] || 0) + parseFloat(item.valueHistory);
-      });
-
-      // Convertir les données en format utilisable pour le graphique
-      const mois = Object.keys(ventesParMois);
-      const chiffreAffairesParMois = Object.values(ventesParMois);
-
-      // Utiliser les données pour afficher le graphique
-      this.lineChartData = [
-        { data: chiffreAffairesParMois, label: 'Chiffre d\'affaires par mois' }
-      ];
-
-      this.lineChartLabels = mois;
-    });
+    // Appelez la méthode getChartDataRevenues avec les valeurs de catégorie et de type
+    this.loadChart('year');
   }
+
+  // Dans votre méthode loadChart, spécifiez le type de données attendu
+  loadChart(type: string): void {
+    // Appelez la méthode getChartDataRevenues avec les valeurs de catégorie et de type
+    this.statsRevenuesService.getDataRevenues('all', type).subscribe(
+      (data: any) => {
+        // Parsez la chaîne JSON pour obtenir un tableau d'objets JavaScript
+        const jsonData = JSON.parse(data);
+  
+        // Organisez les données reçues pour les utiliser dans le graphique
+        this.lineChartLabels = jsonData.map((item: { date: string | number | Date; }) => new Date(item.date).toLocaleDateString());
+        this.lineChartData = [{ data: jsonData.map((item: { value: any; }) => item.value), label: 'Chiffre d\'affaires' }];
+      },
+      (error) => {
+        console.error(error); // Gérez les erreurs
+      }
+    );
+  }
+  
 
   downloadData(): void {
     // Créer un tableau de données contenant les étiquettes et les données

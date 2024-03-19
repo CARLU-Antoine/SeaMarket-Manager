@@ -1,4 +1,4 @@
-import { Component, Input,OnInit,OnChanges } from '@angular/core';
+import { Component, Input,OnInit,ViewChild,OnChanges } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -7,6 +7,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {FormsModule} from '@angular/forms';
+import { MatPaginator,MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ProductsListService } from '../../services/products-list.service';
 import { ManageProductService } from '../../services/manage-product.service';
@@ -34,6 +35,7 @@ export interface tableauProduct {
     MatIconModule,
     MatInputModule,
     FormsModule,
+    MatPaginatorModule
   ],
   templateUrl: './tableau-general.component.html',
   styleUrl: './tableau-general.component.css'
@@ -45,6 +47,8 @@ export class TableauGeneralComponent implements OnInit, OnChanges {
 
   @Input() categorie: string | undefined;
   @Input() modeEdition: boolean = false;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private productsListService: ProductsListService, private manageProductService: ManageProductService) {
     this.dataSource = new MatTableDataSource<tableauProduct>();
@@ -71,8 +75,7 @@ export class TableauGeneralComponent implements OnInit, OnChanges {
         quantity: parseInt(product.quantity),
         sellArticle: parseInt(product.sellArticle),
       }));
-      console.log("avant " ,data)
-      console.log("apres ", this.dataSource.data)
+      this.dataSource.paginator = this.paginator;
     });
   }
 

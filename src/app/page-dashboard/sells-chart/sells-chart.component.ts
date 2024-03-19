@@ -20,17 +20,21 @@ export class SellsChartComponent implements OnInit {
   constructor(private chartService: ManageHistoryService) { }
 
   ngOnInit(): void {
+    this.loadChart()
+  }
+
+  loadChart(): void{
     this.chartService.getChartData().subscribe(data => {
       this.barChartData = [
         { data: data.map(item => item.quantityHistory), label: 'Quantité vendue' },
         // Vous pouvez ajouter d'autres séries de données selon vos besoins
       ];
-      console.log('Données récupérées:', this.barChartData);
+      console.log(data);
       // Mettez à jour d'autres variables de graphique si nécessaire
     });
-  
     this.initializeChartOptions();
   }
+
   initializeChartOptions(): void {
     this.barChartOptions = {
       scaleShowVerticalLines: false,
