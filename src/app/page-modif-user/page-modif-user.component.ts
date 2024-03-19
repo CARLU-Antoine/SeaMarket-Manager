@@ -1,4 +1,5 @@
 import { Component,OnInit } from '@angular/core';
+import { ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
@@ -12,9 +13,12 @@ import { ModifUserService } from '../services/modif-user.service';
 import {MatTableModule} from '@angular/material/table';
 import { MatTableDataSource } from '@angular/material/table';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
-import { ViewChild } from '@angular/core';
+import {MatIconModule} from '@angular/material/icon';
+
+
 
 export interface tableauUser {
+  id : number,
   firstName: string;
   lastName: string;
   email: string;
@@ -36,7 +40,8 @@ export interface tableauUser {
     MatSelectModule,
     MatTableModule,
     MatPaginator,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatIconModule
   ],
   templateUrl: './page-modif-user.component.html',
   styleUrl: './page-modif-user.component.css'
@@ -44,7 +49,7 @@ export interface tableauUser {
 export class PageModifUserComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   userForm: FormGroup;
-  displayedColumns: string[] = ['lastName', 'firstName', 'email', 'isAdmin'];
+  displayedColumns: string[] = ['lastName', 'firstName', 'email', 'isAdmin', 'delete'];
   dataSource: MatTableDataSource<tableauUser>;
 
   constructor(
@@ -62,8 +67,13 @@ export class PageModifUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getUsers().subscribe((data: tableauUser[]) => {
+    this.loadUsers();
+  }
+  
+  loadUsers(): void {
+    this.userService.getUsers().subscribe((data: tableauUser[])  => {
       this.dataSource.data = data.map(user => ({
+        id: user.id,
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
@@ -72,7 +82,6 @@ export class PageModifUserComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
     });
   }
-  
   onSubmit() {
     if (this.userForm.valid) {
       const email = this.userForm.get('email')!.value;
@@ -103,5 +112,19 @@ export class PageModifUserComponent implements OnInit {
         }
       );
     }
+  }
+  deleteUserById(id: number) {
+    // Logique pour supprimer un utilisateur avec l'email donné
+    this.userService.deleteUserById(id).subscribe(
+      response => {
+        console.log('Utilisateur supprimé avec succès!', response);
+        // Mettre à jour la source de données après la suppression
+        this.dataSource.data = this.dataSource.data.filter(user => user.id !== id);
+        this.dataSource.paginator = this.paginator;
+      },
+      error => {
+        console.error('Erreur lors de la suppression de l\'utilisateur', error);
+      }
+    );
   }
 }

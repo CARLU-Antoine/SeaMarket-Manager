@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,15 +12,17 @@ export class ManageProductService {
   constructor(private http: HttpClient) { }
 
   // Fonction pour mettre à jour un produit
-  updateProduct(updatedProductData: any) {
-    const url = this.apiUrl; // Utiliser l'URL de base
-    return this.http.patch(url, updatedProductData)
-      .pipe(
-        catchError(error => {
-          // Gérer l'erreur ici (par exemple, afficher un message d'erreur)
-          console.error('Une erreur s\'est produite lors de la mise à jour du produit:', error);
-          return throwError(error); // Renvoyer une erreur observable pour que le composant appelant puisse la gérer
-        })
-      );
-  }  
+  updateProduct(updatedProductData: any): Observable<any> {
+    // Récupérer le token JWT d'accès depuis le stockage local
+    const accessToken = localStorage.getItem('accessToken');
+
+    // Construire les en-têtes avec le token JWT
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}` // Inclure le token JWT d'accès dans l'en-tête Authorization
+    });
+
+    // Effectuer la requête HTTP PATCH avec les en-têtes authentifiés
+    return this.http.patch<any>(this.apiUrl, updatedProductData, { headers });
+  }
 }

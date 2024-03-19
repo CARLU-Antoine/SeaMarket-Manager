@@ -13,13 +13,14 @@ import { ManageProductService } from '../../services/manage-product.service';
 
 
 export interface tableauProduct {
-  categorie: string;
-  nom: string;
-  price: number;
+  categories: any[];
+  comments: string;
+  id : number;
   percentSale: number;
+  price: number;
+  productId: number;
   quantity: number;
   sellArticle: number;
-  commentaire: string;
 }
 
 @Component({
@@ -59,15 +60,19 @@ export class TableauGeneralComponent implements OnInit, OnChanges {
 
   loadProducts(): void {
     this.productsListService.getProducts().subscribe((data: any[]) => {
+      
       this.dataSource.data = data.map(product => ({
-        categorie: product.categories.join(','),
-        nom: product.id.toString(),
+        categories: product.categories,
+        comments: product.comments,
+        id: product.id,
         percentSale: parseFloat(product.percentSale),
         price: product.price,
+        productId: product.productId,       
         quantity: parseInt(product.quantity),
         sellArticle: parseInt(product.sellArticle),
-        commentaire: product.comments
       }));
+      console.log("avant " ,data)
+      console.log("apres ", this.dataSource.data)
     });
   }
 

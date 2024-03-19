@@ -6,7 +6,16 @@
         <!-- Colonnes du tableau -->
         <ng-container matColumnDef="nom">
             <th mat-header-cell *matHeaderCellDef> Nom </th>
-            <td mat-cell *matCellDef="let element"> {{ element.nom }} </td>                      
+            <td mat-cell *matCellDef="let element">
+                <ng-container *ngIf="modeEdition; else cellules">
+                    <mat-form-field style="width: 125px;">
+                        <input matInput [(ngModel)]="element.categories" placeholder="Prix">
+                    </mat-form-field>
+                </ng-container>
+                <ng-template #cellules>
+                    <p style="width: 125px;">{{ element.categories }}</p>
+                </ng-template>
+            </td>
         </ng-container>
                 
         <ng-container matColumnDef="prix">
@@ -70,11 +79,11 @@
             <td mat-cell *matCellDef="let element">
                 <ng-container *ngIf="modeEdition; else cellules">
                     <mat-form-field style="width: 200px;">
-                        <input matInput [(ngModel)]="element.commentaire" placeholder="Commentaire">
+                        <input matInput [(ngModel)]="element.comments" placeholder="Commentaire">
                     </mat-form-field>
                 </ng-container>
                 <ng-template #cellules>
-                    <p style="width: 200px;">{{ element.commentaire }}</p>
+                    <p style="width: 200px;">{{ element.comments }}</p>
                 </ng-template>
             </td>
         </ng-container>
