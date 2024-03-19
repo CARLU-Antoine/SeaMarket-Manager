@@ -77,6 +77,12 @@
             </td>
         </ng-container>
         
+        <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef> suppression </th>
+            <td mat-cell *matCellDef="let element">
+                <mat-icon (click)="deleteUserById(element.id)" style="cursor: pointer;">delete</mat-icon>
+            </td>
+        </ng-container>
         
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
