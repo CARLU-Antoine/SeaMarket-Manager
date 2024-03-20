@@ -5,6 +5,7 @@ import { MatDialog,MatDialogContent,MatDialogActions } from '@angular/material/d
 import { MatCardModule } from '@angular/material/card';
 import {MatTabsModule} from '@angular/material/tabs';
 import { FormsModule,FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {MatSelectModule} from '@angular/material/select';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
@@ -53,7 +54,8 @@ const ELEMENT_DATA: tableauCategorie[] = [
     MatButtonModule,
     MatDialogContent,
     MatDialogActions,
-    MatInputModule
+    MatInputModule,
+    MatSelectModule
   ],
   templateUrl: './page-tableau-produits.component.html',
   styleUrl: './page-tableau-produits.component.css'

@@ -64,20 +64,56 @@ export class TableauGeneralComponent implements OnInit, OnChanges {
 
   loadProducts(): void {
     this.productsListService.getProducts().subscribe((data: any[]) => {
-      
       this.dataSource.data = data.map(product => ({
         categories: product.categories,
         comments: product.comments,
         id: product.id,
         percentSale: parseFloat(product.percentSale),
         price: product.price,
-        productId: product.productId,       
+        productId: product.productId,
         quantity: parseInt(product.quantity),
         sellArticle: parseInt(product.sellArticle),
       }));
+
       this.dataSource.paginator = this.paginator;
+      this.applyCategoryFilter(); // Appliquer le filtrage lorsque les données sont chargées
     });
   }
+
+  applyCategoryFilter(): void {
+    if (this.categorie) {
+      // Traduire le nom de la catégorie en identifiant de catégorie
+      const categoryId = this.translateCategoryNameToId(this.categorie);
+      if (categoryId !== null) {
+        this.dataSource.filterPredicate = (data: tableauProduct) => {
+          // Vérifier si l'identifiant de la catégorie est inclus dans les valeurs de 'categories' dans 'data'
+          return data.categories.includes(categoryId);
+        };
+        this.dataSource.filter = this.categorie;
+      } else {
+        // Si la traduction échoue, ne pas filtrer
+        this.dataSource.filter = '';
+      }
+    } else {
+      this.dataSource.filter = ''; // Réinitialiser le filtre s'il n'y a pas de catégorie sélectionnée
+    }
+  }
+  
+  translateCategoryNameToId(categoryName: string): number | null {
+    // Logique pour traduire le nom de la catégorie en identifiant de catégorie
+    switch (categoryName) {
+      case 'Poissons':
+        return 1;
+      case 'Fruits de mer':
+        return 2;
+      case 'Crustacés':
+        return 3;
+      default:
+        return null; // Retourne null si la catégorie n'est pas trouvée
+    }
+  }
+  
+  
 
   updateProduct(element: tableauProduct): void {
     this.manageProductService.updateProduct(element).subscribe(

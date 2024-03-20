@@ -20,7 +20,11 @@
     <mat-dialog-content>
       <mat-form-field appearance="fill" class="input-field">
         <mat-label>Catégorie</mat-label>
-        <input matInput formControlName="categorie">
+        <mat-select formControlName="categorie">
+          <mat-option value="1">Poisson</mat-option>
+          <mat-option value="2">Fruits de mer</mat-option>
+          <mat-option value="3">Crustacés</mat-option>
+        </mat-select>
         <mat-error *ngIf="userForm.get('categorie')?.hasError('required')">Catégorie est requise</mat-error>
       </mat-form-field>
 
