@@ -52,6 +52,7 @@ export class PageModifUserComponent implements OnInit {
   displayedColumns: string[] = ['lastName', 'firstName', 'email', 'isAdmin', 'delete'];
   dataSource: MatTableDataSource<tableauUser>;
 
+
   constructor(
     private fb: FormBuilder,
     private userService: ModifUserService
