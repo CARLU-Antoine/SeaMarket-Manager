@@ -12,6 +12,7 @@ export class ModifUserService {
 
   constructor(private http: HttpClient) { }
 
+  
   // Méthode pour créer un nouvel utilisateur
   createUser(email: string, firstName: string, lastName: string, password: string, isAdmin: boolean): Observable<any> {
     // Récupérer le token JWT d'accès depuis le stockage local
