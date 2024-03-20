@@ -101,5 +101,6 @@
         <!-- En-tête et rangées de données -->
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>        
+    </table>
+    <mat-paginator [pageSizeOptions]="[3,5]" showFirstLastButtons></mat-paginator>     
 </mat-card>

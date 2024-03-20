@@ -6,6 +6,7 @@ import { CountMoneyComponent } from './count-money/count-money.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { MatCard } from '@angular/material/card';
 import { SellsChartComponent } from './sells-chart/sells-chart.component';
+import { CountTaxComponent } from './count-tax/count-tax.component';
 @Component({
   selector: 'app-page-dashboard',
   standalone: true,
@@ -17,6 +18,7 @@ import { SellsChartComponent } from './sells-chart/sells-chart.component';
     MatGridListModule,
     CountMoneyComponent,
     SellsChartComponent,
+    CountTaxComponent
   ],
   templateUrl: './page-dashboard.component.html',
   styleUrl: './page-dashboard.component.css'

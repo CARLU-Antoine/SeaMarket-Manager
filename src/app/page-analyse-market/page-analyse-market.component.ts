@@ -6,7 +6,7 @@ import { MatCard } from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import { MoneyChartComponent } from './money-chart/money-chart.component';
 import { ComptabiliteChartComponent } from './comptabilite-chart/comptabilite-chart.component';
-import { ImpotChartComponent } from './impot-chart/impot-chart.component'; 
+import { ProductStatsChartComponent } from './product-stats-chart/product-stats-chart.component';
 import * as XLSX from 'xlsx';
 
 @Component({
@@ -19,7 +19,7 @@ import * as XLSX from 'xlsx';
     MatIconModule,
     MoneyChartComponent,
     ComptabiliteChartComponent,
-    ImpotChartComponent
+    ProductStatsChartComponent
   ],
   templateUrl: './page-analyse-market.component.html',
   styleUrls: ['./page-analyse-market.component.css']
@@ -28,7 +28,7 @@ import * as XLSX from 'xlsx';
 export class PageAnalyseMarketComponent {
   @ViewChildren(MoneyChartComponent) moneyCharts!: QueryList<MoneyChartComponent>;
   @ViewChildren(ComptabiliteChartComponent) comptabiliteCharts!: QueryList<ComptabiliteChartComponent>;
-  @ViewChildren(ImpotChartComponent) impotCharts!: QueryList<ImpotChartComponent>;
+  @ViewChildren(ProductStatsChartComponent) productStatsChart!: QueryList<ProductStatsChartComponent>;
 
   constructor() { }
 
@@ -38,14 +38,12 @@ export class PageAnalyseMarketComponent {
     });
   }
 
-  private getAllChartData(): any[] {
-    const allData: any[] = [];
-    this.moneyCharts.forEach(chart => allData.push(...chart.getData()));
-    this.comptabiliteCharts.forEach(chart => allData.push(...chart.getData()));
-    this.impotCharts.forEach(chart => allData.push(...chart.getData()));
-    return allData;
+  private LoadChartData(charts: QueryList<any>): void {
+    charts.forEach(chart => {
+      chart.loadChart();
+    });
   }
-  
+
   downloadAllChartData(): void {
     const workbook = XLSX.utils.book_new();
   
@@ -62,7 +60,7 @@ export class PageAnalyseMarketComponent {
       XLSX.utils.book_append_sheet(workbook, worksheet, `Rendu comptable`);
     });
   
-    this.impotCharts.forEach((chart, index) => {
+    this.productStatsChart.forEach((chart, index) => {
       const data = chart.getData();
       const worksheet = XLSX.utils.json_to_sheet(data);
       XLSX.utils.book_append_sheet(workbook, worksheet, `Impôts`);
@@ -72,6 +70,24 @@ export class PageAnalyseMarketComponent {
     XLSX.writeFile(workbook, 'Résultats.xlsx');
   }
   
+  loadAllChatData(): void{
+    this.LoadChartData(this.moneyCharts);
+    this.LoadChartData(this.comptabiliteCharts);
+    this.LoadChartData(this.productStatsChart);
+  }
+  
+  loadMoneyChartData(): void{
+    this.LoadChartData(this.moneyCharts);
+  }
+
+  loadComptabiliteChartData(): void{
+    this.LoadChartData(this.comptabiliteCharts);
+  }
+
+  
+  loadProductStatChartData(): void{
+    this.LoadChartData(this.productStatsChart);
+  }
 
   downloadMoneyChartData(): void {
     this.DownloadChartData(this.moneyCharts);
@@ -82,7 +98,7 @@ export class PageAnalyseMarketComponent {
   }
 
   downloadImpotChartData(): void {
-    this.DownloadChartData(this.impotCharts);
+    this.DownloadChartData(this.productStatsChart);
   }
 
 }

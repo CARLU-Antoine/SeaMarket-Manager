@@ -16,22 +16,29 @@ import { Title } from '@angular/platform-browser';
 export class AppComponent implements OnInit {
   title = 'SeaMarket-Manager';
 
-  constructor(private loginService: LoginService, 
+  constructor(
+    private loginService: LoginService, 
     private router: Router,
-    private titleService: Title) {}
+    private titleService: Title
+  ) {}
 
   ngOnInit(): void {
-    
     // Vérifiez le statut de connexion lors de l'initialisation du composant racine
     if (!this.isLoggedIn() && !this.isLoginPage()) {
+      // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
       this.router.navigate(['/login']);
-    }else {
+    } else if (this.loginService.compareRefreshTokenWithUrlToken()) {
+      // Comparer le token d'actualisation de l'URL Django avec celui dans le localStorage
+      // Les tokens correspondent, rediriger vers le tableau de bord
       this.router.navigate(['/dashboard']);
+    } else {
+      // Les tokens ne correspondent pas, rediriger vers la page de connexion
+      this.router.navigate(['/login']);
     }
+    
     // Définir le titre de l'application
     this.titleService.setTitle('SeaMarket-Manager');
   }
-
 
   // Méthode pour vérifier si l'utilisateur est connecté
   isLoggedIn(): boolean {
