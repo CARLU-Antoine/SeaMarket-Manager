@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders,HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import * as CryptoJS from 'crypto-js'; // Importer CryptoJS
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +23,10 @@ export class ModifUserService {
       'Authorization': `Bearer ${accessToken}` // Inclure le token JWT d'accès dans l'en-tête Authorization
     });
 
+    const hashedPassword = CryptoJS.MD5(password).toString(); // Hasher le mot de passe
+
     // Données de l'utilisateur à envoyer dans la requête POST
-    const userData = { email, firstName, lastName, password, isAdmin };
+    const userData = { email, firstName, lastName, hashedPassword, isAdmin };
 
     // Effectuer la requête HTTP POST avec les en-têtes authentifiés
     return this.http.post<any>(this.apiUrl, userData, { headers });
