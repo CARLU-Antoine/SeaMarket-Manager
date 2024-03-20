@@ -13,8 +13,6 @@ export class LoginService {
   // Méthode pour authentifier l'utilisateur et obtenir le token
   login(email: string, password: string): Observable<any> {
     const hashedPassword = CryptoJS.MD5(password).toString(); // Hasher le mot de passe
-
-    console.log(hashedPassword)
     
     return this.http.post<any>('http://127.0.0.1:8000/login/', { email, password: hashedPassword });
   }
@@ -32,11 +30,25 @@ export class LoginService {
       );
   }
 
-  // Méthode pour vérifier si l'utilisateur est connecté
-  isLoggedIn(): boolean {
-    const accessToken = localStorage.getItem('accessToken');
-    return !!accessToken; // Retourne true si le token est présent, false sinon
-  }
+    // Méthode pour comparer le token d'actualisation avec celui dans l'URL Django
+    compareRefreshTokenWithUrlToken(): boolean {
+      const refreshTokenFromLocalStorage = localStorage.getItem('refreshToken');
+      const urlParams = new URLSearchParams(window.location.search);
+      const refreshTokenFromUrl = urlParams.get('refresh_token');
+      return refreshTokenFromLocalStorage === refreshTokenFromUrl;
+    }
+
+    // Méthode pour vérifier si l'utilisateur est connecté
+    isLoggedIn(): boolean {
+      if (typeof localStorage !== 'undefined') {
+        const accessToken = localStorage.getItem('accessToken');
+        return !!accessToken; // Retourne true si le token est présent, false sinon
+      } else {
+        // Gérer le cas où localStorage n'est pas disponible
+        return false;
+      }
+    }
+
 
   // Méthode pour se déconnecter de l'application
   logout(): void {
