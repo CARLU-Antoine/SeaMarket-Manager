@@ -16,7 +16,7 @@ export class ProductStatsChartComponent implements OnInit{
     scaleShowVerticalLines: false,
     responsive: true
   };
-  public barChartLabels:string[] = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+  public barChartLabels:string[] = [];
   public barChartType:string = 'bar';
   public barChartLegend:boolean = true;
  
@@ -28,27 +28,35 @@ export class ProductStatsChartComponent implements OnInit{
     this.loadChart()
   }
   
-  loadChart(): void{
+  loadChart(): void {
     this.manageHistoryService.getChartData().subscribe(data => {
-      this.barChartData = [
-        { data: data.map(item => item.quantityHistory), label: 'Quantité vendue' },
-        // Vous pouvez ajouter d'autres séries de données selon vos besoins
-      ];
-      console.log("je suis la ", data);
-      // Mettez à jour d'autres variables de graphique si nécessaire
+      const typeHistoryLabels = Array.from(new Set(data.map(item => item.typeHistory))); // Obtenir tous les types uniques
+  
+      // Initialiser le tableau de données du graphique avec des valeurs nulles
+      const chartData = typeHistoryLabels.map(label => {
+        const totalQuantity = data.filter(item => item.typeHistory === label)
+                                   .map(item => item.quantityHistory)
+                                   .reduce((acc, val) => acc + val, 0); // Calculer la somme totale des quantités vendues
+        return totalQuantity;
+      });
+  
+      this.barChartData = [{ data: chartData, label: 'Quantité vendue' }];
+      this.barChartLabels = typeHistoryLabels;
     });
+  
     this.initializeChartOptions();
   }
-
+  
+  
   initializeChartOptions(): void {
     this.barChartOptions = {
       scaleShowVerticalLines: false,
       responsive: true
     };
-    this.barChartLabels = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
-    this.barChartType = 'bar'; // Initialisez la propriété barChartType
+    this.barChartType = 'bar';
     this.barChartLegend = true;
-  } 
+  }
+  
 
   getData(): any[] {
     // Récupérer les données sous forme d'un tableau d'objets avec les étiquettes et les valeurs

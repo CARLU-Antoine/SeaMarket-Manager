@@ -32,6 +32,14 @@ export class LoginService {
       );
   }
 
+    // Méthode pour comparer le token d'actualisation avec celui dans l'URL Django
+    compareRefreshTokenWithUrlToken(): boolean {
+      const refreshTokenFromLocalStorage = localStorage.getItem('refreshToken');
+      const urlParams = new URLSearchParams(window.location.search);
+      const refreshTokenFromUrl = urlParams.get('refresh_token');
+      return refreshTokenFromLocalStorage === refreshTokenFromUrl;
+    }
+
   // Méthode pour vérifier si l'utilisateur est connecté
   isLoggedIn(): boolean {
     const accessToken = localStorage.getItem('accessToken');
