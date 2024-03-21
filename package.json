@@ -22,9 +22,14 @@
     "@angular/platform-server": "^17.2.0",
     "@angular/router": "^17.2.0",
     "@angular/ssr": "^17.2.2",
+<<<<<<< HEAD
+    "chart.js": "^4.4.2",
+    "chartist": "^1.3.0",
+=======
     "canvas-confetti": "^1.9.2",
     "chart.js": "^4.4.2",
     "crypto-js": "^4.2.0",
+>>>>>>> main
     "express": "^4.18.2",
     "ng2-charts": "^6.0.0",
     "rxjs": "~7.8.0",
@@ -32,10 +37,16 @@
     "zone.js": "~0.14.3"
   },
   "devDependencies": {
+<<<<<<< HEAD
+    "@angular-devkit/build-angular": "^17.2.2",
+    "@angular/cli": "^17.2.3",
+    "@angular/compiler-cli": "^17.2.0",
+=======
     "@angular-devkit/build-angular": "^17.3.0",
     "@angular/cli": "^17.2.3",
     "@types/canvas-confetti": "^1.6.4",
     "@types/crypto-js": "^4.2.2",
+>>>>>>> main
     "@types/express": "^4.17.17",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^18.18.0"

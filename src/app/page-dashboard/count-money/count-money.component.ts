@@ -1,6 +1,12 @@
+<<<<<<< HEAD
+import { Component, Input } from '@angular/core';
+import { MatCard } from '@angular/material/card';
+
+=======
 import { Component, Input, OnInit } from '@angular/core';
 import { MatCard } from '@angular/material/card';
 import { StatsRevenuesService } from '../../services/stats-revenues.service';
+>>>>>>> main
 @Component({
   selector: 'app-count-money',
   standalone: true,
@@ -10,6 +16,10 @@ import { StatsRevenuesService } from '../../services/stats-revenues.service';
   templateUrl: './count-money.component.html',
   styleUrl: './count-money.component.css'
 })
+<<<<<<< HEAD
+export class CountMoneyComponent {
+  @Input() moneyCount: number = 0;
+=======
 export class CountMoneyComponent implements OnInit{
 
   constructor(private statsRevenuesService: StatsRevenuesService) { }
@@ -46,4 +56,5 @@ export class CountMoneyComponent implements OnInit{
     );
   }
   
+>>>>>>> main
 }

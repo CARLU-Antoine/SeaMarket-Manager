@@ -1,8 +1,14 @@
+<<<<<<< HEAD
+import { Component } from '@angular/core';
+import { ChartOptions } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
+=======
 import { Component,OnInit } from '@angular/core';
 import { ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { ProductsListService } from '../../services/products-list.service';
 import * as XLSX from 'xlsx';
+>>>>>>> main
 
 @Component({
   selector: 'app-pie-chart',
@@ -13,6 +19,26 @@ import * as XLSX from 'xlsx';
   templateUrl: './pie-chart.component.html',
   styleUrl: './pie-chart.component.css'
 })
+<<<<<<< HEAD
+export class PieChartComponent {
+  title = 'ng2-charts-demo';
+
+  public pieChartOptions: ChartOptions<'pie'> = {
+    responsive: false,
+  };
+  // ICI POUR METTRE LES DONNEES DU NOMBRE DE POISSONS/...
+  public pieChartLabels = [ 'Poissons','Fruits de mer', 'Coquillages' ];
+  public pieChartDatasets = [ {
+    data: [ 300, 500, 100 ]
+  } ];
+  public pieChartLegend = true;
+  public pieChartPlugins = [];
+
+  constructor() {
+  }
+
+}
+=======
 export class PieChartComponent implements OnInit {
   title = 'ng2-charts-demo';
   public pieChartOptions: ChartOptions<'pie'> = {
@@ -74,3 +100,4 @@ export class PieChartComponent implements OnInit {
   }
   
 }
+>>>>>>> main

@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+import { Component } from '@angular/core';
+import { SidenavComponent } from '../sidenav/sidenav.component';
+import { PieChartComponent } from './pie-chart/pie-chart.component';
+import { CountUserComponent } from './count-user/count-user.component';
+import { CountMoneyComponent } from './count-money/count-money.component';
+import {MatGridListModule} from '@angular/material/grid-list';
+import { MatCard } from '@angular/material/card';
+=======
 import { Component,ViewChildren,QueryList } from '@angular/core';
 import { SidenavComponent } from '../sidenav/sidenav.component';
 import { CountUserComponent } from './count-user/count-user.component';
@@ -14,12 +23,19 @@ import confetti from 'canvas-confetti';
 import * as XLSX from 'xlsx';
 
 
+>>>>>>> main
 @Component({
   selector: 'app-page-dashboard',
   standalone: true,
   imports: [
     SidenavComponent,
     PieChartComponent,
+<<<<<<< HEAD
+    CountUserComponent,
+    MatCard,
+    MatGridListModule,
+    CountMoneyComponent,
+=======
     MatCard,
     MatGridListModule,
     CountMoneyComponent,
@@ -29,11 +45,16 @@ import * as XLSX from 'xlsx';
     StockQuantityComponent,
     SellsChartComponent,
     MatIconModule
+>>>>>>> main
   ],
   templateUrl: './page-dashboard.component.html',
   styleUrl: './page-dashboard.component.css'
 })
 export class PageDashboardComponent {
+<<<<<<< HEAD
+  numberOfUsers = 5; //recuperer nombre de user ici 
+  numberOfMoney = 12345; //recuperer nombre de revenue ici 
+=======
   @ViewChildren(StockQuantityComponent) stockChart!: QueryList<StockQuantityComponent>;
   @ViewChildren(PieChartComponent) ventesChart!: QueryList<PieChartComponent>;
   @ViewChildren(SellsChartComponent) historiqueChart!: QueryList<SellsChartComponent>;
@@ -120,4 +141,5 @@ downloadHistoriqueChartData(): void {
   this.DownloadChartData(this.historiqueChart);
 }
 
+>>>>>>> main
 }

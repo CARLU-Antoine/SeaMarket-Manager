@@ -18,6 +18,8 @@ import {
 import { TableauGeneralComponent } from './tableau-general/tableau-general.component';
 import { SidenavComponent } from '../sidenav/sidenav.component';
 
+import { SidenavComponent } from '../sidenav/sidenav.component';
+
 export interface tableauCategorie {
   nom: string;
 }
@@ -46,6 +48,9 @@ const ELEMENT_DATA: tableauCategorie[] = [
     MatCardModule,
     MatTabsModule,
     TableauGeneralComponent,
+<<<<<<< HEAD
+    SidenavComponent
+=======
     SidenavComponent,
     MatSlideToggleModule,
     FormsModule,
@@ -56,6 +61,7 @@ const ELEMENT_DATA: tableauCategorie[] = [
     MatDialogActions,
     MatInputModule,
     MatSelectModule
+>>>>>>> main
   ],
   templateUrl: './page-tableau-produits.component.html',
   styleUrl: './page-tableau-produits.component.css'

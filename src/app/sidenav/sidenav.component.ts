@@ -39,6 +39,9 @@ export class SidenavComponent {
     this.router.navigate(['/tabProduits']);
   }
   nagivateToAnalyse() {
+<<<<<<< HEAD
+    this.router.navigate(['/analyse']);
+=======
     this.router.navigate(['/analyseMarket']);
   }
 
@@ -52,5 +55,6 @@ export class SidenavComponent {
     this.loginService.logout(); // Appel de la méthode de déconnexion du service
     // Redirection vers la page de connexion ou une autre page appropriée
     this.router.navigate(['/login']);
+>>>>>>> main
   }
 }
