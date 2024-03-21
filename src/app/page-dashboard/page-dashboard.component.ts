@@ -121,5 +121,4 @@ downloadHistoriqueChartData(): void {
   this.DownloadChartData(this.historiqueChart);
 }
 
-
 }
