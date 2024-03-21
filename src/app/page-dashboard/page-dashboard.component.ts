@@ -69,7 +69,6 @@ export class PageDashboardComponent {
 
 downloadAllChartData(): void {
   const workbook = XLSX.utils.book_new();
-  
   // Télécharger les données de chaque graphique dans une feuille Excel distincte
   this.stockChart.forEach((chart, index) => {
     const data = chart.getData();
