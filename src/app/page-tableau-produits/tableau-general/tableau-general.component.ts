@@ -22,6 +22,7 @@ export interface tableauProduct {
   productId: number;
   quantity: number;
   sellArticle: number;
+  name: string;
 }
 
 @Component({
@@ -73,6 +74,7 @@ export class TableauGeneralComponent implements OnInit, OnChanges {
         productId: product.productId,
         quantity: parseInt(product.quantity),
         sellArticle: parseInt(product.sellArticle),
+        name: product.name
       }));
 
       this.dataSource.paginator = this.paginator;

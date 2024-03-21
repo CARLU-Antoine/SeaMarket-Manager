@@ -1,4 +1,4 @@
-import { Component,ViewChild,TemplateRef } from '@angular/core';
+import { Component,ViewChild,TemplateRef, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatDialog,MatDialogContent,MatDialogActions } from '@angular/material/dialog';
@@ -19,7 +19,8 @@ import { TableauGeneralComponent } from './tableau-general/tableau-general.compo
 import { SidenavComponent } from '../sidenav/sidenav.component';
 
 export interface tableauCategorie {
-  nom: string;
+  id: number;
+  nameCategory: string;
 }
 
 export interface productElement {
@@ -33,9 +34,9 @@ export interface productElement {
 
 // mettre l'appel à la vraie bdd des poissons
 const ELEMENT_DATA: tableauCategorie[] = [
-  { nom: 'Poissons'},
-  { nom: 'Fruits de mer'},
-  { nom: 'Crustacés'},
+  { nameCategory    : 'Poissons',id:1},
+  { nameCategory: 'Fruits de mer',id:2},
+  { nameCategory : 'Crustacés', id:3},
 ];
 @Component({
   selector: 'app-page-tableau-produits',
@@ -61,10 +62,13 @@ const ELEMENT_DATA: tableauCategorie[] = [
   styleUrl: './page-tableau-produits.component.css'
 })
 
-export class PageTableauProduitsComponent {
+export class PageTableauProduitsComponent implements OnInit {
   userForm: FormGroup;
   isChecked: boolean = false;
+  categories: tableauCategorie[] = ELEMENT_DATA;
   modeEdition: boolean = false;
+  dataSource = ELEMENT_DATA;
+  productAvailable:any[] = [];
 
   @ViewChild('dialogContent') dialogContent!: TemplateRef<any>;
 
@@ -74,9 +78,20 @@ export class PageTableauProduitsComponent {
       name: ['', [Validators.required]],
       quantity: ['', [Validators.required]],
       price: ['', [Validators.required]],
-      comment: ['', [Validators.required]],
+      comment: ['']
     });
   }
+  ngOnInit(): void {
+    this.manageProductService.getListCategories().subscribe((response: any) => {
+      this.categories = response.filter((category: tableauCategorie) => category.nameCategory !== 'all');
+      this.dataSource = response;
+      console.log(this.categories);
+    });
+    this.manageProductService.getListAvailableProduct().subscribe((response: any) => {
+      this.productAvailable = response;
+    });
+  }
+  
 
   openDialog(): void {
     const dialogRef = this.dialog.open(this.dialogContent, {
@@ -94,13 +109,13 @@ export class PageTableauProduitsComponent {
   onSubmit() {
     if (this.userForm.valid) {
       const categorie = this.userForm.get('categorie')!.value;
-      const name = this.userForm.get('name')!.value;
+      const productId = this.userForm.get('name')!.value;
       const quantity = this.userForm.get('quantity')!.value;
       const price = this.userForm.get('price')!.value;
       const commment = this.userForm.get('comment')!.value;
 
-      this.manageProductService.addProduct(categorie,name,quantity,price,commment).subscribe(
-        (response: productElement) => {
+      this.manageProductService.addProduct(categorie,productId,quantity,price,commment).subscribe(
+        (response: any) => {
           console.log('Produit ajouté avec succès!', response);
           // Réinitialiser le formulaire après soumission
           this.userForm.reset();
@@ -112,5 +127,4 @@ export class PageTableauProduitsComponent {
     }
   }
   displayedColumns: string[] = ['nom'];
-  dataSource = ELEMENT_DATA;
 }
