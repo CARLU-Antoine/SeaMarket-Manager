@@ -76,8 +76,8 @@ export class ProductStatsChartComponent implements OnInit{
 
     const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(data);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'impôts');
-    XLSX.writeFile(wb, 'impôts.xlsx');
+    XLSX.utils.book_append_sheet(wb, ws, 'Analyse des produits');
+    XLSX.writeFile(wb, 'Analyse des produits.xlsx');
   }
   public chartHovered(e:any):void {
     console.log(e);

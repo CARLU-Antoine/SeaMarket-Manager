@@ -23,7 +23,6 @@ export class CountUserComponent implements OnInit{
     // Appelez la méthode getUsers de modifUserService
     this.modifUserService.getUsers().subscribe(
       (data: any) => {
-        console.log(data);
         // Vérifiez si les données sont un tableau et s'il y a des éléments
         if (Array.isArray(data) && data.length > 0) {
           // Mettez à jour userCount avec le nombre d'utilisateurs récupérés
