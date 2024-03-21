@@ -1,35 +1,28 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input,OnInit,ViewChild,OnChanges } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
+import {MatInputModule} from '@angular/material/input';
+import {FormsModule} from '@angular/forms';
+import { MatPaginator,MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { ProductsListService } from '../../services/products-list.service';
+import { ManageProductService } from '../../services/manage-product.service';
 
 
-export interface tableauProduits {
-  categorie: string;
-  nom: string;
-  prix: number;
-  pourceProm: number;
-  stock: number;
-  vente: number;
-  commentaire: string;
+export interface tableauProduct {
+  categories: any[];
+  comments: string;
+  id : number;
+  percentSale: number;
+  price: number;
+  productId: number;
+  quantity: number;
+  sellArticle: number;
 }
-
-const ELEMENT_DATA: tableauProduits[] = [
-  { categorie:"Poissons", nom: 'Cabillaut', prix: 10, pourceProm: 0, stock: 540, vente: 140, commentaire: ''},
-  { categorie:"Poissons", nom: 'Bar', prix: 4, pourceProm: 5, stock: 85, vente: 250, commentaire: ''},
-  { categorie:"Poissons", nom: 'Poisson chat', prix: 15, pourceProm: 20, stock: 2, vente: 440, commentaire: ''},
-
-  { categorie:"Fruits de mer", nom: 'crevette', prix: 10, pourceProm: 0, stock: 540, vente: 140, commentaire: ''},
-  { categorie:"Fruits de mer", nom: 'berlingot', prix: 4, pourceProm: 5, stock: 85, vente: 250, commentaire: ''},
-  { categorie:"Fruits de mer", nom: 'fdm', prix: 15, pourceProm: 20, stock: 2, vente: 440, commentaire: ''},
-
-  { categorie:"Crustacés", nom: 'homard', prix: 10, pourceProm: 0, stock: 540, vente: 140, commentaire: ''},
-  { categorie:"Crustacés", nom: 'jsp', prix: 4, pourceProm: 5, stock: 85, vente: 250, commentaire: ''},
-  { categorie:"Crustacés", nom: 'Crabe', prix: 15, pourceProm: 20, stock: 2, vente: 440, commentaire: ''},
-];
 
 @Component({
   selector: 'app-tableau-general',
@@ -40,32 +33,97 @@ const ELEMENT_DATA: tableauProduits[] = [
     MatCardModule,
     MatTableModule,
     MatIconModule,
-    TableauGeneralComponent
+    MatInputModule,
+    FormsModule,
+    MatPaginatorModule
   ],
   templateUrl: './tableau-general.component.html',
   styleUrl: './tableau-general.component.css'
 })
 
-export class TableauGeneralComponent {
+export class TableauGeneralComponent implements OnInit, OnChanges {
   displayedColumns: string[] = ['nom', 'prix', 'pourceProm', 'stock', 'vente', 'commentaire', 'edit'];
-  dataSource: tableauProduits[];
+  dataSource: MatTableDataSource<tableauProduct>;
 
   @Input() categorie: string | undefined;
+  @Input() modeEdition: boolean = false;
 
-  constructor() {
-    this.dataSource = ELEMENT_DATA;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  constructor(private productsListService: ProductsListService, private manageProductService: ManageProductService) {
+    this.dataSource = new MatTableDataSource<tableauProduct>();
+  }
+
+  ngOnInit(): void {
+    this.loadProducts();
   }
 
   ngOnChanges(): void {
-    if (this.categorie) {
-      this.dataSource = ELEMENT_DATA.filter(item => item.categorie === this.categorie);
-    } else {
-      this.dataSource = ELEMENT_DATA;
-    }
+    this.loadProducts();
   }
 
-  editRow(element: tableauProduits): void {
-    // Mettez en œuvre la logique pour éditer la ligne ici
-    console.log("Edit row:", element);
+  loadProducts(): void {
+    this.productsListService.getProducts().subscribe((data: any[]) => {
+      this.dataSource.data = data.map(product => ({
+        categories: product.categories,
+        comments: product.comments,
+        id: product.id,
+        percentSale: parseFloat(product.percentSale),
+        price: product.price,
+        productId: product.productId,
+        quantity: parseInt(product.quantity),
+        sellArticle: parseInt(product.sellArticle),
+      }));
+
+      this.dataSource.paginator = this.paginator;
+      this.applyCategoryFilter(); // Appliquer le filtrage lorsque les données sont chargées
+    });
+  }
+
+  applyCategoryFilter(): void {
+    if (this.categorie) {
+      // Traduire le nom de la catégorie en identifiant de catégorie
+      const categoryId = this.translateCategoryNameToId(this.categorie);
+      if (categoryId !== null) {
+        this.dataSource.filterPredicate = (data: tableauProduct) => {
+          // Vérifier si l'identifiant de la catégorie est inclus dans les valeurs de 'categories' dans 'data'
+          return data.categories.includes(categoryId);
+        };
+        this.dataSource.filter = this.categorie;
+      } else {
+        // Si la traduction échoue, ne pas filtrer
+        this.dataSource.filter = '';
+      }
+    } else {
+      this.dataSource.filter = ''; // Réinitialiser le filtre s'il n'y a pas de catégorie sélectionnée
+    }
+  }
+  
+  translateCategoryNameToId(categoryName: string): number | null {
+    // Logique pour traduire le nom de la catégorie en identifiant de catégorie
+    switch (categoryName) {
+      case 'Poissons':
+        return 1;
+      case 'Fruits de mer':
+        return 2;
+      case 'Crustacés':
+        return 3;
+      default:
+        return null; // Retourne null si la catégorie n'est pas trouvée
+    }
+  }
+  
+  
+
+  updateProduct(element: tableauProduct): void {
+    this.manageProductService.updateProduct(element).subscribe(
+      response => {
+        console.log('Produit mis à jour avec succès !');
+        // Faites quelque chose avec la réponse, si nécessaire
+      },
+      error => {
+        console.error('Erreur lors de la mise à jour du produit :', error);
+      }
+    );
   }
 }

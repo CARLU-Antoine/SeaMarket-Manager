@@ -8,7 +8,7 @@ describe('PageModifUserComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PageModifUserComponent]
+      declarations: [PageModifUserComponent]
     })
     .compileComponents();
     
