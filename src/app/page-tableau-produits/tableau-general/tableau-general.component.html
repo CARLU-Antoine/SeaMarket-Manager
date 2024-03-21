@@ -9,11 +9,11 @@
             <td mat-cell *matCellDef="let element">
                 <ng-container *ngIf="modeEdition; else cellules">
                     <mat-form-field style="width: 125px;">
-                        <input matInput [(ngModel)]="element.categories" placeholder="Prix">
+                        <input matInput [(ngModel)]="element.id" placeholder="Prix">
                     </mat-form-field>
                 </ng-container>
                 <ng-template #cellules>
-                    <p style="width: 125px;">{{ element.categories }}</p>
+                    <p style="width: 125px;">{{ element.id }}</p>
                 </ng-template>
             </td>
         </ng-container>

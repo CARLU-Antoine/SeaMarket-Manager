@@ -53,7 +53,6 @@ export class MoneyChartComponent implements OnInit {
       }
     );
   }
-  
 
   downloadData(): void {
     // Créer un tableau de données contenant les étiquettes et les données
