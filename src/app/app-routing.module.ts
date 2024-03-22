@@ -4,11 +4,9 @@ import { LoginComponent } from './login/login.component';
 import { PageModifUserComponent } from './page-modif-user/page-modif-user.component';
 import { PageTableauProduitsComponent } from './page-tableau-produits/page-tableau-produits.component';
 import { PageDashboardComponent } from './page-dashboard/page-dashboard.component';
-<<<<<<< HEAD
 
-=======
 import { PageAnalyseMarketComponent } from './page-analyse-market/page-analyse-market.component';
->>>>>>> main
+
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -16,10 +14,6 @@ const routes: Routes = [
   { path: 'modifUser', component: PageModifUserComponent },
   { path: 'tabProduits', component: PageTableauProduitsComponent },
   { path: 'dashboard', component: PageDashboardComponent },
-<<<<<<< HEAD
-=======
-
->>>>>>> main
 ];
 
 @NgModule({

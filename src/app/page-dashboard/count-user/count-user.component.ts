@@ -1,11 +1,6 @@
-<<<<<<< HEAD
-import { Component, Input } from '@angular/core';
-import { MatCard } from '@angular/material/card';
-=======
 import { Component, Input,OnInit } from '@angular/core';
 import { MatCard } from '@angular/material/card';
 import { ModifUserService } from '../../services/modif-user.service';
->>>>>>> main
 @Component({
   selector: 'app-count-user',
   standalone: true,
@@ -15,11 +10,7 @@ import { ModifUserService } from '../../services/modif-user.service';
   templateUrl: './count-user.component.html',
   styleUrl: './count-user.component.css'
 })
-<<<<<<< HEAD
-export class CountUserComponent {
-  @Input() userCount: number = 0;
-}
-=======
+
 export class CountUserComponent implements OnInit{
   @Input() userCount: number = 0;
 
@@ -49,5 +40,3 @@ export class CountUserComponent implements OnInit{
   }
   
 }
-
->>>>>>> main

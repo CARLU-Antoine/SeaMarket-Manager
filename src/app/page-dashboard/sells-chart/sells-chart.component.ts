@@ -15,71 +15,66 @@ import * as XLSX from 'xlsx';
   styleUrl: './sells-chart.component.css'
 })
 export class SellsChartComponent implements OnInit {
-  barChartData: any[] = []; // Initialisez la propriété barChartData
+  barChartData: any[] = [];
   barChartOptions: any;
-  barChartLabels: string[] = []; // Initialisez la propriété barChartLabels
-  barChartType: string = ''; // Initialisez la propriété barChartType
+  barChartLabels: string[] = [];
+  barChartType: string = '';
   barChartLegend: boolean = true;
+  selectedTypeDate: string=''; 
 
   constructor(private chartService: ManageHistoryService) { }
 
   ngOnInit(): void {
-    this.loadChart('year'); // Chargez initialement les données pour l'année
+    this.loadChart('year');
   }
 
-  loadChart(typeSelected: string = 'year'): void {
+  loadChart(selectedTypeDate: string = 'year'): void {
     this.chartService.getChartData().subscribe(data => {
-      // Initialiser filteredData à un tableau vide par défaut
       let filteredData = [];
       let filteredLabels: string[] = [];
-      if (typeSelected === 'day') {
+      if (selectedTypeDate === 'day') {
         filteredData = data.filter(item => new Date(item.addDate).getDate() === new Date().getDate());
         filteredLabels = ['Jour'];
-      } else if (typeSelected === 'month') {
+      } else if (selectedTypeDate === 'month') {
         filteredData = data.filter(item => new Date(item.addDate).getMonth() === new Date().getMonth());
         filteredLabels = ['Mois'];
-      } else if (typeSelected === 'year') {
+      } else if (selectedTypeDate === 'year') {
         filteredData = data.filter(item => new Date(item.addDate).getFullYear() === new Date().getFullYear());
         filteredLabels = ['Année'];
       }
 
       this.barChartData = [
         { data: filteredData.map(item => item.quantityHistory), label: 'Quantité vendue' },
-        // Vous pouvez ajouter d'autres séries de données selon vos besoins
       ];
 
       this.barChartLabels = filteredLabels;
 
-      // Modifier la légende en fonction du type de date
-      this.barChartLegend = filteredData.length > 0; // Afficher la légende uniquement si des données sont disponibles
+      this.barChartLegend = filteredData.length > 0;
 
-      // Initialisez les options du graphique ici pour garantir que les données sont correctement filtrées avant l'initialisation des options
       this.initializeChartOptions();
     });
-}
+  }
+
   initializeChartOptions(): void {
     this.barChartOptions = {
       scaleShowVerticalLines: false,
       responsive: true
     };
-    this.barChartType = 'bar'; // Initialisez la propriété barChartType
+    this.barChartType = 'bar';
     this.barChartLegend = true;
   }
 
   getData(): any[] {
-    // Récupérer les données sous forme d'un tableau d'objets avec les étiquettes et les valeurs
     return this.barChartLabels.map((label, index) => ({
       label: label,
       data: this.barChartData.map(dataPoint => dataPoint.data[index]),
-      type: this.barChartData.map(dataPoint => dataPoint.type) // Ajouter les types d'historique
+      type: this.barChartData.map(dataPoint => dataPoint.type)
     }));
   }
-  
-  
+
   downloadData(): void {
-    // Créer un tableau de données contenant les étiquettes et les données
     const data = [this.barChartLabels].concat(
-        this.barChartData.map(dataPoint => dataPoint.data)
+      this.barChartData.map(dataPoint => dataPoint.data)
     );
 
     const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(data);
@@ -88,7 +83,6 @@ export class SellsChartComponent implements OnInit {
     XLSX.writeFile(wb, 'Analyse des produits.xlsx');
   }
 
-  // events
   public chartClicked(e: any): void {
     console.log(e);
   }

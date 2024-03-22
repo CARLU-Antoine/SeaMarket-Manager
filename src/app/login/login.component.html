@@ -5,23 +5,7 @@
     <mat-card-title style="color: white;">Se connecter au SeaMarket-Manager</mat-card-title>
     <br/>
     <mat-card-content>
-<<<<<<< HEAD
-        <form [formGroup]="userForm" >
-        <br/>
-        <mat-form-field appearance="fill">
-            <mat-label>Email</mat-label>
-            <input matInput formControlName="email">
-        </mat-form-field>
-        <br/>
-        <mat-form-field appearance="fill">
-            <mat-label>Mot de passe</mat-label>
-            <input matInput type="password" formControlName="motDePasse">
-        </mat-form-field>
-        <br/>
-        <button mat-raised-button color="primary" type="submit" [disabled]="!userForm.valid">Se connecter</button>
-=======
         <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-            <br/>
             <mat-form-field appearance="fill" class="input-field">
                 <mat-label>Email</mat-label>
                 <input matInput formControlName="email">
@@ -44,7 +28,6 @@
               </mat-error> 
             <br/>
             <button mat-raised-button color="primary" type="submit" [disabled]="!userForm.valid">Se connecter</button>
->>>>>>> main
         </form>
     </mat-card-content>
 </mat-card>
