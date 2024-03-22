@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -58,7 +58,6 @@ export class ManageProductService {
   // Fonction pour mettre à jour un produit
   updateProduct(updatedProductData: any): Observable<any> {
 
-    console.log("product modifier", updatedProductData)
     // Récupérer le token JWT d'accès depuis le stockage local
     const accessToken = localStorage.getItem('accessToken');
 
@@ -67,6 +66,11 @@ export class ManageProductService {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${accessToken}` // Inclure le token JWT d'accès dans l'en-tête Authorization
     });
+    // Vérifier si updatedProductData est un tableau
+    if (!Array.isArray(updatedProductData)) {
+      // Si ce n'est pas un tableau, mettre updatedProductData dans un tableau
+      updatedProductData = [updatedProductData];
+    }
 
     // Effectuer la requête HTTP PATCH avec les en-têtes authentifiés
     return this.http.patch<any>(this.apiUrl, updatedProductData, { headers });

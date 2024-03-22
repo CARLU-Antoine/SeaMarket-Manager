@@ -6,11 +6,12 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
-import {FormsModule} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import { MatPaginator,MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ProductsListService } from '../../services/products-list.service';
 import { ManageProductService } from '../../services/manage-product.service';
+import { MatSelectModule } from '@angular/material/select';
 
 
 export interface tableauProduct {
@@ -36,7 +37,9 @@ export interface tableauProduct {
     MatIconModule,
     MatInputModule,
     FormsModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSelectModule,
+    ReactiveFormsModule
   ],
   templateUrl: './tableau-general.component.html',
   styleUrl: './tableau-general.component.css'
@@ -45,22 +48,66 @@ export interface tableauProduct {
 export class TableauGeneralComponent implements OnInit, OnChanges {
   displayedColumns: string[] = ['nom', 'prix', 'pourceProm', 'stock', 'vente', 'commentaire', 'edit'];
   dataSource: MatTableDataSource<tableauProduct>;
+  productAvailable: any;
 
   @Input() categorie: string | undefined;
   @Input() modeEdition: boolean = false;
+  forms: FormGroup[] = [];
+  productExistsValidator(currentProductId:number): ValidatorFn{
+    return (control: AbstractControl): ValidationErrors | null => {
+      if(control && (this.productAvailable.filter((product:any) => control.value === product.id) || currentProductId === control.value)){
+        return null;
+      }
+      return { productExists: false };
+    }
+
+  }
+  productHigherSellArticle(currentValue: number): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (control.value >= currentValue) {
+          return null; // retourne null si la validation est réussie
+      } else {
+          return { lowerValue: true }; // retourne un objet d'erreur si la validation échoue
+      }
+  };
+}
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private productsListService: ProductsListService, private manageProductService: ManageProductService) {
+  constructor(private productsListService: ProductsListService, private manageProductService: ManageProductService,productListService:ProductsListService) {
     this.dataSource = new MatTableDataSource<tableauProduct>();
+  }
+  ngAfterViewInit(): void {
+   
   }
 
   ngOnInit(): void {
     this.loadProducts();
+    this.manageProductService.getListAvailableProduct().subscribe((response: any) => {
+      console.log("AvailableProduct: "+response)
+      this.productAvailable = response
+    });
+    this.productsListService.productData.subscribe((response) => {
+
+     this.forms =response.map((product: any):FormGroup => {
+        return this.createFormWithValidators(product)
+      });
+    });
   }
 
   ngOnChanges(): void {
     this.loadProducts();
+  }
+  createFormWithValidators(product:any): FormGroup {
+    return new FormGroup({
+      id : new FormControl(product.id, [Validators.required]),
+      name: new FormControl(product.productId, [Validators.required, this.productExistsValidator(product.productId)]),
+      price: new FormControl(product.price,[Validators.required, Validators.min(0)]),
+      quantity: new FormControl(product.quantity,[Validators.required, Validators.min(0)]),
+      percentSale: new FormControl(product.percentSale,[Validators.required, Validators.min(0), Validators.max(100)]),
+      sellArticle: new FormControl(product.sellArticle,[Validators.required, Validators.min(0), this.productHigherSellArticle(product.sellArticle)]),
+      comments: new FormControl(product.comments)
+    });
   }
 
   loadProducts(): void {
@@ -78,54 +125,43 @@ export class TableauGeneralComponent implements OnInit, OnChanges {
       }));
 
       this.dataSource.paginator = this.paginator;
-      this.applyCategoryFilter(); // Appliquer le filtrage lorsque les données sont chargées
     });
   }
-
-  applyCategoryFilter(): void {
-    if (this.categorie) {
-      // Traduire le nom de la catégorie en identifiant de catégorie
-      const categoryId = this.translateCategoryNameToId(this.categorie);
-      if (categoryId !== null) {
-        this.dataSource.filterPredicate = (data: tableauProduct) => {
-          // Vérifier si l'identifiant de la catégorie est inclus dans les valeurs de 'categories' dans 'data'
-          return data.categories.includes(categoryId);
-        };
-        this.dataSource.filter = this.categorie;
-      } else {
-        // Si la traduction échoue, ne pas filtrer
-        this.dataSource.filter = '';
-      }
-    } else {
-      this.dataSource.filter = ''; // Réinitialiser le filtre s'il n'y a pas de catégorie sélectionnée
-    }
-  }
-  
-  translateCategoryNameToId(categoryName: string): number | null {
-    // Logique pour traduire le nom de la catégorie en identifiant de catégorie
-    switch (categoryName) {
-      case 'Poissons':
-        return 1;
-      case 'Fruits de mer':
-        return 2;
-      case 'Crustacés':
-        return 3;
-      default:
-        return null; // Retourne null si la catégorie n'est pas trouvée
-    }
-  }
   
   
 
-  updateProduct(element: tableauProduct): void {
-    this.manageProductService.updateProduct(element).subscribe(
-      response => {
-        console.log('Produit mis à jour avec succès !');
-        // Faites quelque chose avec la réponse, si nécessaire
-      },
-      error => {
-        console.error('Erreur lors de la mise à jour du produit :', error);
-      }
-    );
+  updateProduct(index:number): void {
+    const element = this.forms[index].value;
+    if(this.forms[index].valid){
+      this.dataSource.data.forEach((item, index) => {
+        if (item.id === element.id ) {
+        const newElement = {
+          id : Number(item.id),
+          ...(element.comments !== item.comments && { comments: element.comments }),
+          ...(element.percentSale !== item.percentSale && { percentSale: element.percentSale }),
+          ...(element.price !== item.price && { price: element.price }),
+          ...(element.productId !== item.productId && { productId: element.name }),
+          ...(element.quantity !== item.quantity && { quantity: element.quantity }),
+          ...(element.sellArticle !== item.sellArticle && { sellArticle: element.sellArticle }),
+          ...(element.quantity > item.quantity && { reason: 'buy' }),
+          ...(element.quantity < item.quantity && { reason: (element.price === 0 ? 'unsold' : 'sell') })
+        }
+        this.manageProductService.updateProduct(newElement).subscribe(
+          response => {
+            console.log('Produit mis à jour !',response);
+            this.dataSource.data[index] = response;
+          },
+          error => {
+            console.error('Erreur lors de la mise à jour du produit :', error);
+          }
+        );
+        return;
+        }
+      });
+    }
+    else{
+      console.error('Formulaire invalide');
+    }
+
   }
 }
