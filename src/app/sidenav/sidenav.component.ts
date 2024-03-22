@@ -39,7 +39,6 @@ export class SidenavComponent {
     this.router.navigate(['/tabProduits']);
   }
   nagivateToAnalyse() {
-    this.router.navigate(['/analyse']);
     this.router.navigate(['/analyseMarket']);
   }
 

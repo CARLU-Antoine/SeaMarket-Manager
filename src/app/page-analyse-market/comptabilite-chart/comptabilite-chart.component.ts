@@ -16,10 +16,9 @@ import * as XLSX from 'xlsx';
   styleUrl: './comptabilite-chart.component.css'
 })
 export class ComptabiliteChartComponent implements OnInit{
-  public lineChartData: Array<any> = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: '  Frais' }
-  ];
-  public lineChartLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  public lineChartData: Array<any> = [];
+  public lineChartLabels: Array<any> = [];
+  selectedDateType: string = '';
   public lineChartOptions: any = {
     responsive: true
   };

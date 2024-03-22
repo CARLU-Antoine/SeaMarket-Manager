@@ -1,6 +1,6 @@
 <div style="display: block">
     <div style="display: block">
-        <select >
+        <select [(ngModel)]="selectedDateType" (change)="loadChart(selectedDateType)">
             <option value="">Sélectionnez un type de date</option>
             <option value="day">Jour</option>
             <option value="month">Mois</option>
