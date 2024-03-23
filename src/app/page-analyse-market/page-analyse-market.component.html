@@ -1,26 +1,29 @@
 <app-sidenav></app-sidenav>
-
 <mat-card class="card-general"style="width: 1000px; height: auto; margin: auto;">
+    <div class="download-button" >
+        <mat-icon style="cursor: pointer;"(click)="loadAllChatData()">autorenew</mat-icon>
+        <mat-icon style="cursor: pointer;" (click)="downloadAllChartData()">play_for_work</mat-icon>
+    </div>    
     <!-- Première rangée -->
     <div style="display:flex;">
         <div class="card-component" style="width: 50%; position: relative;">
             <span>Analyse chiffre d'affaire</span>
-            <mat-icon style="position: absolute; right: 8%; cursor: pointer;">autorenew</mat-icon>
+            <mat-icon style="position: absolute; right: 8%; cursor: pointer;" (click)="loadMoneyChartData()">autorenew</mat-icon>
             <mat-icon style="position: absolute; right: 2%; cursor: pointer;" (click)="downloadMoneyChartData()">play_for_work</mat-icon>
             <app-money-chart></app-money-chart>
         </div>        
         <div class="card-component" style="width: 50%;">
             <span>Résultat comptable (marge)</span>
-            <mat-icon style="position: absolute; right: 5%; cursor: pointer;">autorenew</mat-icon>
+            <mat-icon style="position: absolute; right: 5%; cursor: pointer;" (click)="loadComptabiliteChartData()">autorenew</mat-icon>
             <mat-icon style="position: absolute; right: 2%; cursor: pointer;" (click)="downloadComptabiliteChartData()">play_for_work</mat-icon>
             <app-comptabilite-chart></app-comptabilite-chart>
         </div>
     </div>
     <div>
         <div class="card-component" style="height: 100%;">
-            <span>Analyse de l’impôt sur les sociétés</span>
-            <mat-icon style="position: absolute; right: 5%; cursor: pointer;">autorenew</mat-icon>
-            <mat-icon style="position: absolute; right: 2%; cursor: pointer;" (click)="downloadImpotChartData()">play_for_work</mat-icon>
+            <span>Analyse des stastitiques des produits</span>
+            <mat-icon style="position: absolute; right: 5%; cursor: pointer;" (click)="loadProductStatChartData()">autorenew</mat-icon>
+            <mat-icon style="position: absolute; right: 2%; cursor: pointer;" (click)="downloadProductChartData()">play_for_work</mat-icon>
             <app-impot-chart></app-impot-chart>
         </div>
     </div>
