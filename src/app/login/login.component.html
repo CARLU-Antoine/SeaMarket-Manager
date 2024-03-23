@@ -6,7 +6,6 @@
     <br/>
     <mat-card-content>
         <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-            <br/>
             <mat-form-field appearance="fill" class="input-field">
                 <mat-label>Email</mat-label>
                 <input matInput formControlName="email">
@@ -23,8 +22,10 @@
                     [attr.aria-pressed]="passwordVisible">
                     <mat-icon>{{passwordVisible ? 'visibility' : 'visibility_off'}}</mat-icon>
                 </button>
-            </mat-form-field>        
-            <br/>
+            </mat-form-field>
+            <mat-error *ngIf="errorMessage" class="error-message">
+                {{ errorMessage }}
+              </mat-error> 
             <br/>
             <button mat-raised-button color="primary" type="submit" [disabled]="!userForm.valid">Se connecter</button>
         </form>

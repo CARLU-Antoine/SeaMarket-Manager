@@ -10,10 +10,10 @@
 
 .slide-container {
   position: fixed;
+  width: auto;
   top: 0;
   left: 0;
   bottom: 0;
-  width: 250px;
   z-index: 1000;
 }
 
@@ -26,25 +26,153 @@
   background-color: #c9c9c9;
 }
 
+
+
 .sidenav-content button {
   width: 100%;
   margin-bottom: 10px;
   padding: 20px;
   background-color: #B9B9B9;
+  color: black;
 }
 
-@media screen and (max-width: 768px) {
-  .slide-container {
-      width: 200px; 
-  }
+
+.sidenav-content .button:hover {
+  background-color: black;
+  color: white;
 }
 
-@media screen and (max-width: 576px) {
-  .slide-container {
-      width: 150px;
-  }
-  
-  .sidenav-content button {
-      padding: 15px;
-  }
+.button {
+  outline: 0 !important;
+  border: 0 !important;
+  width: 40px;
+  border-radius: 50%;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  transition: all ease-in-out 0.3s;
+  cursor: pointer;
 }
+
+.icon {
+  font-size: 20px;
+}
+
+.rgb-effect::after {
+  content: "";
+  position: absolute;
+  padding-bottom: 10%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-color: lightblue;
+  animation-name: rgb;
+  animation-duration: 600s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes rgb {
+0% {
+  background-color: rgb(175, 235, 249);
+}
+10% {
+  background-color: rgb(252, 192, 192);
+}
+20% {
+  background-color: rgb(254, 254, 185);
+}
+30% {
+  background-color: rgb(255, 255, 180);
+}
+40% {
+  background-color: rgb(255, 183, 183);
+}
+50% {
+  background-color: rgb(169, 239, 255);
+}
+60% {
+  background-color: rgb(144, 205, 249);
+}
+70% {
+  background-color: rgb(127, 198, 248);
+}
+80% {
+  background-color: rgb(145, 231, 251);
+}
+90% {
+  background-color: rgb(249, 249, 158);
+}
+100% {
+  background-color: rgb(157, 232, 249);
+}
+}
+
+
+
+.rgb-effect::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1000px;
+  z-index: -1;
+  background-color: lightblue;
+  animation-name: rgb;
+  animation-duration: 600s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+
+.mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-icon {
+  display: flex;
+  gap: 32px;
+}
+
+@keyframes rgb {
+0% {
+  background-color: rgb(175, 235, 249);
+}
+10% {
+  background-color: rgb(252, 192, 192);
+}
+20% {
+  background-color: rgb(254, 254, 185);
+}
+30% {
+  background-color: rgb(255, 255, 180);
+}
+40% {
+  background-color: rgb(255, 183, 183);
+}
+50% {
+  background-color: rgb(169, 239, 255);
+}
+60% {
+  background-color: rgb(144, 205, 249);
+}
+70% {
+  background-color: rgb(127, 198, 248);
+}
+80% {
+  background-color: rgb(145, 231, 251);
+}
+90% {
+  background-color: rgb(249, 249, 158);
+}
+100% {
+  background-color: rgb(157, 232, 249);
+}
+}
+
