@@ -57,7 +57,6 @@ export class ModifUserService {
       'Authorization': `Bearer ${accessToken}` // Inclure le token JWT d'accès dans l'en-tête Authorization
     });
   
-    // Construire l'objet contenant l'ID de l'utilisateur à supprimer
     const userData = { id };
   
     // Effectuer la requête DELETE avec les en-têtes appropriés
