@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ImpotChartComponent } from './impot-chart.component';
+import { BetterCategorieComponent } from './better-categorie.component';
 
-describe('ImpotChartComponent', () => {
-  let component: ImpotChartComponent;
-  let fixture: ComponentFixture<ImpotChartComponent>;
+describe('BetterCategorieComponent', () => {
+  let component: BetterCategorieComponent;
+  let fixture: ComponentFixture<BetterCategorieComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ImpotChartComponent]
+      imports: [BetterCategorieComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(ImpotChartComponent);
+    fixture = TestBed.createComponent(BetterCategorieComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

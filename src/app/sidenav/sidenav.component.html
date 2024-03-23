@@ -4,7 +4,10 @@
       <mat-icon style="cursor: pointer;">menu</mat-icon>
     </button>
 
-    <span style="padding: 20px;">SeaMarket-Manager</span>
+    <span style="padding: 20px;color: black;">SeaMarket-Manager</span>
+    <div class="header-icon" *ngIf="isLoggedIn()" matTooltip="Se déconnecter" (click)="logout()" style="cursor: pointer;color: black;">
+      <mat-icon>logout</mat-icon>
+    </div>       
   </mat-toolbar>
 
   <mat-drawer class="slide-container" #drawer mode="side" opened> 
@@ -17,7 +20,7 @@
           <mat-icon>store</mat-icon>
         </button>
         <button class="button" (click)="nagivateToAnalyse()">
-          <mat-icon> attach_money</mat-icon>
+          <mat-icon>attach_money</mat-icon>
         </button>
         <button class="button" (click)="nagivateToModifUser()">
           <mat-icon>supervisor_account</mat-icon>
@@ -25,4 +28,6 @@
       </div>
     </div>
   </mat-drawer>
+
 </mat-drawer-container>
+<div class="rgb-effect"></div>
