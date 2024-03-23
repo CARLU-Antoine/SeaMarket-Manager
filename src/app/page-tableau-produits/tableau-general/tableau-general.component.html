@@ -2,31 +2,32 @@
 <mat-card style="text-align:center;">
     <mat-card-title>Modifier vos produits</mat-card-title>
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        
         <!-- Colonnes du tableau -->
         <ng-container matColumnDef="nom">
             <th mat-header-cell *matHeaderCellDef> Nom </th>
             <td mat-cell *matCellDef="let element">
                 <ng-container *ngIf="modeEdition; else cellules">
-                    <mat-form-field style="width: 250px;">
-                        <input matInput [(ngModel)]="element.nom" placeholder="Nom">
+                    <mat-form-field style="width: 125px;">
+                        <input matInput [(ngModel)]="element.id" placeholder="Prix">
                     </mat-form-field>
                 </ng-container>
                 <ng-template #cellules>
-                    <p style="width: 250px;">{{ element.nom }}</p>
-                </ng-template>                
+                    <p style="width: 125px;">{{ element.id }}</p>
+                </ng-template>
             </td>
         </ng-container>
-        
+                
         <ng-container matColumnDef="prix">
             <th mat-header-cell *matHeaderCellDef> Prix </th>
             <td mat-cell *matCellDef="let element">
                 <ng-container *ngIf="modeEdition; else cellules">
                     <mat-form-field style="width: 125px;">
-                        <input matInput [(ngModel)]="element.prix" placeholder="Prix">
+                        <input matInput [(ngModel)]="element.price" placeholder="Prix">
                     </mat-form-field>
                 </ng-container>
                 <ng-template #cellules>
-                    <p style="width: 125px;">{{ element.prix }}</p>
+                    <p style="width: 125px;">{{ element.price }}</p>
                 </ng-template>
             </td>
         </ng-container>
@@ -36,11 +37,11 @@
             <td mat-cell *matCellDef="let element">
                 <ng-container *ngIf="modeEdition; else cellules">
                     <mat-form-field style="width: 125px;">
-                        <input matInput [(ngModel)]="element.pourceProm" placeholder="% Promotion">
+                        <input matInput [(ngModel)]="element.percentSale" placeholder="% Promotion">
                     </mat-form-field>
                 </ng-container>
                 <ng-template #cellules>
-                    <p style="width: 125px;">{{ element.pourceProm }}</p>
+                    <p style="width: 125px;">{{ element.percentSale }}</p>
                 </ng-template>
             </td>
         </ng-container>
@@ -50,11 +51,11 @@
             <td mat-cell *matCellDef="let element">
                 <ng-container *ngIf="modeEdition; else cellules">
                     <mat-form-field style="width: 125px;">
-                        <input matInput [(ngModel)]="element.stock" placeholder="Stock">
+                        <input matInput [(ngModel)]="element.quantity" placeholder="Stock">
                     </mat-form-field>
                 </ng-container>
                 <ng-template #cellules>
-                    <p style="width: 125px;">{{ element.stock }}</p>
+                    <p style="width: 125px;">{{ element.quantity }}</p>
                 </ng-template>
             </td>
         </ng-container>
@@ -64,11 +65,11 @@
             <td mat-cell *matCellDef="let element">
                 <ng-container *ngIf="modeEdition; else cellules">
                     <mat-form-field style="width: 125px;">
-                        <input matInput [(ngModel)]="element.vente" placeholder="Vente">
+                        <input matInput [(ngModel)]="element.sellArticle" placeholder="Vente">
                     </mat-form-field>
                 </ng-container>
                 <ng-template #cellules>
-                    <p style="width: 125px;">{{ element.vente }}</p>
+                    <p style="width: 125px;">{{ element.sellArticle }}</p>
                 </ng-template>
             </td>
         </ng-container>
@@ -78,11 +79,11 @@
             <td mat-cell *matCellDef="let element">
                 <ng-container *ngIf="modeEdition; else cellules">
                     <mat-form-field style="width: 200px;">
-                        <input matInput [(ngModel)]="element.commentaire" placeholder="Commentaire">
+                        <input matInput [(ngModel)]="element.comments" placeholder="Commentaire">
                     </mat-form-field>
                 </ng-container>
                 <ng-template #cellules>
-                    <p style="width: 200px;">{{ element.commentaire }}</p>
+                    <p style="width: 200px;">{{ element.comments }}</p>
                 </ng-template>
             </td>
         </ng-container>
@@ -91,7 +92,7 @@
         <ng-container matColumnDef="edit">
             <th mat-header-cell *matHeaderCellDef> Edit </th>
             <td mat-cell *matCellDef="let element">
-                <button mat-icon-button (click)="editRow(element)">
+                <button mat-icon-button (click)="updateProduct(element)">
                     <mat-icon>save</mat-icon>
                 </button>
             </td>
@@ -100,5 +101,6 @@
         <!-- En-tête et rangées de données -->
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>        
+    </table>
+    <mat-paginator [pageSizeOptions]="[3,5]" showFirstLastButtons></mat-paginator>     
 </mat-card>

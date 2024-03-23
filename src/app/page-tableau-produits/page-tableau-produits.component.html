@@ -4,6 +4,7 @@
     <div class="slide-toggle">
         <h4>Activer ou désactiver la modification</h4>
         <mat-slide-toggle [(ngModel)]="isChecked" (change)="modifierModeEdition()"></mat-slide-toggle>
+        <button mat-raised-button color="primary" (click)="openDialog()">Ajouter un produit</button>
     </div>
     <mat-tab-group class="navTab">
         <mat-tab *ngFor="let categorie of dataSource" [label]="categorie.nom">
@@ -11,3 +12,49 @@
         </mat-tab>
     </mat-tab-group>
 </div>
+
+<!-- Dialog pour ajouter un produit -->
+<ng-template #dialogContent let-data>
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="product-form">
+    <h2 class="dialog-title">Ajouter un produit</h2>
+    <mat-dialog-content>
+      <mat-form-field appearance="fill" class="input-field">
+        <mat-label>Catégorie</mat-label>
+        <mat-select formControlName="categorie">
+          <mat-option value="1">Poisson</mat-option>
+          <mat-option value="2">Fruits de mer</mat-option>
+          <mat-option value="3">Crustacés</mat-option>
+        </mat-select>
+        <mat-error *ngIf="userForm.get('categorie')?.hasError('required')">Catégorie est requise</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="input-field">
+        <mat-label>Nom du produit</mat-label>
+        <input matInput formControlName="name">
+        <mat-error *ngIf="userForm.get('name')?.hasError('required')">Nom du produit est requis</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="input-field">
+        <mat-label>Quantité</mat-label>
+        <input matInput formControlName="quantity">
+        <mat-error *ngIf="userForm.get('quantity')?.hasError('required')">Quantité est requise</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="input-field">
+        <mat-label>Prix</mat-label>
+        <input matInput formControlName="price">
+        <mat-error *ngIf="userForm.get('price')?.hasError('required')">Prix est requis</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="input-field">
+        <mat-label>Commentaire</mat-label>
+        <input matInput formControlName="comment">
+        <mat-error *ngIf="userForm.get('comment')?.hasError('required')">Commentaire est requis</mat-error>
+      </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button mat-button color="primary" type="submit" [disabled]="!userForm.valid">Ajouter le produit</button>
+      <button mat-button (click)="closeDialog()" color="warn">Fermer</button>
+    </mat-dialog-actions>
+  </form>
+</ng-template>
