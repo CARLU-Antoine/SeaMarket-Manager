@@ -84,8 +84,7 @@ export class TableauGeneralComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.loadProducts();
     this.manageProductService.getListAvailableProduct().subscribe((response: any) => {
-      console.log("AvailableProduct: "+response)
-      this.productAvailable = response
+     this.productAvailable = response
     });
     this.productsListService.productData.subscribe((response) => {
 
@@ -102,10 +101,10 @@ export class TableauGeneralComponent implements OnInit, OnChanges {
     return new FormGroup({
       id : new FormControl(product.id, [Validators.required]),
       name: new FormControl(product.productId, [Validators.required, this.productExistsValidator(product.productId)]),
-      price: new FormControl(product.price,[Validators.required, Validators.min(0)]),
-      quantity: new FormControl(product.quantity,[Validators.required, Validators.min(0)]),
-      percentSale: new FormControl(product.percentSale,[Validators.required, Validators.min(0), Validators.max(100)]),
-      sellArticle: new FormControl(product.sellArticle,[Validators.required, Validators.min(0), this.productHigherSellArticle(product.sellArticle)]),
+      price: new FormControl(product.price, [Validators.required, Validators.min(0)]),
+      quantity: new FormControl(product.quantity, [Validators.required, Validators.min(0)]),
+      percentSale: new FormControl(product.percentSale, [Validators.required, Validators.min(0), Validators.max(100)]),
+      sellArticle: new FormControl(product.sellArticle, [Validators.required, Validators.min(0), this.productHigherSellArticle(product.sellArticle)]),
       comments: new FormControl(product.comments)
     });
   }
@@ -137,18 +136,17 @@ export class TableauGeneralComponent implements OnInit, OnChanges {
         if (item.id === element.id ) {
         const newElement = {
           id : Number(item.id),
+          price : element.price,
           ...(element.comments !== item.comments && { comments: element.comments }),
-          ...(element.percentSale !== item.percentSale && { percentSale: element.percentSale }),
-          ...(element.price !== item.price && { price: element.price }),
+          ...(Number(element.percentSale) !== Number(item.percentSale) && { percentSale: element.percentSale }),
           ...(element.productId !== item.productId && { productId: element.name }),
           ...(element.quantity !== item.quantity && { quantity: element.quantity }),
           ...(element.sellArticle !== item.sellArticle && { sellArticle: element.sellArticle }),
           ...(element.quantity > item.quantity && { reason: 'buy' }),
-          ...(element.quantity < item.quantity && { reason: (element.price === 0 ? 'unsold' : 'sell') })
+          ...(element.quantity < item.quantity && { reason: (Number(element.price === 0) ? 'unsold' : 'sell') })
         }
         this.manageProductService.updateProduct(newElement).subscribe(
           response => {
-            console.log('Produit mis à jour !',response);
             this.dataSource.data[index] = response;
           },
           error => {
@@ -160,7 +158,7 @@ export class TableauGeneralComponent implements OnInit, OnChanges {
       });
     }
     else{
-      console.error('Formulaire invalide');
+      console.error('Formulaire invalide '+this.forms[index].errors);
     }
 
   }

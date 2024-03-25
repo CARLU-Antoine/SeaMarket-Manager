@@ -74,7 +74,7 @@ export class PageTableauProduitsComponent implements OnInit {
 
   constructor(public dialog: MatDialog,private fb: FormBuilder, private manageProductService: ManageProductService) {
     this.userForm = this.fb.group({
-      categorie: ['', [Validators.required]],
+      categorie: ['', []],
       name: ['', [Validators.required]],
       quantity: ['', [Validators.required]],
       price: ['', [Validators.required]],
@@ -85,7 +85,6 @@ export class PageTableauProduitsComponent implements OnInit {
     this.manageProductService.getListCategories().subscribe((response: any) => {
       this.categories = response.filter((category: tableauCategorie) => category.nameCategory !== 'all');
       this.dataSource = response;
-      console.log(this.categories);
     });
     this.manageProductService.getListAvailableProduct().subscribe((response: any) => {
       this.productAvailable = response;
@@ -116,7 +115,6 @@ export class PageTableauProduitsComponent implements OnInit {
 
       this.manageProductService.addProduct(categorie,productId,quantity,price,commment).subscribe(
         (response: any) => {
-          console.log('Produit ajouté avec succès!', response);
           // Réinitialiser le formulaire après soumission
           this.userForm.reset();
         },
