@@ -35,7 +35,6 @@ export class MoneyChartComponent implements OnInit {
 
   // Dans votre méthode loadChart, spécifiez le type de données attendu
   loadChart(selectedDateType: string): void {
-    console.log("je suis dedans")
     // Appelez la méthode getChartDataRevenues avec les valeurs de catégorie et de type
     this.statsRevenuesService.getDataRevenues('all', selectedDateType).subscribe(
       (data: any) => {
