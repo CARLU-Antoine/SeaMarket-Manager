@@ -34,19 +34,17 @@ export class ProductStatsChartComponent implements OnInit{
   
       // Initialiser le tableau de données du graphique avec des valeurs nulles
       const chartData = typeHistoryLabels.map(label => {
-        const totalQuantity = data.filter(item => item.typeHistory === label)
-                                   .map(item => item.quantityHistory)
-                                   .reduce((acc, val) => acc + val, 0); // Calculer la somme totale des quantités vendues
-        return totalQuantity;
+        const dataForLabel = data.filter(item => item.typeHistory === label);
+        const totalQuantity = dataForLabel.map(item => item.quantityHistory)
+                                          .reduce((acc, val) => acc + val, 0); // Calculer la somme totale des quantités vendues
+        return { data: [totalQuantity], label: label };
       });
   
-      this.barChartData = [{ data: chartData, label: 'Quantité vendue' }];
+      this.barChartData = chartData;
       this.barChartLabels = typeHistoryLabels;
+      this.initializeChartOptions();
     });
-  
-    this.initializeChartOptions();
-  }
-  
+}
   
   initializeChartOptions(): void {
     this.barChartOptions = {
@@ -67,7 +65,6 @@ export class ProductStatsChartComponent implements OnInit{
     }));
   }
   
-  
   downloadData(): void {
     // Créer un tableau de données contenant les étiquettes et les données
     const data = [this.barChartLabels].concat(
@@ -76,8 +73,8 @@ export class ProductStatsChartComponent implements OnInit{
 
     const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(data);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'impôts');
-    XLSX.writeFile(wb, 'impôts.xlsx');
+    XLSX.utils.book_append_sheet(wb, ws, 'Analyse des produits');
+    XLSX.writeFile(wb, 'Analyse des produits.xlsx');
   }
   public chartHovered(e:any):void {
     console.log(e);

@@ -1,10 +1,20 @@
 <div style="display: block">
-    <canvas baseChart
+    <div style="display: block">
+        <select [(ngModel)]="selectedTypeDate" (change)="loadChart(selectedTypeDate)">
+            <option value="">Sélectionnez un type de date</option>
+            <option value="day">Jour</option>
+            <option value="month">Mois</option>
+            <option value="year">Année</option>
+        </select>        
+    </div>
+    <div style="display: block">
+        <canvas baseChart
             [datasets]="barChartData"
             [labels]="barChartLabels"
             [options]="barChartOptions"
             [legend]="barChartLegend"
             (chartHover)="chartHovered($event)"
             (chartClick)="chartClicked($event)">
-    </canvas>
+        </canvas>
+    </div>
 </div>

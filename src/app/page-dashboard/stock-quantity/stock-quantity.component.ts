@@ -5,16 +5,16 @@ import { ProductsListService } from '../../services/products-list.service';
 import * as XLSX from 'xlsx';
 
 @Component({
-  selector: 'app-pie-chart',
+  selector: 'app-stock-quantity',
   standalone: true,
   imports: [
-    BaseChartDirective,
+    BaseChartDirective
   ],
-  templateUrl: './pie-chart.component.html',
-  styleUrl: './pie-chart.component.css'
+  templateUrl: './stock-quantity.component.html',
+  styleUrl: './stock-quantity.component.css'
 })
 
-export class PieChartComponent implements OnInit {
+export class StockQuantityComponent implements OnInit {
   title = 'ng2-charts-demo';
   public pieChartOptions: ChartOptions<'pie'> = {
     responsive: false,
@@ -39,13 +39,13 @@ export class PieChartComponent implements OnInit {
         const category = Array.isArray(product.categories) ? product.categories[0] : product.categories;
         switch (category) {
           case 1:
-            categoryCounts[0]+= product.sellArticle; ;
+            categoryCounts[0]+= product.quantity; ;
             break;
           case 2:
-            categoryCounts[1]+= product.sellArticle; ;
+            categoryCounts[1]+= product.quantity; ;
             break;
           case 3:
-            categoryCounts[2]+= product.sellArticle; ;
+            categoryCounts[2]+= product.quantity; ;
             break;
           default:
             break;
@@ -54,7 +54,6 @@ export class PieChartComponent implements OnInit {
       this.pieChartDatasets = [{ data: categoryCounts }];
     });
   }
-
   downloadData(): void {
     // Créer un tableau de données contenant les étiquettes et les données
     const data = [this.pieChartLabels].concat(
@@ -62,8 +61,8 @@ export class PieChartComponent implements OnInit {
     );
     const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(data);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Ventes');
-    XLSX.writeFile(wb, 'Historique par catégorie.xlsx');
+    XLSX.utils.book_append_sheet(wb, ws, 'Stock');
+    XLSX.writeFile(wb, 'Stock.xlsx');
 }
     
   getData(): any[] {
@@ -73,5 +72,4 @@ export class PieChartComponent implements OnInit {
           value: this.pieChartDatasets[0].data[index] // Supposons que vous avez un seul jeu de données pour simplifier
       }));
   }
-  
 }

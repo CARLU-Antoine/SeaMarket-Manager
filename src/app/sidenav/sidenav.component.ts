@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common'; // Import du CommonModule
 import {MatSidenavModule} from '@angular/material/sidenav';
@@ -8,6 +8,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import { LoginService } from '../services/login.service';
+import {jwtDecode}  from 'jwt-decode';
+
 
 @Component({
   selector: 'app-sidenav',
@@ -23,9 +25,12 @@ import { LoginService } from '../services/login.service';
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.css'
 })
-export class SidenavComponent {
+export class SidenavComponent implements OnInit{
   constructor(private loginService: LoginService, private router: Router) {}
   
+  ngOnInit(): void {
+      this.CheckAccessToken()
+  }
   nagivateToLogin() {
     this.router.navigate(['/login']);
   }
@@ -40,6 +45,23 @@ export class SidenavComponent {
   }
   nagivateToAnalyse() {
     this.router.navigate(['/analyseMarket']);
+  }
+
+  CheckAccessToken():void{
+    const accessToken = localStorage.getItem('accessToken');
+    if(accessToken){
+      let decodedToken = jwtDecode(accessToken)
+      const isExpired = decodedToken && decodedToken.exp ?  decodedToken.exp < Date.now() / 1000 : false;
+  
+      if(isExpired){
+        console.log("le token est expiré");
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        this.router.navigateByUrl('/login');
+      }else{
+        console.log("le token n'est pas expiré");  
+      }
+    }
   }
 
    // Méthode pour vérifier si l'utilisateur est connecté

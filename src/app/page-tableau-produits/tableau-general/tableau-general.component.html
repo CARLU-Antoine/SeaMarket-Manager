@@ -8,18 +8,27 @@
             <th mat-header-cell *matHeaderCellDef> Nom </th>
             <td mat-cell *matCellDef="let element,let i= index">
                 <ng-container *ngIf="modeEdition; else cellules">
+<<<<<<< HEAD
                     <form [formGroup]="forms[i]">
                     <mat-form-field>
                         <mat-select formControlName="name" class="input-field">
                             <mat-option [value]="element.productId">{{element.name}}</mat-option>
                             <mat-option *ngFor="let product of productAvailable" [value]="product.id">{{product.name}}</mat-option>
                         </mat-select>
+=======
+                    <mat-form-field style="width: 125px;">
+                        <input matInput [(ngModel)]="element.id" placeholder="Prix">
+>>>>>>> main
                     </mat-form-field>
                     <!-- <mat-error *ngIf="forms[i].get('name')?.errors?.['productExists']">Produt exists</mat-error> -->
                     </form>
                 </ng-container>
                 <ng-template #cellules>
+<<<<<<< HEAD
                     <p style="width: 125px;">{{ element.name }}</p>
+=======
+                    <p style="width: 125px;">{{ element.id }}</p>
+>>>>>>> main
                 </ng-template>
             </td>
         </ng-container>
@@ -30,7 +39,11 @@
                 <form [formGroup]="forms[i]">
                 <ng-container *ngIf="modeEdition; else cellules">
                     <mat-form-field style="width: 125px;">
+<<<<<<< HEAD
                         <input matInput formControlName="price" placeholder="Prix">
+=======
+                        <input matInput [(ngModel)]="element.price" placeholder="Prix">
+>>>>>>> main
                     </mat-form-field>
                 </ng-container>
                 </form>
