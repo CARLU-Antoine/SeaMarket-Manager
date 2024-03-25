@@ -6,7 +6,6 @@ import { PageTableauProduitsComponent } from './page-tableau-produits/page-table
 import { PageDashboardComponent } from './page-dashboard/page-dashboard.component';
 
 import { PageAnalyseMarketComponent } from './page-analyse-market/page-analyse-market.component';
-
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -14,6 +13,7 @@ const routes: Routes = [
   { path: 'modifUser', component: PageModifUserComponent },
   { path: 'tabProduits', component: PageTableauProduitsComponent },
   { path: 'dashboard', component: PageDashboardComponent },
+
 ];
 
 @NgModule({

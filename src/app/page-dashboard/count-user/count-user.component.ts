@@ -10,7 +10,6 @@ import { ModifUserService } from '../../services/modif-user.service';
   templateUrl: './count-user.component.html',
   styleUrl: './count-user.component.css'
 })
-
 export class CountUserComponent implements OnInit{
   @Input() userCount: number = 0;
 
@@ -40,3 +39,4 @@ export class CountUserComponent implements OnInit{
   }
   
 }
+
