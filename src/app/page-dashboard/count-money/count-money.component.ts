@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatCard } from '@angular/material/card';
 import { StatsRevenuesService } from '../../services/stats-revenues.service';
-
 @Component({
   selector: 'app-count-money',
   standalone: true,
@@ -11,7 +10,6 @@ import { StatsRevenuesService } from '../../services/stats-revenues.service';
   templateUrl: './count-money.component.html',
   styleUrl: './count-money.component.css'
 })
-
 export class CountMoneyComponent implements OnInit{
 
   constructor(private statsRevenuesService: StatsRevenuesService) { }

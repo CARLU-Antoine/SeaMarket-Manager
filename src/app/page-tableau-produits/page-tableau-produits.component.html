@@ -7,8 +7,8 @@
         <button mat-raised-button color="primary" (click)="openDialog()">Ajouter un produit</button>
     </div>
     <mat-tab-group class="navTab">
-        <mat-tab *ngFor="let categorie of dataSource" [label]="categorie.nom">
-            <app-tableau-general [categorie]="categorie.nom" [modeEdition]="modeEdition"></app-tableau-general>
+        <mat-tab *ngFor="let categorie of dataSource" [label]="categorie.nameCategory">
+            <app-tableau-general [categorie]="categorie.nameCategory" [modeEdition]="modeEdition"></app-tableau-general>
         </mat-tab>
     </mat-tab-group>
 </div>
@@ -20,18 +20,17 @@
     <mat-dialog-content>
       <mat-form-field appearance="fill" class="input-field">
         <mat-label>Catégorie</mat-label>
-        <mat-select formControlName="categorie">
-          <mat-option value="1">Poisson</mat-option>
-          <mat-option value="2">Fruits de mer</mat-option>
-          <mat-option value="3">Crustacés</mat-option>
+        <mat-select formControlName="categorie" multiple>
+          <mat-option *ngFor="let category of categories" [value]="category.id">{{ category.nameCategory }}</mat-option>
         </mat-select>
         <mat-error *ngIf="userForm.get('categorie')?.hasError('required')">Catégorie est requise</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="input-field">
         <mat-label>Nom du produit</mat-label>
-        <input matInput formControlName="name">
-        <mat-error *ngIf="userForm.get('name')?.hasError('required')">Nom du produit est requis</mat-error>
+        <mat-select formControlName="name" class="input-field">
+          <mat-option *ngFor="let product of productAvailable" [value]="product.id">{{product.name}}</mat-option>
+        </mat-select>
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="input-field">
