@@ -1,4 +1,5 @@
 import { Component,Input,OnInit } from '@angular/core';
+import { ManageProductService } from '../../services/manage-product.service';
 import { ProductsListService } from '../../services/products-list.service';
 
 @Component({
@@ -11,61 +12,49 @@ import { ProductsListService } from '../../services/products-list.service';
 
 
 export class BetterCategorieComponent implements OnInit{
-    @Input() bestCategorie: string = '';
-    @Input() bestProduct: number = 0; 
+    @Input() bestCategory: string = '';
+    @Input() bestProduct: string = ''; 
     @Input() numberBestProduct: number = 0; 
   
-    public categories = ['Poissons', 'Fruits de mer', 'Coquillages'];
-  
-    constructor(private productsListService: ProductsListService) { }
+    constructor(private manageProductService:ManageProductService,private productsListService: ProductsListService) { }
   
     ngOnInit(): void {
-      this.recoverBestCategorie();
+      this.recoverBestCategory();
     }
   
-    recoverBestCategorie(): void {
-      this.productsListService.getProducts().subscribe((data: any[]) => {
-        let categoryCounts = [0, 0, 0];
-        let categoryBestProducts =0; // Pour stocker l'ID du produit avec le plus de ventes pour chaque catégorie
-        
-        for (const product of data) {
-          const category = Array.isArray(product.categories) ? product.categories[0] : product.categories;
-          
-          switch (category) {
-            case 1:
-              categoryCounts[0] += product.sellArticle;
-
-              if (product.sellArticle >= Math.max(...categoryCounts)) {
-                categoryBestProducts = product.id;
-                console.log('meilleur produit',product.id);
+    recoverBestCategory(): void {
+      let bestCategoryName = '';
+      let maxQuantity = 0;
+  
+      this.manageProductService.getListCategories().subscribe(
+        (data: any) => {
+          const categories: { id: number, nameCategory: string }[] = Object.values(data);
+  
+          this.productsListService.getProducts().subscribe(
+            (products: any[]) => {
+              for (const product of products) {
+                if (product.categories && Array.isArray(product.categories) && product.categories.length > 0) {
+                  for (const categoryId of product.categories) {
+                    const categoryIndex = categories.findIndex(cat => cat.id === categoryId);
+                    if (product.quantity > maxQuantity && categories[categoryIndex].nameCategory!='all') {
+                      maxQuantity = product.quantity;
+                      bestCategoryName = categories[categoryIndex].nameCategory;
+                      this.bestProduct = product.name;
+                    }
+                  }
+                }
               }
-              break;
-            case 2:
-              categoryCounts[1] += product.sellArticle;
-
-              if (product.sellArticle >= Math.max(...categoryCounts)) {
-                categoryBestProducts = product.id;
-              }
-              break;
-            case 3:
-              categoryCounts[2] += product.sellArticle;
-
-              if (product.sellArticle >= Math.max(...categoryCounts)) {
-                categoryBestProducts = product.id;
-              }
-              break;
-            default:
-              break;
-          }
+              this.bestCategory = bestCategoryName;
+              this.numberBestProduct = maxQuantity;
+            },
+            (error: any) => {
+              console.error('Erreur lors de la récupération des produits :', error);
+            }
+          );
+        },
+        (error: any) => {
+          console.error('Erreur lors de la récupération des catégories :', error);
         }
-        
-        // Trouver la catégorie avec le nombre le plus élevé
-        const maxCount = Math.max(...categoryCounts);
-        const bestCategoryIndex = categoryCounts.indexOf(maxCount);
-        this.bestCategorie = this.categories[bestCategoryIndex];
-        this.bestProduct = categoryBestProducts;
-        this.numberBestProduct = maxCount;
-      });
-    }
-    
+      );
+    }    
   }
