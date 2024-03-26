@@ -99,13 +99,7 @@ export class PageModifUserComponent implements OnInit {
       this.userService.createUser(email, firstName, lastName, password, isAdmin).subscribe(
         (response: tableauUser) => {
           console.log('Utilisateur créé avec succès!', response);
-          // Ajouter l'utilisateur à la source de données
-          this.dataSource.data.push(response);
-          // Actualiser la source de données
-          this.dataSource.data = [...this.dataSource.data];
-          // Réinitialiser le paginator
-          this.dataSource.paginator = this.paginator;
-          // Réinitialiser le formulaire après soumission
+          this.loadUsers();
           this.userForm.reset();
         },
         error => {
@@ -120,8 +114,7 @@ export class PageModifUserComponent implements OnInit {
       response => {
         console.log('Utilisateur supprimé avec succès!', response);
         // Mettre à jour la source de données après la suppression
-        this.dataSource.data = this.dataSource.data.filter(user => user.id !== id);
-        this.dataSource.paginator = this.paginator;
+        this.loadUsers();
       },
       error => {
         console.error('Erreur lors de la suppression de l\'utilisateur', error);

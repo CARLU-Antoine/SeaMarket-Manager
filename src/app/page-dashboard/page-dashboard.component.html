@@ -1,6 +1,10 @@
 <app-sidenav></app-sidenav>
 
   <mat-card class="card-general" style="width: 1000px; height: auto; margin: auto; margin-top: 10px;">
+    <div class="download-button" >
+      <mat-icon style="cursor: pointer;"(click)="loadAllChatData()">autorenew</mat-icon>
+      <mat-icon style="cursor: pointer;" (click)="downloadAllChartData()">play_for_work</mat-icon>
+    </div> 
     <!-- Première rangée -->
     <div style="display: flex;">
       <div style="width: 900%;">
@@ -13,21 +17,31 @@
         <div style="height: 65px;" class="card-component center">
           <app-count-tax></app-count-tax>
         </div>
+        <div style="height: 65px;" class="card-component center">
+          <app-better-categorie></app-better-categorie>
+        </div>
       </div>
-      <div class="card-component">
-        <span>Stocks</span>
-        <app-pie-chart></app-pie-chart>
+        <div class="card-component" style="position: relative;">
+          <mat-icon style="position: absolute; right: 8%; cursor: pointer;" (click)="loadStockChartData()">autorenew</mat-icon>
+          <mat-icon style="position: absolute; right: 2%; cursor: pointer;" (click)="downloadStockChartData()">play_for_work</mat-icon>
+          <span>Stocks</span>
+          <app-stock-quantity></app-stock-quantity>
+        </div>
+        <div class="card-component" style="position: relative;">
+          <mat-icon style="position: absolute; right: 8%; cursor: pointer;" (click)="loadVentesChartData()">autorenew</mat-icon>
+          <mat-icon style="position: absolute; right: 2%; cursor: pointer;" (click)="downloadVentesChartData()">play_for_work</mat-icon>
+          <span>Ventes</span>
+          <app-pie-chart></app-pie-chart>
+        </div>
       </div>
-      <div class="card-component">
-        <span>ajouter un graphique different</span>
-        <app-pie-chart></app-pie-chart>
-      </div>
-    </div>
-
     <div>
-      <div class="card-component" style="height: 100%;">
+      <div class="card-component" style="position: relative;height: 100%;">
+          <span>Historique des ventes</span>
+          <mat-icon style="position: absolute; right: 5%; cursor: pointer;" (click)="loadHistoriqueChartData()">autorenew</mat-icon>
+          <mat-icon style="position: absolute; right: 2%; cursor: pointer;" (click)="downloadHistoriqueChartData()">play_for_work</mat-icon>
         <app-sells-chart></app-sells-chart>
       </div>
     </div>
   </mat-card>
-
+  
+<button (click)="celebrate()">Celebrate!</button>

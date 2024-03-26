@@ -5,11 +5,6 @@ import * as XLSX from 'xlsx';
 import { FormsModule } from '@angular/forms';
 import { StatsRevenuesService } from '../../services/stats-revenues.service';
 
-interface RevenueData {
-  date: string;
-  value: number;
-  quantity: number;
-}
 
 @Component({
   selector: 'app-money-chart',
@@ -23,6 +18,8 @@ interface RevenueData {
 export class MoneyChartComponent implements OnInit {
   public lineChartData: Array<any> = [];
   public lineChartLabels: Array<any> = [];
+  selectedDateType: string = '';
+
   public lineChartOptions: any = {
     responsive: true
   };
@@ -37,9 +34,9 @@ export class MoneyChartComponent implements OnInit {
   }
 
   // Dans votre méthode loadChart, spécifiez le type de données attendu
-  loadChart(type: string): void {
+  loadChart(selectedDateType: string): void {
     // Appelez la méthode getChartDataRevenues avec les valeurs de catégorie et de type
-    this.statsRevenuesService.getDataRevenues('all', type).subscribe(
+    this.statsRevenuesService.getDataRevenues('all', selectedDateType).subscribe(
       (data: any) => {
         // Parsez la chaîne JSON pour obtenir un tableau d'objets JavaScript
         const jsonData = JSON.parse(data);
@@ -53,7 +50,6 @@ export class MoneyChartComponent implements OnInit {
       }
     );
   }
-  
 
   downloadData(): void {
     // Créer un tableau de données contenant les étiquettes et les données

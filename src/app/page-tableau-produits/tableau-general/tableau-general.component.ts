@@ -12,6 +12,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ProductsListService } from '../../services/products-list.service';
 import { ManageProductService } from '../../services/manage-product.service';
 import { MatSelectModule } from '@angular/material/select';
+import { tableauCategorie } from '../page-tableau-produits.component';
 
 
 export interface tableauProduct {
@@ -50,7 +51,7 @@ export class TableauGeneralComponent implements OnInit, OnChanges {
   dataSource: MatTableDataSource<tableauProduct>;
   productAvailable: any;
 
-  @Input() categorie: string | undefined;
+  @Input() categorie:  tableauCategorie| undefined;
   @Input() modeEdition: boolean = false;
   forms: FormGroup[] = [];
   productExistsValidator(currentProductId:number): ValidatorFn{
@@ -95,7 +96,6 @@ export class TableauGeneralComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(): void {
-    this.loadProducts();
   }
   createFormWithValidators(product:any): FormGroup {
     return new FormGroup({

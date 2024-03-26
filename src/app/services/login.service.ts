@@ -16,8 +16,19 @@ export class LoginService {
     
     return this.http.post<any>('http://127.0.0.1:8000/login/', { email, password: hashedPassword });
   }
+    
+    // Méthode pour vérifier si l'utilisateur est connecté
+    isLoggedIn(): boolean {
+      if (typeof localStorage !== 'undefined') {
+        const accessToken = localStorage.getItem('accessToken');
+        return !!accessToken; // Retourne true si le token est présent, false sinon
+      } else {
+        // Gérer le cas où localStorage n'est pas disponible
+        return false;
+      }
+    }
 
-  // Méthode pour rafraîchir le token d'accès
+      // Méthode pour rafraîchir le token d'accès
   refreshToken(refreshToken: string): Observable<any> {
     return this.http.post<any>('http://127.0.0.1:8000/login/refreshtoken/', { refresh: refreshToken })
       .pipe(
@@ -29,25 +40,6 @@ export class LoginService {
         })
       );
   }
-
-    // Méthode pour comparer le token d'actualisation avec celui dans l'URL Django
-    compareRefreshTokenWithUrlToken(): boolean {
-      const refreshTokenFromLocalStorage = localStorage.getItem('refreshToken');
-      const urlParams = new URLSearchParams(window.location.search);
-      const refreshTokenFromUrl = urlParams.get('refresh_token');
-      return refreshTokenFromLocalStorage === refreshTokenFromUrl;
-    }
-
-    // Méthode pour vérifier si l'utilisateur est connecté
-    isLoggedIn(): boolean {
-      if (typeof localStorage !== 'undefined') {
-        const accessToken = localStorage.getItem('accessToken');
-        return !!accessToken; // Retourne true si le token est présent, false sinon
-      } else {
-        // Gérer le cas où localStorage n'est pas disponible
-        return false;
-      }
-    }
 
 
   // Méthode pour se déconnecter de l'application

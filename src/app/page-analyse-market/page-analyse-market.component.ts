@@ -63,7 +63,7 @@ export class PageAnalyseMarketComponent {
     this.productStatsChart.forEach((chart, index) => {
       const data = chart.getData();
       const worksheet = XLSX.utils.json_to_sheet(data);
-      XLSX.utils.book_append_sheet(workbook, worksheet, `Impôts`);
+      XLSX.utils.book_append_sheet(workbook, worksheet, `Analyse des produits`);
     });
   
     // Écrire le fichier Excel
@@ -97,7 +97,7 @@ export class PageAnalyseMarketComponent {
     this.DownloadChartData(this.comptabiliteCharts);
   }
 
-  downloadImpotChartData(): void {
+  downloadProductChartData(): void {
     this.DownloadChartData(this.productStatsChart);
   }
 
