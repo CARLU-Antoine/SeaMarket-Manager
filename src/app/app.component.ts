@@ -1,4 +1,4 @@
-import { Component,OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { RouterOutlet } from '@angular/router';
@@ -15,12 +15,14 @@ import {jwtDecode}  from 'jwt-decode';
   
 })
 
+
 export class AppComponent implements OnInit {
   title = 'SeaMarket-Manager';
 
   constructor(private loginService: LoginService, 
     private router: Router,
     private titleService: Title) {} // Injectez le service Title
+
 
   ngOnInit(): void {
     // Vérifiez le statut de connexion lors de l'initialisation du composant racine

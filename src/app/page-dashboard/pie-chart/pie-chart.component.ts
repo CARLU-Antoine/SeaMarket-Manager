@@ -2,6 +2,7 @@ import { Component,OnInit } from '@angular/core';
 import { ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { ProductsListService } from '../../services/products-list.service';
+
 import { ManageProductService } from '../../services/manage-product.service';
 import * as XLSX from 'xlsx';
 
@@ -23,6 +24,7 @@ export class PieChartComponent implements OnInit {
   public pieChartOptions: ChartOptions<'pie'> = {
     responsive: false,
   };
+
   public pieChartLabels = ['Poissons'];
   public pieChartDatasets: { data: number[] }[] = [{ data: [0, 0, 0] }];
   public pieChartLegend = true;
@@ -30,12 +32,14 @@ export class PieChartComponent implements OnInit {
 
   constructor(private manageProductService:ManageProductService,private productsListService: ProductsListService) { }
 
+
   ngOnInit(): void {
     // Chargez le graphique lors de l'initialisation du composant
     this.loadChart();
   }
 
   loadChart(): void {
+
     this.manageProductService.getListCategories().subscribe(
       (data: any) => {
         const categories: { id: number, nameCategory: string }[] = Object.values(data) as { id: number, nameCategory: string }[];
@@ -92,6 +96,17 @@ export class PieChartComponent implements OnInit {
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Ventes');
     XLSX.writeFile(wb, 'Historique par catégorie.xlsx');
+
+}
+    
+  getData(): any[] {
+      // Récupérer les données sous forme d'un tableau d'objets avec les étiquettes et les valeurs
+      return this.pieChartLabels.map((label, index) => ({
+          label: label,
+          value: this.pieChartDatasets[0].data[index] // Supposons que vous avez un seul jeu de données pour simplifier
+      }));
+  }
+  
 }
     
   getData(): any[] {

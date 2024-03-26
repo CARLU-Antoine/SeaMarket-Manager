@@ -1,5 +1,7 @@
 import { Component,Input,OnInit } from '@angular/core';
+
 import { ManageProductService } from '../../services/manage-product.service';
+
 import { ProductsListService } from '../../services/products-list.service';
 
 @Component({
@@ -12,6 +14,7 @@ import { ProductsListService } from '../../services/products-list.service';
 
 
 export class BetterCategorieComponent implements OnInit{
+
     @Input() bestCategory: string = '';
     @Input() bestProduct: string = ''; 
     @Input() numberBestProduct: number = 0; 
@@ -57,4 +60,5 @@ export class BetterCategorieComponent implements OnInit{
         }
       );
     }    
+
   }

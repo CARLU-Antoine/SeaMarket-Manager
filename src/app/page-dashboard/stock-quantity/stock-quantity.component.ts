@@ -2,6 +2,7 @@ import { Component,OnInit } from '@angular/core';
 import { ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { ProductsListService } from '../../services/products-list.service';
+
 import { ManageProductService } from '../../services/manage-product.service';
 import * as XLSX from 'xlsx';
 
@@ -21,6 +22,7 @@ export class StockQuantityComponent implements OnInit {
     responsive: false,
   };
   public pieChartLabels = ['Poissons', 'Fruits de mer', 'Coquillages'];
+
   public pieChartDatasets: { data: number[] }[] = [];
   public pieChartLegend = true;
   public pieChartPlugins = [];
@@ -33,6 +35,7 @@ export class StockQuantityComponent implements OnInit {
   }
 
   loadChart(): void {
+
     this.manageProductService.getListCategories().subscribe(
       (data: any) => {
         // Traitement des données ici
@@ -94,4 +97,5 @@ export class StockQuantityComponent implements OnInit {
           value: this.pieChartDatasets[0].data[index] // Supposons que vous avez un seul jeu de données pour simplifier
       }));
   }
+
 }
