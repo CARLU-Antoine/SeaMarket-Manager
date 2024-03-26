@@ -10,6 +10,8 @@ import { SidenavComponent } from '../sidenav/sidenav.component';
 import {MatIconModule} from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { LoginService } from '../services/login.service';
+import {jwtDecode}  from 'jwt-decode';
+
 
 @Component({
   selector: 'app-login',

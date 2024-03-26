@@ -15,7 +15,7 @@
                             <mat-option *ngFor="let product of productAvailable" [value]="product.id">{{product.name}}</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <!-- <mat-error *ngIf="forms[i].get('name')?.errors?.['productExists']">Produt exists</mat-error> -->
+                    <mat-error *ngIf="forms[i].get('name')?.errors?.['productExists']">Produt exists</mat-error>
                     </form>
                 </ng-container>
                 <ng-template #cellules>

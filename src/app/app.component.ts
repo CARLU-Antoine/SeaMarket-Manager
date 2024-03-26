@@ -14,13 +14,34 @@ import {jwtDecode}  from 'jwt-decode';
   styleUrl: './app.component.css',
   
 })
-export class AppComponent{
+
+
+export class AppComponent implements OnInit {
   title = 'SeaMarket-Manager';
 
-  constructor(
-    private loginService: LoginService, 
+  constructor(private loginService: LoginService, 
     private router: Router,
-    private titleService: Title
-  ) {}
+    private titleService: Title) {} // Injectez le service Title
 
-}
+
+  ngOnInit(): void {
+    // Vérifiez le statut de connexion lors de l'initialisation du composant racine
+    if (!this.isLoggedIn() && !this.isLoginPage()) {
+      this.router.navigate(['/login']);
+    }
+
+    // Définir le titre de l'application
+    this.titleService.setTitle('SeaMarket-Manager');
+  }
+
+
+  // Méthode pour vérifier si l'utilisateur est connecté
+  isLoggedIn(): boolean {
+    return this.loginService.isLoggedIn();
+  }
+
+  // Méthode pour vérifier si la page actuelle est la page de connexion
+  isLoginPage(): boolean {
+    return this.router.url === '/login';
+  }
+} 

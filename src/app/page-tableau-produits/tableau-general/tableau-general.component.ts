@@ -27,6 +27,7 @@ export interface tableauProduct {
   name: string;
 }
 
+
 @Component({
   selector: 'app-tableau-general',
   standalone: true,
@@ -99,6 +100,7 @@ export class TableauGeneralComponent implements OnInit, OnChanges {
     if(changes["productData"] && changes["productData"].currentValue){
       this.loadProducts();
     }
+
   }
   createFormWithValidators(product:any): FormGroup {
     return new FormGroup({
@@ -118,20 +120,10 @@ export class TableauGeneralComponent implements OnInit, OnChanges {
     }
     console.log(this.productData);
     this.dataSource.data = this.productData;
-    // this.productsListService.getProducts().subscribe((data: any[]) => {
-    //   this.dataSource.data = data.map(product => ({
-    //     categories: product.categories,
-    //     comments: product.comments,
-    //     id: product.id,
-    //     percentSale: parseFloat(product.percentSale),
-    //     price: product.price,
-    //     productId: product.productId,
-    //     quantity: parseInt(product.quantity),
-    //     sellArticle: parseInt(product.sellArticle),
-    //     name: product.name
-    //   }));
+
 
     this.dataSource.paginator = this.paginator;
+
   }
   
   

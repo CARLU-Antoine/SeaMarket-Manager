@@ -21,6 +21,7 @@ import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { error } from 'console';
 import { ProductsListService } from '../services/products-list.service';
 
+
 export interface tableauCategorie {
   id: number;
   nameCategory: string;
@@ -76,6 +77,7 @@ export class PageTableauProduitsComponent implements OnInit {
   globalProduct: { [id: number]: any[] } = {};
   @ViewChild('dialogContent') dialogContent!: TemplateRef<any>;
   constructor(public dialog: MatDialog,private productListService:ProductsListService,private fb: FormBuilder, private manageProductService: ManageProductService) {
+
     this.userForm = this.fb.group({
       categorie: ['', []],
       name: ['', [Validators.required]],
@@ -108,6 +110,7 @@ export class PageTableauProduitsComponent implements OnInit {
       });
       });
 
+
     this.manageProductService.getListAvailableProduct().subscribe((response: any) => {
       this.productAvailable = response;
     });
@@ -118,6 +121,7 @@ export class PageTableauProduitsComponent implements OnInit {
     
   }
   filterProducts(){
+
   }
   onCategoryChange(event: MatSelectChange): void {
     if( event.value.includes('new')){
