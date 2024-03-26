@@ -54,6 +54,15 @@ export class ManageProductService {
     const urlCategories:string =  'http://127.0.0.1:8000/products/redirection/';
     return this.http.get(urlCategories,{headers:headers});
   }
+  addNewCategory(newCategory: string) {
+    const accessToken = localStorage.getItem('accessToken');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}` // Inclure le token JWT d'accès dans l'en-tête Authorization
+    });
+    return this.http.post('http://127.0.0.1:8000/category/',{nameCategory:newCategory},{headers:headers});
+
+  }
 
   // Fonction pour mettre à jour un produit
   updateProduct(updatedProductData: any): Observable<any> {

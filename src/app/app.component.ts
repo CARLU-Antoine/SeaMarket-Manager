@@ -1,4 +1,4 @@
-import { Component,OnChanges,OnInit } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { RouterOutlet } from '@angular/router';
@@ -14,36 +14,24 @@ import {jwtDecode}  from 'jwt-decode';
   styleUrl: './app.component.css',
   
 })
+
 export class AppComponent implements OnInit {
   title = 'SeaMarket-Manager';
 
-  constructor(
-    private loginService: LoginService, 
+  constructor(private loginService: LoginService, 
     private router: Router,
-    private titleService: Title
-  ) {}
+    private titleService: Title) {} // Injectez le service Title
 
   ngOnInit(): void {
+    // Vérifiez le statut de connexion lors de l'initialisation du composant racine
+    if (!this.isLoggedIn() && !this.isLoginPage()) {
+      this.router.navigate(['/login']);
+    }
+
+    // Définir le titre de l'application
+    this.titleService.setTitle('SeaMarket-Manager');
   }
 
-  CheckAccessToken():void{
-    const accessToken = localStorage.getItem('accessToken');
-    if(accessToken){
-      let decodedToken = jwtDecode(accessToken)
-      const isExpired = decodedToken && decodedToken.exp ?  decodedToken.exp < Date.now() / 1000 : false;
-  
-      if(isExpired){
-        console.log("le token est expiré");
-        localStorage.removeItem('accessToken');
-        //router.navigateByUrl('/login');
-      }else{
-        console.log("le token n'est pas expiré");  
-      }
-    }else{
-      console.log('no token')
-      //router.navigateByUrl('/login');
-    }
-  }
 
   // Méthode pour vérifier si l'utilisateur est connecté
   isLoggedIn(): boolean {
@@ -54,4 +42,4 @@ export class AppComponent implements OnInit {
   isLoginPage(): boolean {
     return this.router.url === '/login';
   }
-}
+} 

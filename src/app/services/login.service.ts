@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {jwtDecode}  from 'jwt-decode';
+import { catchError } from 'rxjs/operators';
 import * as CryptoJS from 'crypto-js'; // Importer CryptoJS
 
 @Injectable({
@@ -27,6 +27,19 @@ export class LoginService {
         return false;
       }
     }
+
+      // Méthode pour rafraîchir le token d'accès
+  refreshToken(refreshToken: string): Observable<any> {
+    return this.http.post<any>('http://127.0.0.1:8000/login/refreshtoken/', { refresh: refreshToken })
+      .pipe(
+        catchError(error => {
+          // Si le rafraîchissement échoue, déconnectez l'utilisateur et redirigez-le vers la page de login
+          this.logout();
+          // Ajoutez ici le code pour rediriger l'utilisateur vers la page de login
+          throw error; // relancez l'erreur pour que le composant puisse la gérer
+        })
+      );
+  }
 
 
   // Méthode pour se déconnecter de l'application

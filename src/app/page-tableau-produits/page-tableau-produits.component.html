@@ -7,8 +7,8 @@
         <button mat-raised-button color="primary" (click)="openDialog()">Ajouter un produit</button>
     </div>
     <mat-tab-group class="navTab">
-        <mat-tab *ngFor="let categorie of dataSource" [label]="categorie.nameCategory">
-            <app-tableau-general [categorie]="categorie.nameCategory" [modeEdition]="modeEdition"></app-tableau-general>
+        <mat-tab *ngFor="let categorie of dataSource" [label]="categorie.nameCategory" >
+            <app-tableau-general [categorie]="categorie" [modeEdition]="modeEdition"></app-tableau-general>
         </mat-tab>
     </mat-tab-group>
 </div>
@@ -18,12 +18,22 @@
   <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="product-form">
     <h2 class="dialog-title">Ajouter un produit</h2>
     <mat-dialog-content>
-      <mat-form-field appearance="fill" class="input-field">
+      <mat-form-field appearance="fill" class="input-field" *ngIf="!isNewCategory">
         <mat-label>Catégorie</mat-label>
-        <mat-select formControlName="categorie" multiple>
-          <mat-option *ngFor="let category of categories" [value]="category.id">{{ category.nameCategory }}</mat-option>
+        <mat-select formControlName="categorie" multiple (selectionChange)="onCategoryChange($event)">
+            <mat-option *ngFor="let category of categories" [value]="category.id">{{ category.nameCategory }}</mat-option>
+            <mat-option value="new">Nouvelle catégorie</mat-option>
         </mat-select>
         <mat-error *ngIf="userForm.get('categorie')?.hasError('required')">Catégorie est requise</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="input-field" *ngIf="isNewCategory">
+        <mat-label>Nouvelle catégorie</mat-label>
+        <div style="display: flex;">
+        <input matInput #addCategory autofocus placeholder="Ajout d'une catégorie" style="flex-grow:1 ;" (input.enter)="addNewCategory(addCategory.value)"/>
+        <button mat-button (click)="addNewCategory(addCategory.value)"><mat-icon fontIcon="send"></mat-icon></button>
+        
+      </div>
+
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="input-field">

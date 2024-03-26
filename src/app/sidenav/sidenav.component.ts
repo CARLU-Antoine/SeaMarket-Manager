@@ -47,22 +47,43 @@ export class SidenavComponent implements OnInit{
     this.router.navigate(['/analyseMarket']);
   }
 
-  CheckAccessToken():void{
-    const accessToken = localStorage.getItem('accessToken');
-    if(accessToken){
-      let decodedToken = jwtDecode(accessToken)
-      const isExpired = decodedToken && decodedToken.exp ?  decodedToken.exp < Date.now() / 1000 : false;
-  
-      if(isExpired){
-        console.log("le token est expiré");
+CheckAccessToken(): void {
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+
+  if (accessToken) {
+    let decodedToken = jwtDecode(accessToken);
+    const isExpired = decodedToken && decodedToken.exp ? decodedToken.exp < Date.now() / 1000 : false;
+
+    if (isExpired) {
+      console.log("Le token est expiré");
+      if (refreshToken) {
+        // Utiliser le refresh token pour obtenir un nouveau access token
+        this.loginService.refreshToken(refreshToken).subscribe(
+          (response) => {
+            const newAccessToken = response.access;
+            localStorage.setItem('accessToken', newAccessToken);
+            console.log("Nouveau token obtenu avec succès !");
+            // Vous pouvez rediriger l'utilisateur vers la page précédente ou vers un autre endroit approprié
+          },
+          (error) => {
+            console.log("Erreur lors de l'obtention d'un nouveau token :", error);
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            this.router.navigateByUrl('/login');
+          }
+        );
+      } else {
+        console.log("Aucun refresh token disponible. Déconnexion de l'utilisateur.");
         localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
         this.router.navigateByUrl('/login');
-      }else{
-        console.log("le token n'est pas expiré");  
       }
+    } else {
+      console.log("Le token n'est pas expiré");
     }
   }
+}
+
 
    // Méthode pour vérifier si l'utilisateur est connecté
    isLoggedIn(): boolean {
