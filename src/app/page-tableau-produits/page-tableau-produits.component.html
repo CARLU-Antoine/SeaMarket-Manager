@@ -1,7 +1,7 @@
 <app-sidenav></app-sidenav>
 
-<div>
-    <div class="slide-toggle">
+<div style="margin-right: 10px; margin-top: 10px;">
+    <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 10px;">
         <h4>Activer ou désactiver la modification</h4>
         <mat-slide-toggle [(ngModel)]="isChecked" (change)="modifierModeEdition()"></mat-slide-toggle>
         <button mat-raised-button color="primary" (click)="openDialog()">Ajouter un produit</button>
@@ -11,10 +11,10 @@
             <app-tableau-general [categorie]="categorie" [modeEdition]="modeEdition"></app-tableau-general>
         </mat-tab>
     </mat-tab-group>
-</div>
+
 
 <!-- Dialog pour ajouter un produit -->
-<ng-template #dialogContent let-data>
+<ng-template #dialogContent let-data style="display: flex; justify-content: center;">
   <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="product-form">
     <h2 class="dialog-title">Ajouter un produit</h2>
     <mat-dialog-content>
@@ -67,3 +67,4 @@
     </mat-dialog-actions>
   </form>
 </ng-template>
+</div>

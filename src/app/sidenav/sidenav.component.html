@@ -13,16 +13,16 @@
   <mat-drawer class="slide-container" #drawer mode="side" opened> 
     <div class="sidenav-content">
       <div class="button-container">
-        <button class="button" (click)="nagivateToDashboard()">
+        <button class="button" title="Dashboard" (click)="nagivateToDashboard()">
           <mat-icon>dashboard</mat-icon>
         </button>
-        <button class="button" (click)="nagivateToProduit()">
+        <button class="button" title="Produits" (click)="nagivateToProduit()">
           <mat-icon>store</mat-icon>
         </button>
-        <button class="button" (click)="nagivateToAnalyse()">
+        <button class="button" title="Statistiques" (click)="nagivateToAnalyse()">
           <mat-icon>attach_money</mat-icon>
         </button>
-        <button class="button" (click)="nagivateToModifUser()">
+        <button class="button" title="Utilisateurs" (click)="nagivateToModifUser()">
           <mat-icon>supervisor_account</mat-icon>
         </button>
       </div>
