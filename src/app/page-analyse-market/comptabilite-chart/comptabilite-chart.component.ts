@@ -4,6 +4,7 @@ import { ChartType } from 'chart.js';
 import { FormsModule } from '@angular/forms';
 import { StatsMarginService } from '../../services/stats-margin.service';
 import * as XLSX from 'xlsx';
+import confetti from 'canvas-confetti';
 
 @Component({
   selector: 'app-comptabilite-chart',
@@ -52,6 +53,17 @@ export class ComptabiliteChartComponent implements OnInit{
         // Organisez les données reçues pour les utiliser dans le graphique
         this.lineChartLabels = jsonData.map((item: { date: string | number | Date; }) => new Date(item.date).toLocaleDateString());
         this.lineChartData = [{ data: jsonData.map((item: { value: any; }) => item.value), label: 'Marge' }];
+
+        jsonData.forEach((item: { value: any; }) => {
+          if (item.value > 100) {
+            console.log('marge supérieure à 100');	
+            console.log(item.value);
+            this.celebrate();
+          } else {
+            console.log('marge inférieur à 100');
+            console.log(item.value);
+          }
+        });
       },
       (error) => {
         console.error(error); // Gérez les erreurs
@@ -69,4 +81,16 @@ export class ComptabiliteChartComponent implements OnInit{
     XLSX.utils.book_append_sheet(wb, ws, 'Résultat comptable');
     XLSX.writeFile(wb, 'Résultat comptable.xlsx');
   }
+  celebrate() {
+    const duration = 3000;
+  
+    confetti({
+      particleCount: 150,
+      spread: 180,
+      origin: { x: 0.5, y: 0.7 },
+      colors: ['#FF4500', '#008080', '#FFD700'],
+    });
+  
+    setTimeout(() => confetti.reset(), duration);
+    }
 }

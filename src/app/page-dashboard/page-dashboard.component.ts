@@ -69,7 +69,7 @@ export class PageDashboardComponent {
   });
 
   setTimeout(() => confetti.reset(), duration);
-}
+  }
 
 downloadAllChartData(): void {
   const workbook = XLSX.utils.book_new();
