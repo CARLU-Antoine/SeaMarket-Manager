@@ -1,4 +1,4 @@
-import { Component, Input,OnInit,ViewChild,OnChanges } from '@angular/core';
+import { Component, Input,OnInit,ViewChild,OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -53,10 +53,11 @@ export class TableauGeneralComponent implements OnInit, OnChanges {
 
   @Input() categorie:  tableauCategorie| undefined;
   @Input() modeEdition: boolean = false;
+  @Input() productData: any[] = [];
   forms: FormGroup[] = [];
   productExistsValidator(currentProductId:number): ValidatorFn{
     return (control: AbstractControl): ValidationErrors | null => {
-      if(control && (this.productAvailable.filter((product:any) => control.value === product.id) || currentProductId === control.value)){
+      if(control && this.productAvailable && (this.productAvailable.filter((product:any) => control.value === product.id) || currentProductId === control.value)){
         return null;
       }
       return { productExists: false };
@@ -83,7 +84,6 @@ export class TableauGeneralComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.loadProducts();
     this.manageProductService.getListAvailableProduct().subscribe((response: any) => {
      this.productAvailable = response
     });
@@ -95,7 +95,10 @@ export class TableauGeneralComponent implements OnInit, OnChanges {
     });
   }
 
-  ngOnChanges(): void {
+  ngOnChanges(changes:SimpleChanges): void {
+    if(changes["productData"] && changes["productData"].currentValue){
+      this.loadProducts();
+    }
   }
   createFormWithValidators(product:any): FormGroup {
     return new FormGroup({
@@ -110,21 +113,25 @@ export class TableauGeneralComponent implements OnInit, OnChanges {
   }
 
   loadProducts(): void {
-    this.productsListService.getProducts().subscribe((data: any[]) => {
-      this.dataSource.data = data.map(product => ({
-        categories: product.categories,
-        comments: product.comments,
-        id: product.id,
-        percentSale: parseFloat(product.percentSale),
-        price: product.price,
-        productId: product.productId,
-        quantity: parseInt(product.quantity),
-        sellArticle: parseInt(product.sellArticle),
-        name: product.name
-      }));
+    if (!this.categorie){
+      return;
+    }
+    console.log(this.productData);
+    this.dataSource.data = this.productData;
+    // this.productsListService.getProducts().subscribe((data: any[]) => {
+    //   this.dataSource.data = data.map(product => ({
+    //     categories: product.categories,
+    //     comments: product.comments,
+    //     id: product.id,
+    //     percentSale: parseFloat(product.percentSale),
+    //     price: product.price,
+    //     productId: product.productId,
+    //     quantity: parseInt(product.quantity),
+    //     sellArticle: parseInt(product.sellArticle),
+    //     name: product.name
+    //   }));
 
-      this.dataSource.paginator = this.paginator;
-    });
+    this.dataSource.paginator = this.paginator;
   }
   
   

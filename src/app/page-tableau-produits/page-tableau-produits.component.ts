@@ -19,6 +19,7 @@ import { TableauGeneralComponent } from './tableau-general/tableau-general.compo
 import { SidenavComponent } from '../sidenav/sidenav.component';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { error } from 'console';
+import { ProductsListService } from '../services/products-list.service';
 
 export interface tableauCategorie {
   id: number;
@@ -26,7 +27,7 @@ export interface tableauCategorie {
 }
 
 export interface productElement {
-  categorie: number;
+  categories: number[];
   name:string,
   price: string;
   quantity:number;
@@ -71,10 +72,10 @@ export class PageTableauProduitsComponent implements OnInit {
   categories: tableauCategorie[] = ELEMENT_DATA;
   modeEdition: boolean = false;
   dataSource = ELEMENT_DATA;
-  productAvailable:any[] = [];
-
+  productAvailable :any[] = [];
+  globalProduct: { [id: number]: any[] } = {};
   @ViewChild('dialogContent') dialogContent!: TemplateRef<any>;
-  constructor(public dialog: MatDialog,private fb: FormBuilder, private manageProductService: ManageProductService) {
+  constructor(public dialog: MatDialog,private productListService:ProductsListService,private fb: FormBuilder, private manageProductService: ManageProductService) {
     this.userForm = this.fb.group({
       categorie: ['', []],
       name: ['', [Validators.required]],
@@ -92,15 +93,31 @@ export class PageTableauProduitsComponent implements OnInit {
       });
       this.categories = response.filter((category: tableauCategorie) => category.nameCategory !== 'All');
       this.dataSource = response;
-      
+      this.productListService.getProducts().subscribe((response: any) => {
+        
+        this.globalProduct = response.reduce((acc: any, product: productElement) => {
+          product.categories.forEach(categoryId => {
+            if (!acc[categoryId]) {
+              acc[categoryId] = [];
+            }
+            acc[categoryId].push(product);
+          });
+          return acc;
+        },{});
+        console.log(this.globalProduct);
+      });
+      });
 
-    });
     this.manageProductService.getListAvailableProduct().subscribe((response: any) => {
       this.productAvailable = response;
     });
   }
   onTabChange(event: MatTabChangeEvent): void {
     let selectedCategory = this.categories[event.index].id;
+    console.log(selectedCategory)
+    
+  }
+  filterProducts(){
   }
   onCategoryChange(event: MatSelectChange): void {
     if( event.value.includes('new')){
