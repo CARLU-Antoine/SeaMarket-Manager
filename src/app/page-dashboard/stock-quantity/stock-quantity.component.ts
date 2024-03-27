@@ -21,7 +21,7 @@ export class StockQuantityComponent implements OnInit {
   public pieChartOptions: ChartOptions<'pie'> = {
     responsive: false,
   };
-  public pieChartLabels = ['Poissons', 'Fruits de mer', 'Coquillages'];
+  public pieChartLabels = [''];
 
   public pieChartDatasets: { data: number[] }[] = [];
   public pieChartLegend = true;

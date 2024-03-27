@@ -56,12 +56,7 @@ export class ComptabiliteChartComponent implements OnInit{
 
         jsonData.forEach((item: { value: any; }) => {
           if (item.value > 100) {
-            console.log('marge supérieure à 100');	
-            console.log(item.value);
             this.celebrate();
-          } else {
-            console.log('marge inférieur à 100');
-            console.log(item.value);
           }
         });
       },
