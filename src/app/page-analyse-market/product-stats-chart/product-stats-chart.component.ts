@@ -76,7 +76,4 @@ export class ProductStatsChartComponent implements OnInit{
     XLSX.utils.book_append_sheet(wb, ws, 'Analyse des produits');
     XLSX.writeFile(wb, 'Analyse des produits.xlsx');
   }
-  public chartHovered(e:any):void {
-    console.log(e);
-  }
 }

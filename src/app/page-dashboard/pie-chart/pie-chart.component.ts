@@ -55,7 +55,6 @@ export class PieChartComponent implements OnInit {
 
             // Parcourir les produits
             for (const product of products) {
-              console.log(product)
               // Vérifier si le produit a des catégories
               if (product.categories && Array.isArray(product.categories) && product.categories.length > 0) {
                 // Parcourir les catégories du produit
@@ -97,16 +96,6 @@ export class PieChartComponent implements OnInit {
     XLSX.utils.book_append_sheet(wb, ws, 'Ventes');
     XLSX.writeFile(wb, 'Historique par catégorie.xlsx');
 
-}
-    
-  getData(): any[] {
-      // Récupérer les données sous forme d'un tableau d'objets avec les étiquettes et les valeurs
-      return this.pieChartLabels.map((label, index) => ({
-          label: label,
-          value: this.pieChartDatasets[0].data[index] // Supposons que vous avez un seul jeu de données pour simplifier
-      }));
-  }
-  
 }
     
   getData(): any[] {

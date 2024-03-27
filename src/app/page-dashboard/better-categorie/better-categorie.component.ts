@@ -27,7 +27,7 @@ export class BetterCategorieComponent implements OnInit{
   
     recoverBestCategory(): void {
       let bestCategoryName = '';
-      let maxQuantity = 0;
+      let maxSell = 0;
   
       this.manageProductService.getListCategories().subscribe(
         (data: any) => {
@@ -39,8 +39,8 @@ export class BetterCategorieComponent implements OnInit{
                 if (product.categories && Array.isArray(product.categories) && product.categories.length > 0) {
                   for (const categoryId of product.categories) {
                     const categoryIndex = categories.findIndex(cat => cat.id === categoryId);
-                    if (product.quantity > maxQuantity && categories[categoryIndex].nameCategory!='all') {
-                      maxQuantity = product.quantity;
+                    if (product.sellArticle > maxSell && categories[categoryIndex].nameCategory!='all') {
+                      maxSell = product.sellArticle;
                       bestCategoryName = categories[categoryIndex].nameCategory;
                       this.bestProduct = product.name;
                     }
@@ -48,7 +48,7 @@ export class BetterCategorieComponent implements OnInit{
                 }
               }
               this.bestCategory = bestCategoryName;
-              this.numberBestProduct = maxQuantity;
+              this.numberBestProduct = maxSell;
             },
             (error: any) => {
               console.error('Erreur lors de la récupération des produits :', error);
